@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    container_name: vexa_postgres
+    environment:
+      POSTGRES_DB: vexadb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: vexa
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - vexa_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: vexa_pgadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@vexa.com
+      PGADMIN_DEFAULT_PASSWORD: vexa
+    depends_on:
+      - db
+    networks:
+      - vexa_net
+
+volumes:
+  pgdata:
+
+networks:
+  vexa_net:
