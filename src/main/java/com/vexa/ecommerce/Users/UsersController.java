@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.controller;
+package com.vexa.ecommerce.Users;
 
 import org.springframework.stereotype.Controller;
 

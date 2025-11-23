@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.controller;
+package com.vexa.ecommerce.Cart;
 
 import org.springframework.stereotype.Controller;
 

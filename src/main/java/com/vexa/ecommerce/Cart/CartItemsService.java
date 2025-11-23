@@ -1,4 +1,7 @@
 package com.vexa.ecommerce.Cart;
 
-public class CartItemsController {
+import org.springframework.stereotype.Service;
+
+@Service
+public class CartItemsService {
 }
