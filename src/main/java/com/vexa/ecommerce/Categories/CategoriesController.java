@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.controller;
+package com.vexa.ecommerce.Categories;
 
 import org.springframework.stereotype.Controller;
 

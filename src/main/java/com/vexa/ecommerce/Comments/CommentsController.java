@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.controller;
+package com.vexa.ecommerce.Comments;
 
 import org.springframework.stereotype.Controller;
 

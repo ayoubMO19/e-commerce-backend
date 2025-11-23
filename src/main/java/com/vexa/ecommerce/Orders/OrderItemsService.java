@@ -1,7 +1,7 @@
 package com.vexa.ecommerce.Orders;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
-@Controller
+@Service
 public class OrderItemsService {
 }
