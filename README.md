@@ -42,6 +42,15 @@ El proyecto está en desarrollo continuo y sigue una planificación semanal orga
 - [`/docs/database.md`](./docs/database.md)  
 - [`/docs/sql/schema.sql`](./docs/sql/schema.sql)
 
+---
+
+## 🐳 Instalación rápida con Docker
+```bash
+docker compose up -d
+```
+
+---
+
 ▶️ Ejecución local
 ```
 mvn clean package
@@ -50,6 +59,7 @@ java -jar target/ecommerce-backend.jar
 Documentación detallada:
 - /docs/setup.md
 
+---
 📂 Estructura (Domain-Driven)
 ```
 src/
@@ -61,9 +71,3 @@ src/
  └── cart/
 ```
 
-
----
-
-## 🐳 Instalación rápida con Docker
-```bash
-docker compose up -d
