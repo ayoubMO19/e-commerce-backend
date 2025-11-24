@@ -5,6 +5,7 @@ import com.vexa.ecommerce.Cart.CartItems;
 import com.vexa.ecommerce.Categories.Categories;
 import com.vexa.ecommerce.Comments.Comments;
 
+import com.vexa.ecommerce.Orders.OrderItems;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,10 @@ public class Products {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CartItems> cartItemsList;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderItems> orderItemsList;
 
     // Empty Constructor
     public Products() {}
