@@ -54,7 +54,7 @@ docker compose up -d
 mvn clean package
 java -jar target/ecommerce-backend.jar
 ```
-Documentación detallada:
+📄 Documentación completa:
 - [`/docs/setup.md`](./docs/setup.md)  
 
 ---
