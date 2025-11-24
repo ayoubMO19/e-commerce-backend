@@ -55,7 +55,7 @@ mvn clean package
 java -jar target/ecommerce-backend.jar
 ```
 Documentación detallada:
-- /docs/setup.md
+- [`/docs/setup.md`](./docs/setup.md)  
 
 ---
 ## 📂 Estructura (Domain-Driven)
