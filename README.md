@@ -42,6 +42,26 @@ El proyecto está en desarrollo continuo y sigue una planificación semanal orga
 - [`/docs/database.md`](./docs/database.md)  
 - [`/docs/sql/schema.sql`](./docs/sql/schema.sql)
 
+▶️ Ejecución local
+```
+mvn clean package
+java -jar target/ecommerce-backend.jar
+```
+Documentación detallada:
+- /docs/setup.md
+
+📂 Estructura (Domain-Driven)
+```
+src/
+ ├── users/
+ ├── products/
+ ├── comments/
+ ├── categories/
+ ├── orders/
+ └── cart/
+```
+
+
 ---
 
 ## 🐳 Instalación rápida con Docker
