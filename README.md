@@ -49,8 +49,6 @@ El proyecto está en desarrollo continuo y sigue una planificación semanal orga
 docker compose up -d
 ```
 
----
-
 ▶️ Ejecución local
 ```
 mvn clean package
@@ -60,7 +58,7 @@ Documentación detallada:
 - /docs/setup.md
 
 ---
-📂 Estructura (Domain-Driven)
+## 📂 Estructura (Domain-Driven)
 ```
 src/
  ├── users/
