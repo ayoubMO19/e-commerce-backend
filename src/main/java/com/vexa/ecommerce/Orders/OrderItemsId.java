@@ -1,5 +1,6 @@
-package com.vexa.ecommerce.Cart;
+package com.vexa.ecommerce.Orders;
 
+import com.vexa.ecommerce.Cart.CartItemsId;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,28 +11,27 @@ import java.util.Objects;
 @Setter
 @Getter
 @Embeddable
-public class CartItemsId implements Serializable {
-
-    private Integer cartId;
+public class OrderItemsId implements Serializable {
     private Integer productId;
+    private Integer orderId;
 
-    public CartItemsId() {}
+    public OrderItemsId() {}
 
-    public CartItemsId(Integer cartId, Integer productId) {
-        this.cartId = cartId;
+    public OrderItemsId(Integer productId, Integer orderId) {
         this.productId = productId;
+        this.orderId = orderId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CartItemsId that)) return false;
-        return Objects.equals(cartId, that.cartId) &&
+        if (!(o instanceof OrderItemsId that)) return false;
+        return Objects.equals(orderId, that.orderId) &&
                 Objects.equals(productId, that.productId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cartId, productId);
+        return Objects.hash(orderId, productId);
     }
 }

@@ -1,11 +1,13 @@
 package com.vexa.ecommerce.Orders;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vexa.ecommerce.Users.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -31,6 +33,10 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderItems> orderItemsList;
 
     // Empty Constructor
     public Orders() {}
