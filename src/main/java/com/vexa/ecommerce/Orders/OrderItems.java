@@ -1,6 +1,5 @@
 package com.vexa.ecommerce.Orders;
 
-import com.vexa.ecommerce.Cart.CartItemsId;
 import com.vexa.ecommerce.Products.Products;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,6 +33,17 @@ public class OrderItems {
         this.order = order;
         this.quantity = quantity;
         this.priceAtPurchase = priceAtPurchase;
-        this.id = new OrderItemsId(order.getOrderId(), product.getProductId());
+        this.id = new OrderItemsId(product.getProductId(), order.getOrderId());
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItems{" +
+                "id=" + id +
+                ", product=" + product +
+                ", order=" + order +
+                ", quantity=" + quantity +
+                ", priceAtPurchase=" + priceAtPurchase +
+                '}';
     }
 }

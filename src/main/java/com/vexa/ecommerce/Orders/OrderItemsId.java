@@ -1,6 +1,5 @@
 package com.vexa.ecommerce.Orders;
 
-import com.vexa.ecommerce.Cart.CartItemsId;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
