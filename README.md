@@ -7,58 +7,53 @@ El proyecto está en desarrollo continuo y sigue una planificación semanal orga
 ---
 
 ## 🚀 Stack Tecnológico
-- **Backend:** Java 17+, Spring Boot 3  
-- **Persistencia:** Hibernate/JPA + PostgreSQL  
-- **Seguridad:** Spring Security + JWT  
-- **Frontend:** React + Axios  
-- **Infraestructura:** Docker, Docker Compose  
-- **Testing:** JUnit  
-- **Build:** Maven  
+- **Backend:** Java 17+, Spring Boot 3
+- **Persistencia:** Hibernate/JPA + PostgreSQL
+- **Seguridad:** Spring Security + JWT
+- **Frontend:** React + Axios
+- **Infraestructura:** Docker, Docker Compose
+- **Testing:** JUnit
+- **Build:** Maven
 
 ---
 
 ## 📌 Funcionalidades principales
-- Registro e inicio de sesión (JWT)  
-- Carrito por usuario  
-- Gestión de productos y categorías  
-- Comentarios de productos  
-- Flujo completo de pedidos:  
-  - Procesando → Confirmado → Preparando → Enviado  
-- Cancelación de pedido (antes de Enviado)  
-- Devoluciones integradas  
-- Gestión de stock  
+- Registro e inicio de sesión (JWT)
+- Carrito por usuario
+- Gestión de productos y categorías
+- Comentarios de productos
+- Flujo completo de pedidos:
+    - Procesando → Confirmado → Preparando → Enviado
+- Cancelación antes de "Enviado"
+- Devoluciones
+- Gestión de stock
 
-🔎 **Documentación completa:**  
-- [`/docs/requirements.md`](./docs/requirements.md)
-
----
-
-## 🗄️ Base de Datos (resumen)
-- PostgreSQL  
-- Modelo relacional con claves compuestas  
-- Relaciones 1:N, N:1 y 1:1
-
-📄 Documentación completa:  
-- [`/docs/database.md`](./docs/database.md)  
-- [`/docs/sql/schema.sql`](./docs/sql/schema.sql)
+🔎 **Documentación completa:**
+- `/docs/requirements.md`
 
 ---
 
-## 🐳 Instalación rápida con Docker
+## 🗄️ Base de Datos
+Ver documentación:
+- `/docs/database.md`
+- `/docs/sql/schema.sql`
+
+---
+
+## 🐳 Instalación con Docker
 ```bash
 docker compose up -d
 ```
 
-▶️ Ejecución local
-```
+## ▶️ Ejecución local
+```bash
 mvn clean package
 java -jar target/ecommerce-backend.jar
 ```
-📄 Documentación completa:
-- [`/docs/setup.md`](./docs/setup.md)  
 
 ---
-## 📂 Estructura (Domain-Driven)
+
+## 📂 Estructura
 ```
 src/
  ├── users/
@@ -69,3 +64,16 @@ src/
  └── cart/
 ```
 
+---
+
+## 📅 Roadmap del proyecto
+| Semana | Estado | Detalles |
+|--------|--------|----------|
+| 1 | ✅ | Modelos + relaciones |
+| 2 | 🟡 | Servicios + controladores |
+| 3 | ⏳ | Seguridad + JWT |
+
+---
+
+## 🧑‍💻 Autor
+**Ayoub Morghi — Java Backend Developer**

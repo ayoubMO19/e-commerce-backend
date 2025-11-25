@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Categories;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vexa.ecommerce.Products.Products;
 
 import jakarta.persistence.*;
@@ -20,6 +21,7 @@ public class Categories {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Products> productsList;
 

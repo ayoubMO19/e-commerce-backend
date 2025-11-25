@@ -33,4 +33,14 @@ public class CartItems {
         this.quantity = quantity;
         this.id = new CartItemsId(cart.getCartId(), product.getProductId());
     }
+
+    @Override
+    public String toString() {
+        return "CartItems{" +
+                "id=" + id +
+                ", cart=" + cart +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

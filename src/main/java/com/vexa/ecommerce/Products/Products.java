@@ -69,6 +69,10 @@ public class Products {
                 ", description='" + description + '\'' +
                 ", urlImage='" + urlImage + '\'' +
                 ", stock=" + stock +
+                ", category=" + category +
+                ", commentsList=" + commentsList +
+                ", cartItemsList=" + cartItemsList +
+                ", orderItemsList=" + orderItemsList +
                 '}';
     }
 }
