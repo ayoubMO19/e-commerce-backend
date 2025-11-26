@@ -26,7 +26,7 @@ public class CategoriesService implements ICategoriesService {
     }
 
     @Override
-    public Categories createNewCategory(Categories category) {
+    public Categories saveNewCategory(Categories category) {
         return this.categoriesRepository.save(category);
     }
 
