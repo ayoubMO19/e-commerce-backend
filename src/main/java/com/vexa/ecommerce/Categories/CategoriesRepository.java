@@ -1,7 +1,6 @@
 package com.vexa.ecommerce.Categories;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class CategoriesRepository {
+public interface CategoriesRepository extends JpaRepository<Categories, Integer> {
 }

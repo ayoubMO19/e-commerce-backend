@@ -1,7 +1,6 @@
 package com.vexa.ecommerce.Products;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class ProductsRepository {
+public interface ProductsRepository extends JpaRepository<Products, Integer> {
 }
