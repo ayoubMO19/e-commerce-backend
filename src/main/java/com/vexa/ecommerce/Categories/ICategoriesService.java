@@ -8,7 +8,7 @@ public interface ICategoriesService {
 
     Categories getCategoryById(Integer id);
 
-    Categories createNewCategory(Categories category);
+    Categories saveNewCategory(Categories category);
 
     Categories updateCategory(Categories category);
 

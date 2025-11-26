@@ -8,7 +8,7 @@ public interface IProductsService {
 
     Products getProductById(Integer id);
 
-    Products createNewProduct(Products product);
+    Products saveNewProduct(Products product);
 
     Products updateProduct(Products product);
 

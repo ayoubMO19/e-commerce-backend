@@ -26,7 +26,7 @@ public class ProductsService implements IProductsService {
     }
 
     @Override
-    public Products createNewProduct(Products product) {
+    public Products saveNewProduct(Products product) {
         return this.productsRepository.save(product);
     }
 
