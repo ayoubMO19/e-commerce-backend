@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -27,12 +28,15 @@ public class Cart {
     private List<CartItems> cartItemsList;
 
     // Empty Constructor
-    public Cart() {}
+    public Cart() {
+        this.cartItemsList = new ArrayList<>();
+    }
 
     // Constructor
     public Cart(Integer cartId, Users user) {
         this.cartId = cartId;
         this.user = user;
+        this.cartItemsList = new ArrayList<>();
     }
 
     @Override

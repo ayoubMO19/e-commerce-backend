@@ -2,6 +2,7 @@ package com.vexa.ecommerce.Users;
 
 import com.vexa.ecommerce.Users.DTOs.UserRequestDTO;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO requestDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO requestDTO) {
         Users newUser = UserMapper.toEntity(requestDTO);
         Users savedUser = usersService.saveNewUser(newUser);
 
@@ -44,7 +45,7 @@ public class UsersController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Integer id,
-            @RequestBody UserRequestDTO requestDTO
+            @Valid @RequestBody UserRequestDTO requestDTO
     ) {
         Users updatedUser = UserMapper.toEntity(requestDTO);
         updatedUser.setUserId(id);
