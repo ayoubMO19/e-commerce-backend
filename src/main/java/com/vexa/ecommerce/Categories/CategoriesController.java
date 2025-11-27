@@ -2,6 +2,7 @@ package com.vexa.ecommerce.Categories;
 
 import com.vexa.ecommerce.Categories.DTOs.CategoriesRequestDTO;
 import com.vexa.ecommerce.Categories.DTOs.CategoriesResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class CategoriesController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriesResponseDTO> createCategory(@RequestBody CategoriesRequestDTO requestDTO) {
+    public ResponseEntity<CategoriesResponseDTO> createCategory(@Valid @RequestBody CategoriesRequestDTO requestDTO) {
         Categories newCategory = CategoriesMapper.toEntity(requestDTO);
         Categories savedCategory = categoriesService.saveNewCategory(newCategory);
 
@@ -44,7 +45,7 @@ public class CategoriesController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoriesResponseDTO> updateCategory(
             @PathVariable Integer id,
-            @RequestBody CategoriesRequestDTO requestDTO
+            @Valid @RequestBody CategoriesRequestDTO requestDTO
     ) {
         Categories updatedCategory = CategoriesMapper.toEntity(requestDTO);
         updatedCategory.setCategoryId(id);

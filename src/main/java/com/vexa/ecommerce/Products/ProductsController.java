@@ -2,6 +2,7 @@ package com.vexa.ecommerce.Products;
 
 import com.vexa.ecommerce.Products.DTOs.ProductRequestDTO;
 import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO requestDTO) {
+    public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO requestDTO) {
         Products newProduct = ProductMapper.toEntity(requestDTO);
         Products savedProduct = productsService.saveNewProduct(newProduct);
 
@@ -44,7 +45,7 @@ public class ProductsController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(
             @PathVariable Integer id,
-            @RequestBody ProductRequestDTO requestDTO
+            @Valid @RequestBody ProductRequestDTO requestDTO
     ) {
         Products updatedProduct = ProductMapper.toEntity(requestDTO);
         updatedProduct.setProductId(id);
