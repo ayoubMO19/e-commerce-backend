@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartItemDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartAddRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartUpdateRequestDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/exceptions/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
