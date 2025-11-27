@@ -84,11 +84,7 @@ public class CartService {
         }
 
         Cart cart = getCartByUserId(userId);
-
-        CartItems item = cart.getCartItemsList().stream()
-                .filter(ci -> ci.getProduct().getProductId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("CartItem", productId));
+        CartItems item = findCartItem(cart, productId);
 
         // Si la cantidad es 0 -> eliminar producto
         if (quantity == 0) {
@@ -135,6 +131,13 @@ public class CartService {
                 .toList();
 
         return new CartResponseDTO(cart.getUser().getUserId(), items);
+    }
+
+    private CartItems findCartItem(Cart cart, Integer productId) {
+        return cart.getCartItemsList().stream()
+                .filter(i -> i.getProduct().getProductId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("CartItem", productId));
     }
 
 
