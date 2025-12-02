@@ -86,7 +86,7 @@ public class CartService {
         Cart cart = getCartByUserId(userId);
         CartItems item = findCartItem(cart, productId);
 
-        // Si la cantidad es 0 -> eliminar producto
+        // Si la cantidad es 0 elimina el producto de la lista
         if (quantity == 0) {
             cart.getCartItemsList().remove(item);
             return cartRepository.save(cart);

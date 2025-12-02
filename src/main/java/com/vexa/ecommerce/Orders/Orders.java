@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,9 @@ public class Orders {
 
     private String status;
 
+    @Column(name = "total_price")
+    private Double totalPrice;
+
     @Column(name = "shipping_address")
     private String shippingAddress;
 
@@ -34,19 +38,29 @@ public class Orders {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
     @JsonIgnore
     private List<OrderItems> orderItemsList;
 
     // Empty Constructor
-    public Orders() {}
+    public Orders() {
+        this.orderItemsList = new ArrayList<>();
+        this.totalPrice = 0.0;
+    }
 
     // Constructor
-    public Orders(String status, String shippingAddress, Date createdAt, Date updatedAt) {
+    public Orders(String status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt) {
         this.status = status;
+        this.totalPrice = totalPrice;
         this.shippingAddress = shippingAddress;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.orderItemsList = new ArrayList<>();
     }
 
 
@@ -55,6 +69,7 @@ public class Orders {
         return "Orders{" +
                 "orderId=" + orderId +
                 ", status='" + status + '\'' +
+                ", totalPrice='" + totalPrice + '\'' +
                 ", shippingAddress='" + shippingAddress + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
