@@ -94,7 +94,7 @@ Las relaciones están correctamente mapeadas con JPA usando:
 - @OneToMany  
 - @ManyToOne  
 - @JoinColumn  
-- @EmbeddedId (para OrderItemsId)
+- @EmbeddedId (para OrderItemsId y CartItemsId)
 
 ---
 
