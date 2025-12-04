@@ -1,7 +1,6 @@
-# VEXA E-Commerce Backend (Spring Boot + PostgreSQL)
+# VEXA E-Commerce Backend — Spring Boot + PostgreSQL
 
-Backend educativo desarrollado en **Java + Spring Boot** para aprender arquitectura real de un sistema E-Commerce:  
-gestión de usuarios, productos, categorías, carrito, pedidos y flujo completo del checkout.
+Proyecto backend de e-commerce desarrollado en Spring Boot con arquitectura modular, relaciones JPA bien definidas y flujo completo de carrito → pedido. Incluye validaciones, stock handling automático y estructura lista para añadir seguridad con JWT.
 
 El proyecto crece semana a semana siguiendo una planificación enfocada en buenas prácticas,  
 arquitectura limpia y preparación para entorno profesional.
@@ -12,6 +11,7 @@ arquitectura limpia y preparación para entorno profesional.
 
 - **Java 17+**
 - **Spring Boot 3 (Web, JPA, Validation)**
+- **Relaciones JPA avanzadas (OneToMany, ManyToOne, EmbeddedId)**
 - **PostgreSQL**
 - **Hibernate**
 - **Maven**
@@ -140,19 +140,19 @@ mvn spring-boot:run
 La documentación completa está en Notion con detalles de cada endpoint.
 - [Notion - Endpoints](https://aged-stag-a8e.notion.site/Endpoints-2bee038a025c80629569c161c6614f59?source=copy_link)
 
-### Users
+### Users (API REST)
 ```
 POST /users
 GET  /users/{id}
 ```
 
-### Categories
+### Categories (API REST)
 ```
 POST /categories
 GET  /categories
 ```
 
-### Products
+### Products (API REST)
 ```
 POST /products
 GET  /products
@@ -160,7 +160,7 @@ GET  /products/{id}
 DELETE /products/{id}
 ```
 
-### Cart
+### Cart (API REST)
 ```
 POST /cart/{userId}
 GET  /cart/{userId}
@@ -168,7 +168,7 @@ DELETE /cart/item/{cartItemId}
 DELETE /cart/clear/{userId}
 ```
 
-### Orders
+### Orders (API REST)
 ```
 POST /orders/{userId}
 GET  /orders/user/{userId}
