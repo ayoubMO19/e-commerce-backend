@@ -35,12 +35,18 @@ public class OrdersService implements IOrdersService {
     @Override
     @Transactional
     public Orders createOrderFromCart(Integer userId, OrdersRequestDTO dto) {
-        // Obtener el Cart y el User
-        Cart cart = cartService.getCartByUserId(userId);
+        // Obtener el User
         Users user = usersService.getUserById(userId);
 
+        // Obtener el Cart y comprobar que no esté vacío
+        Cart cart = cartService.getCartByUserId(userId);
+        if (!cart.getUser().getUserId().equals(userId)) {
+            throw new BadRequestException("Cart does not belong to user");
+        }
+
+        // Comprobar que el Cart tiene items
         if (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty()) {
-            throw new BadRequestException("Cart is empty");
+            throw new BadRequestException("Your cart is empty, cannot create an order.");
         }
 
         // Crear Order
@@ -85,6 +91,10 @@ public class OrdersService implements IOrdersService {
                 .stream()
                 .mapToDouble(ci -> ci.getProduct().getPrice() * ci.getQuantity())
                 .sum();
+
+        if (totalPrice < 0) {
+            throw new BadRequestException("Total price cannot be negative.");
+        }
 
         savedOrder.setTotalPrice(totalPrice);
 

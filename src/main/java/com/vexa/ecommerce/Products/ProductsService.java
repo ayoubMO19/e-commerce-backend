@@ -27,16 +27,33 @@ public class ProductsService implements IProductsService {
 
     @Override
     public Products saveNewProduct(Products product) {
+        if (productsRepository.existsByName(product.getName())) {
+            throw new RuntimeException("Product name already exists.");
+        }
         return this.productsRepository.save(product);
     }
 
     @Override
     public Products updateProduct(Products product) {
-        this.productsRepository.findById(product.getProductId())
+        // Comprobar si Existe
+        Products existing = this.productsRepository.findById(product.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product", product.getProductId()));
 
-        return this.productsRepository.save(product);
+        // Comprobar Nombre duplicado (excepto si es el mismo producto)
+        if (productsRepository.existsByNameAndProductIdNot(product.getName(), product.getProductId())) {
+            throw new RuntimeException("Product name already exists.");
+        }
+
+        // Actualizar campos
+        existing.setName(product.getName());
+        existing.setPrice(product.getPrice());
+        existing.setStock(product.getStock());
+        existing.setDescription(product.getDescription());
+        existing.setCategory(product.getCategory());
+
+        return this.productsRepository.save(existing);
     }
+
 
     @Override
     public void deleteProductById(Integer id) {

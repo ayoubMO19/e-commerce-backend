@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Products.DTOs;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class ProductRequestDTO {
 
     private String urlImage;
 
+    @Max(value = 9999)
     private Integer stock;
 
     private Integer categoryId;
