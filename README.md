@@ -103,14 +103,14 @@ Las relaciones están correctamente mapeadas con JPA usando:
 ### 1. Configurar PostgreSQL
 Crear base de datos:
 ```sql
-CREATE DATABASE vexa_ecommerce;
+CREATE DATABASE vexadb;
 ```
 
 ### 2. Configurar `application.properties`
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/vexa_ecommerce
-spring.datasource.username=postgres
-spring.datasource.password=1234
+spring.datasource.url=jdbc:postgresql://localhost:5432/vexadb
+spring.datasource.username=admin
+spring.datasource.password=vexa
 spring.jpa.hibernate.ddl-auto=update
 ```
 
