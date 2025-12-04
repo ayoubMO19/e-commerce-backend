@@ -128,7 +128,7 @@ mvn spring-boot:run
 ## 📬 Endpoints (resumen)
 
 La documentación completa está en Notion con detalles de cada endpoint.
-- Notion - Endpoints Doc[https://aged-stag-a8e.notion.site/Endpoints-2bee038a025c80629569c161c6614f59?source=copy_link]
+- [Notion - Endpoints Doc](https://aged-stag-a8e.notion.site/Endpoints-2bee038a025c80629569c161c6614f59?source=copy_link)
 
 ### Users
 ```
