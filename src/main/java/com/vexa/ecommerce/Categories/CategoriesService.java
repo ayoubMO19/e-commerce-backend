@@ -27,6 +27,10 @@ public class CategoriesService implements ICategoriesService {
 
     @Override
     public Categories saveNewCategory(Categories category) {
+        if (categoriesRepository.existsByName(category.getName())) {
+            throw new RuntimeException("Category name already exists.");
+        }
+
         return this.categoriesRepository.save(category);
     }
 

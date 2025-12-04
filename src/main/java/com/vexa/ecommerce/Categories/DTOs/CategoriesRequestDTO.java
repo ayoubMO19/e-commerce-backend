@@ -1,11 +1,11 @@
 package com.vexa.ecommerce.Categories.DTOs;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class CategoriesRequestDTO {
 
-    @NotNull
+    @NotBlank
     private String name;
 }

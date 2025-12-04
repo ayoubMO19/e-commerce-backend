@@ -1,22 +1,23 @@
 package com.vexa.ecommerce.Users.DTOs;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class UserRequestDTO {
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull
+    @NotBlank
     private String surname;
 
     @Email
+    @NotBlank
     private String email;
 
-    @NotNull
+    @NotBlank
     private String password;
 
     private Boolean hasWelcomeDiscount;

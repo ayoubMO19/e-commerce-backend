@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrdersRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/IOrdersService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrderItemResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrderResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrderMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartItemsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartItemsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrderItemsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrderItemsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/Orders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/DTOs/CategoriesRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/DTOs/CategoriesRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrdersRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrdersRequestDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/DTOs/ProductRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/DTOs/ProductRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/DTOs/UserRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/DTOs/UserRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
