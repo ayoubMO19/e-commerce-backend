@@ -106,12 +106,22 @@ Crear base de datos:
 CREATE DATABASE vexadb;
 ```
 
-### 2. Configurar `application.properties`
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/vexadb
-spring.datasource.username=admin
-spring.datasource.password=vexa
-spring.jpa.hibernate.ddl-auto=update
+### 2. Configurar `application.yaml`
+```
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/vexadb
+    username: admin
+    password: vexa
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8082
 ```
 
 ### 3. Ejecutar Spring Boot
