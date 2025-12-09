@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.exceptions;
+package com.vexa.ecommerce.Exceptions;
 
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {

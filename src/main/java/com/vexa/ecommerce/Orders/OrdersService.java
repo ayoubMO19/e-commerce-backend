@@ -8,8 +8,8 @@ import com.vexa.ecommerce.Products.Products;
 import com.vexa.ecommerce.Products.ProductsService;
 import com.vexa.ecommerce.Users.Users;
 import com.vexa.ecommerce.Users.UsersService;
-import com.vexa.ecommerce.exceptions.BadRequestException;
-import com.vexa.ecommerce.exceptions.ResourceNotFoundException;
+import com.vexa.ecommerce.Exceptions.BadRequestException;
+import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

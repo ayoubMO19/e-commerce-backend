@@ -1,6 +1,7 @@
 package com.vexa.ecommerce.Users;
 
-import com.vexa.ecommerce.exceptions.ResourceNotFoundException;
+import com.vexa.ecommerce.Exceptions.BadRequestException;
+import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class UsersService implements IUsersService {
 
     @Override
     public Users saveNewUser(Users user) {
+        if (usersRepository.existsByEmail(user.getEmail())) {
+            throw new BadRequestException("Email is already registered.");
+        }
+
         return this.usersRepository.save(user);
     }
 
@@ -33,6 +38,10 @@ public class UsersService implements IUsersService {
     public Users updateUser(Users user) {
         this.usersRepository.findById(user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", user.getUserId()));
+
+        if (usersRepository.existsByEmailAndUserIdNot(user.getEmail(), user.getUserId())) {
+            throw new BadRequestException("Email is already registered.");
+        }
 
         return this.usersRepository.save(user);
     }

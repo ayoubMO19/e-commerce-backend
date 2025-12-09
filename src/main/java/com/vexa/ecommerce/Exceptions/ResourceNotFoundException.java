@@ -1,4 +1,4 @@
-package com.vexa.ecommerce.exceptions;
+package com.vexa.ecommerce.Exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String type, Integer id) {

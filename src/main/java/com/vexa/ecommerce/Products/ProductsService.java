@@ -1,6 +1,6 @@
 package com.vexa.ecommerce.Products;
 
-import com.vexa.ecommerce.exceptions.ResourceNotFoundException;
+import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

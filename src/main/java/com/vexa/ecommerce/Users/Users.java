@@ -8,28 +8,42 @@ import com.vexa.ecommerce.Orders.Orders;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements UserDetails {
     // Variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(nullable = false, length = 50)
     private String name;
+
+    @Column(nullable = false, length = 50)
     private String surname;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(name = "has_welcome_discount")
-    private Boolean hasWelcomeDiscount;
+    private Boolean hasWelcomeDiscount = false;
 
+    @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role = Role.USER;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -47,12 +61,18 @@ public class Users {
     public Users() {}
 
     // Constructor
-    public Users(String name, String surname, String email, Boolean hasWelcomeDiscount, String password) {
+    public Users(String name, String surname, String email, Boolean hasWelcomeDiscount, String password, Role role) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.hasWelcomeDiscount = hasWelcomeDiscount;
         this.password = password;
+        this.role = role;
+    }
+
+    // constructor SIN role (para compatibilidad):
+    public Users(String name, String surname, String email, Boolean hasWelcomeDiscount, String password) {
+        this(name, surname, email, hasWelcomeDiscount, password, Role.USER);
     }
 
     @Override
@@ -63,7 +83,38 @@ public class Users {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", hasWelcomeDiscount=" + hasWelcomeDiscount +
-                ", password='" + password + '\'' +
+                ", role=" + role +
                 '}';
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

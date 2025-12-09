@@ -4,6 +4,7 @@ import com.vexa.ecommerce.Categories.DTOs.CategoriesRequestDTO;
 import com.vexa.ecommerce.Categories.DTOs.CategoriesResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class CategoriesController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoriesResponseDTO> createCategory(@Valid @RequestBody CategoriesRequestDTO requestDTO) {
         Categories newCategory = CategoriesMapper.toEntity(requestDTO);
         Categories savedCategory = categoriesService.saveNewCategory(newCategory);
@@ -43,6 +45,7 @@ public class CategoriesController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoriesResponseDTO> updateCategory(
             @PathVariable Integer id,
             @Valid @RequestBody CategoriesRequestDTO requestDTO
@@ -55,6 +58,7 @@ public class CategoriesController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
         categoriesService.deleteCategoryById(id);
         return ResponseEntity.noContent().build();
