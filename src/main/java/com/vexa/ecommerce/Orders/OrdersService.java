@@ -108,6 +108,13 @@ public class OrdersService implements IOrdersService {
     }
 
     @Override
+    public Orders getOrderByOrderId(Integer orderId) {
+        return ordersRepository.findById(orderId).orElseThrow(() -> {
+            return new ResourceNotFoundException("Order", orderId);
+        });
+    }
+
+    @Override
     public List<Orders> getOrdersByUserId(Integer userId) {
         Optional<List<Orders>> optionalListOrders = ordersRepository.findByUser_UserId(userId);
 

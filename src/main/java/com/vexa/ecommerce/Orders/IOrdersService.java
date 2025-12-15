@@ -7,4 +7,5 @@ public interface IOrdersService {
 
     Orders createOrderFromCart(Integer userId, OrdersRequestDTO dto);
     List<Orders> getOrdersByUserId(Integer userId);
+    Orders getOrderByOrderId(Integer orderId);
 }
