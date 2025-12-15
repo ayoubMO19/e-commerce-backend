@@ -45,6 +45,9 @@ public class Users implements UserDetails {
     @Column(name = "role", nullable = false)
     private Role role = Role.USER;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = false;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comments> commentsList;
@@ -68,6 +71,7 @@ public class Users implements UserDetails {
         this.hasWelcomeDiscount = hasWelcomeDiscount;
         this.password = password;
         this.role = role;
+        this.enabled = false;
     }
 
     // constructor SIN role (para compatibilidad):
@@ -114,7 +118,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
 }

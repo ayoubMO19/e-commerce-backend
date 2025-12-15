@@ -51,7 +51,7 @@ public class OrdersService implements IOrdersService {
 
         // Crear Order
         Orders order = new Orders();
-        order.setStatus("pending");
+        order.setStatus(OrdersStatus.pending);
         order.setShippingAddress(dto.getShippingAddress());
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());

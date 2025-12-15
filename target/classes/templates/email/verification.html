@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verifica tu cuenta</title>
+</head>
+<body>
+<h1>¡Bienvenido a Vexa E-commerce!</h1>
+<p>Por favor verifica tu cuenta haciendo click en el siguiente enlace:</p>
+<a th:href="${verificationUrl}"
+   style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+    Verificar mi cuenta
+</a>
+<p>O copia y pega esta URL en tu navegador:</p>
+<code th:text="${verificationUrl}"></code>
+<p>Este enlace expirará en 24 horas.</p>
+</body>
+</html>

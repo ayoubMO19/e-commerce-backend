@@ -7,9 +7,6 @@ import lombok.Data;
 @Data
 public class OrdersRequestDTO {
 
-    @NotNull
-    private Integer userId;
-
     @NotNull(message = "Shipping address cannot be null")
     @Size(min = 5, max = 200, message = "Shipping address must be between 5 and 200 characters")
     private String shippingAddress;

@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -72,6 +73,21 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Object> handleResponseStatusException(
+            ResponseStatusException ex, WebRequest request) {
+
+        // Usar el mensaje y status code de la excepción
+        ErrorResponse body = new ErrorResponse(
+                ex.getReason(),  // Esto es "Por favor verifica tu email antes de iniciar sesión"
+                ex.getStatusCode().value(),
+                "AuthenticationException",  // Puedes personalizar el tipo
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(body, ex.getStatusCode());
     }
 
 }

@@ -1,6 +1,5 @@
 package com.vexa.ecommerce.Products;
 
-import com.vexa.ecommerce.Categories.Categories;
 import com.vexa.ecommerce.Categories.CategoriesRepository;
 import com.vexa.ecommerce.Products.DTOs.ProductRequestDTO;
 import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;

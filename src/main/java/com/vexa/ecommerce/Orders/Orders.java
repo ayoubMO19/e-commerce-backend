@@ -20,7 +20,8 @@ public class Orders {
     @Column(name = "order_id")
     private Integer orderId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrdersStatus status;
 
     @Column(name = "total_price")
     private Double totalPrice;
@@ -54,7 +55,7 @@ public class Orders {
     }
 
     // Constructor
-    public Orders(String status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt) {
+    public Orders(OrdersStatus status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt) {
         this.status = status;
         this.totalPrice = totalPrice;
         this.shippingAddress = shippingAddress;
