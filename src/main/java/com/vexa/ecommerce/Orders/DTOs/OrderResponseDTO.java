@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Orders.DTOs;
 
+import com.vexa.ecommerce.Orders.OrdersStatus;
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 @Data
 public class OrderResponseDTO {
     private Integer orderId;
-    private String status;
+    private OrdersStatus status;
     private Double totalPrice;
     private String shippingAddress;
     private Date createdAt;

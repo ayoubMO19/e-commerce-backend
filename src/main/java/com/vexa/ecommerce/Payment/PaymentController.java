@@ -1,5 +1,7 @@
 package com.vexa.ecommerce.Payment;
 import com.vexa.ecommerce.Orders.Orders;
+import com.vexa.ecommerce.Payment.DTOs.PaymentIntentRequestDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,19 +16,18 @@ public class PaymentController {
     }
 
     @PostMapping("/create-intent")
-    public ResponseEntity<String> createIntent(@RequestBody Integer orderId) { // Viene el order para saber de qué order crear el intent
-        String secretClientKey = paymentService.createIntent(orderId);
+    public ResponseEntity<String> createIntent(@Valid @RequestBody PaymentIntentRequestDTO orderDetails) {
+        String secretClientKey = paymentService.createIntent(orderDetails.orderId());
         return ResponseEntity.ok(secretClientKey);
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<Void> chekPayment(
+    public ResponseEntity<?> chekPayment(
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String signature
     ) {
-        paymentService.handleWebhook(payload, signature);
         // Si esta todo bien se retorna 200
-        return ResponseEntity.noContent().build();
+        return paymentService.handleWebhook(payload, signature);
     }
 
 }

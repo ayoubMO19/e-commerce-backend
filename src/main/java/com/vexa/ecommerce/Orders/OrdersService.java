@@ -124,4 +124,15 @@ public class OrdersService implements IOrdersService {
 
         throw new ResourceNotFoundException("Orders for user", userId);
     }
+
+    @Override
+    public Orders updateOrder(Orders order) {
+        Optional<Orders> optionalOrder = ordersRepository.findById(order.getOrderId());
+
+        if (optionalOrder.isPresent()) {
+            return ordersRepository.save(order);
+        }
+
+        throw new ResourceNotFoundException("Order", order.getOrderId());
+    }
 }
