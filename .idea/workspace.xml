@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change beforePath="$PROJECT_DIR$/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
