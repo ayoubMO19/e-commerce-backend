@@ -1,5 +1,5 @@
 package com.vexa.ecommerce.Payment;
-import com.vexa.ecommerce.Orders.Orders;
+
 import com.vexa.ecommerce.Payment.DTOs.PaymentIntentRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class PaymentController {
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String signature
     ) {
-        // Si esta todo bien se retorna 200
+        // Return result code
         return paymentService.handleWebhook(payload, signature);
     }
 

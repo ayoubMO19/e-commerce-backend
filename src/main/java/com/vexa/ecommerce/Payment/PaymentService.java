@@ -12,6 +12,7 @@ import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Orders.Orders;
 import com.vexa.ecommerce.Orders.OrdersService;
 import com.vexa.ecommerce.Orders.OrdersStatus;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class PaymentService {
         this.ordersService = ordersService;
     }
 
+    @PostConstruct
+    public void init() {
+        Stripe.apiKey = apiKey;
+    }
+
     public String createIntent(Integer orderId) {
         // Obtener el order mediante el OrderId
         Orders order = ordersService.getOrderByOrderId(orderId);
@@ -45,7 +51,6 @@ public class PaymentService {
         // Variables necesarias para crear PaymentIntent
         long amount = new BigDecimal(order.getTotalPrice()).multiply(new BigDecimal(100)).longValueExact();
         String currency = "eur";
-        Stripe.apiKey = apiKey;
 
         // Creamos el PaymentIntent utilizando los params
         try {
@@ -71,45 +76,50 @@ public class PaymentService {
     }
 
     public ResponseEntity<?> handleWebhook(String payload, String signature) {
-        // Comprobar Firma signature
         try{
+            // Comprobar Firma signature
             Event event = Webhook.constructEvent(payload, signature, webhookSecret);
+
+            // Comprobamos si el payment intent es de tipo succeeded, en caso de no serlo, terminamos el proceso
+            if (!event.getType().equals("payment_intent.succeeded")) {
+                return ResponseEntity.ok().build();
+            }
 
             // Deserialize the nested object inside the event
             EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
             StripeObject stripeObject = null;
-            if (dataObjectDeserializer.getObject().isPresent()) {
-                stripeObject = dataObjectDeserializer.getObject().get();
-            } else {
-                // return de 200
-                return ResponseEntity.noContent().build();
+            if (dataObjectDeserializer.getObject().isEmpty()) {
+                System.err.println(
+                        "[STRIPE WEBHOOK] Failed to deserialize event. " +
+                                "eventId=" + event.getId() +
+                                ", type=" + event.getType() +
+                                ", apiVersion=" + event.getApiVersion()
+                );
+
+                // Return 200
+                return ResponseEntity.ok().build();
             }
 
-            // Obtener evento
-            switch (event.getType()) {
-                case "payment_intent.payment_failed":
-                    // termina el proceso dejando el order en pending
-                    break;
-                case "payment_intent.succeeded":
-                    // Obtener PaymentIntent
-                    PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
-                    // Obtener orderId de los metadatos de PaymentIntent
-                    Integer orderId = Integer.parseInt(paymentIntent.getMetadata().get("orderId"));
-                    // Buscar el order por orderId
-                    Orders order = ordersService.getOrderByOrderId(orderId);
-                    if (order.getStatus() == OrdersStatus.pending) { // Comprobamos si order existe y su estado
-                        // Cambiamos estado de order a PAID
-                        order.setStatus(OrdersStatus.paid);
-                        ordersService.updateOrder(order);
-                    }
-                    break;
+            stripeObject = dataObjectDeserializer.getObject().get();
+
+            // Obtener PaymentIntent
+            PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
+            // Obtener orderId de los metadatos de PaymentIntent
+            Integer orderId = Integer.parseInt(paymentIntent.getMetadata().get("orderId"));
+            // Buscar el order por orderId
+            Orders order = ordersService.getOrderByOrderId(orderId);
+            if (order.getStatus() == OrdersStatus.pending) { // Comprobamos si order existe y su estado
+                // Cambiamos estado de order a PAID
+                order.setStatus(OrdersStatus.paid);
+                ordersService.updateOrder(order);
             }
+
         } catch (SignatureVerificationException e) {
             System.err.println("Webhook signature verification failed: " + e.getMessage());
             System.err.println("Header: " + e.getSigHeader());
             return ResponseEntity.badRequest().build();
         }
         // retornamos 200 ok
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }

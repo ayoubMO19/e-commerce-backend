@@ -22,26 +22,11 @@ public class ProductsController {
         this.categoriesRepository = categoriesRepository;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
-        List<Products> products = productsService.getAllProducts();
-        List<ProductResponseDTO> dtoList = products.stream()
-                .map(ProductMapper::toDTO)
-                .toList();
-
-        return ResponseEntity.ok(dtoList);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer id) {
-        Products product = productsService.getProductById(id);
-        return ResponseEntity.ok(ProductMapper.toDTO((product)));
-    }
-
+    // ENDPOINTS PARA ROL ADMIN
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO requestDTO) {
-        // Comprobar si al categoría existe
+        // Comprobar si la categoría existe
         categoriesRepository.findById(requestDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
@@ -57,7 +42,7 @@ public class ProductsController {
             @PathVariable Integer id,
             @Valid @RequestBody ProductRequestDTO requestDTO
     ) {
-        // Comprobar si al categoría existe
+        // Comprobar si la categoría existe
         categoriesRepository.findById(requestDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
@@ -73,5 +58,23 @@ public class ProductsController {
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
         productsService.deleteProductById(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    // ENDPOINTS PARA ROL USER
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+        List<Products> products = productsService.getAllProducts();
+        List<ProductResponseDTO> dtoList = products.stream()
+                .map(ProductMapper::toDTO)
+                .toList();
+
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer id) {
+        Products product = productsService.getProductById(id);
+        return ResponseEntity.ok(ProductMapper.toDTO((product)));
     }
 }

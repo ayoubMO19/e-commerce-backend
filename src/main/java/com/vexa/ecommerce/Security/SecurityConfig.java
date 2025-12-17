@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos
                         .requestMatchers("/api/auth/**").permitAll() // autoriza requests a todos los endpoints que hay en api/auth/
+                        .requestMatchers("/api/payments/webhook").permitAll()
 
                         // Endpoints que requieren autenticación
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}").authenticated() // se configura autenticación necesaria para el endpont get /api/users/{id} para obtener user

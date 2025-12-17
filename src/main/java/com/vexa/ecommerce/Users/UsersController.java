@@ -28,6 +28,7 @@ public class UsersController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ADMIN ENDPOINTS
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
@@ -39,22 +40,8 @@ public class UsersController {
         return ResponseEntity.ok(dtoList);
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserResponseDTO> getMyProfile() {
-        String userEmail = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-
-        Users user = usersRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Usuario no encontrado"
-                ));
-
-        return ResponseEntity.ok(UserMapper.toDTO(user));
-    }
-
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id) {
         String currentUserEmail = SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -73,6 +60,27 @@ public class UsersController {
         }
 
         Users user = usersService.getUserById(id);
+        return ResponseEntity.ok(UserMapper.toDTO(user));
+    }
+
+    // TODO: Crear endpoint de deleteUserById
+
+    // TODO: Crear endpoint de updateUserById
+
+
+    // CLIENTS ENDPOINTS
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getMyProfile() {
+        String userEmail = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Users user = usersRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Usuario no encontrado"
+                ));
+
         return ResponseEntity.ok(UserMapper.toDTO(user));
     }
 
@@ -97,4 +105,7 @@ public class UsersController {
         Users savedUser = usersService.updateUser(updatedUser);
         return ResponseEntity.ok(UserMapper.toDTO(savedUser));
     }
+
+    // TODO: Crear endpoint de deleteMyProfile
+
 }

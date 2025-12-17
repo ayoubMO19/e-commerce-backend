@@ -3,7 +3,6 @@ package com.vexa.ecommerce.Cart.DTOs;
 import lombok.Data;
 
 @Data
-public class CartUpdateRequestDTO {
+public class CartDeleteProductRequestDTO {
     private Integer productId;
-    private Integer quantity;
 }

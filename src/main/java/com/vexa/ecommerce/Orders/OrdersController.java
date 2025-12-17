@@ -40,5 +40,7 @@ public class OrdersController {
 
         return ResponseEntity.ok(orderResponseDTOList);
     }
+
+    // TODO: Obtener los orders de un user específico (SOLO PARA ADMINS)
 }
 
