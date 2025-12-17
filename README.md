@@ -95,6 +95,9 @@ Implementación completa de pagos reales con Stripe:
 - Estados:
   - PENDING
   - PAID
+  - SHIPPED
+  - DELIVERED
+  - CANCELLED
 - Historial de pedidos por usuario
 
 ### ✔ Payments
