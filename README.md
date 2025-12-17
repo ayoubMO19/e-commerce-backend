@@ -1,200 +1,250 @@
-# VEXA E-Commerce Backend — Spring Boot + PostgreSQL
+# VEXA E-Commerce Backend — Spring Boot · JWT · Stripe · PostgreSQL
 
-Proyecto backend de e-commerce desarrollado en Spring Boot con arquitectura modular, relaciones JPA bien definidas y flujo completo de carrito → pedido. Incluye validaciones, stock handling automático y estructura lista para añadir seguridad con JWT.
+Backend de e-commerce desarrollado en **Spring Boot** con arquitectura modular, seguridad completa con **JWT + roles**, verificación por email, recuperación de contraseña y **pagos reales integrados con Stripe** (PaymentIntent + Webhooks).
 
-El proyecto crece semana a semana siguiendo una planificación enfocada en buenas prácticas,  
-arquitectura limpia y preparación para entorno profesional.
+El proyecto sigue una evolución progresiva orientada a **buenas prácticas**, **seguridad real**, **flujo end-to-end** y preparación para entorno profesional.
 
 ---
 
 ## 🚀 Tecnologías
 
-- **Java 17+**
-- **Spring Boot 3 (Web, JPA, Validation)**
-- **Relaciones JPA avanzadas (OneToMany, ManyToOne, EmbeddedId)**
+- **Java 17**
+- **Spring Boot 3**
+  - Web
+  - Spring Security
+  - JPA / Hibernate
+  - Validation
+- **JWT (Auth stateless)**
+- **Stripe API (PaymentIntent + Webhooks)**
 - **PostgreSQL**
-- **Hibernate**
 - **Maven**
 - **Lombok**
 - **Postman (testing manual)**
-
-*(Autenticación, seguridad y JWT se implementarán la semana siguiente)*
+- **Stripe CLI (testing webhooks en local)**
 
 ---
 
-## 📌 Módulos implementados
+## 🔐 Autenticación y Seguridad
+
+- Registro de usuario
+- Login con JWT
+- Roles:
+  - USER
+  - ADMIN
+- Endpoints protegidos por rol
+- Acceso a recursos **siempre desde el JWT** (nunca desde el request)
+- Verificación de email
+- Reset de contraseña por email
+- Password hashing con **BCrypt**
+- Protección total frente a acceso a recursos de otros usuarios
+
+---
+
+## 💳 Pagos con Stripe (End-to-End)
+
+Implementación completa de pagos reales con Stripe:
+
+- Creación de PaymentIntent desde el backend
+- Asociación del orderId en metadata
+- Confirmación del pago desde frontend (Stripe Elements)
+- Recepción de eventos mediante **Webhooks**
+- Verificación de firma del webhook
+- Actualización segura del estado del pedido (PENDING → PAID)
+- Manejo idempotente (múltiples eventos, una sola actualización)
+
+> El backend **no confía nunca** en el frontend para marcar pedidos como pagados.
+
+---
+
+## 📦 Módulos implementados
 
 ### ✔ Users
-- Crear usuario
-- Obtener usuario por ID
-- Validación básica de datos (email, vacío, etc.)
+- Registro
+- Login
+- Perfil /me
+- Roles
+- Verificación de email
+- Reset de contraseña
 
 ### ✔ Categories
-- Crear categorías
+- Crear categorías (ADMIN)
 - Listar categorías
 
 ### ✔ Products
-- CRUD básico
+- CRUD (ADMIN)
 - Relación con Category
 - Validaciones:
   - precio > 0
   - stock ≥ 0
 
 ### ✔ Cart
-- Carrito por usuario (1 carrito por user)
-- Añadir productos al carrito
+- 1 carrito por usuario
+- Añadir productos
 - Actualizar cantidades
 - Eliminar productos
-- Vaciar carrito
+- Obtener carrito
+- **UserId siempre obtenido del JWT**
 
 ### ✔ Orders
-- Crear un pedido desde el carrito
-- Guardar cada item del pedido con:
+- Crear pedido desde carrito
+- Copia de items:
   - cantidad
   - precio pagado
-  - reducción de stock automática
+- Reducción de stock automática
+- totalPrice calculado automáticamente
+- Estados:
+  - PENDING
+  - PAID
 - Historial de pedidos por usuario
-- TotalPrice automático
+
+### ✔ Payments
+- Crear PaymentIntent
+- Webhook seguro (/api/payments/webhook)
+- Validación de firma Stripe
+- Actualización del estado del pedido solo si:
+  - Evento = payment_intent.succeeded
+  - Order está en PENDING
 
 ---
 
-## 📦 Flujo del carrito → pedido
+## 🔄 Flujo completo de compra
 
-1️⃣ El usuario añade productos al carrito  
-2️⃣ Consulta su carrito cuando quiera (GET)  
-3️⃣ Hace checkout llamando a:  
-```
-POST /orders/{userId}
-```
-4️⃣ Se genera el pedido:
-- Items se copian desde el carrito  
-- Stock se descuenta  
-- totalPrice se calcula  
-- Carrito se vacía  
-
-5️⃣ El usuario puede ver su historial:  
-```
-GET /orders/user/{userId}
-```
+1. Usuario autenticado añade productos al carrito  
+2. Consulta su carrito  
+3. Crea pedido (order queda en PENDING)  
+4. Backend crea PaymentIntent (Stripe)  
+5. Frontend confirma pago con Stripe Elements  
+6. Stripe envía webhook al backend  
+7. Backend valida firma y evento  
+8. Pedido pasa a PAID  
 
 ---
 
 ## 🗄️ Base de Datos
 
-### Tablas principales:
-- users  
-- categories  
-- products  
-- cart  
-- cart_items  
-- orders  
+### Tablas principales
+- users
+- roles
+- categories
+- products
+- cart
+- cart_items
+- orders
 - order_items
 
-Las relaciones están correctamente mapeadas con JPA usando:
-- @OneToMany  
-- @ManyToOne  
-- @JoinColumn  
-- @EmbeddedId (para OrderItemsId y CartItemsId)
+Relaciones JPA:
+- @OneToMany
+- @ManyToOne
+- @JoinColumn
+- @EmbeddedId (CartItems / OrderItems)
 
 ---
 
 ## ▶️ Cómo ejecutar el proyecto
 
-### 1. Configurar PostgreSQL
-Crear base de datos:
-```sql
-CREATE DATABASE vexadb;
-```
+### 1️⃣ Crear base de datos
 
-### 2. Configurar `application.yaml`
-```
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5433/vexadb
-    username: admin
-    password: vexa
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    CREATE DATABASE vexadb;
 
-server:
-  port: 8082
-```
+### 2️⃣ Configurar application.yaml
 
-### 3. Ejecutar Spring Boot
-Desde IntelliJ:
-- Botón "Run"
+    spring:
+      datasource:
+        url: jdbc:postgresql://localhost:5432/vexadb
+        username: admin
+        password: vexa
+      jpa:
+        hibernate:
+          ddl-auto: update
 
-O por terminal:
-```bash
-mvn spring-boot:run
-```
+    server:
+      port: 8082
+
+    jwt:
+      secret: your_jwt_secret
+
+    stripe:
+      secret-key: sk_test_...
+      webhook-secret: whsec_...
+
+### 3️⃣ Ejecutar backend
+
+    mvn spring-boot:run
+
+---
+
+## 🧪 Testing
+
+Testing manual completo con Postman.
+
+Stripe CLI para webhooks:
+
+    stripe listen --forward-to localhost:8082/api/payments/webhook
+
+Tarjeta de prueba Stripe:
+
+- 4242 4242 4242 4242  
+- Cualquier fecha futura  
+- CVC cualquiera  
 
 ---
 
 ## 📬 Endpoints (resumen)
 
-La documentación completa está en Notion con detalles de cada endpoint.
-- [Notion - Endpoints](https://aged-stag-a8e.notion.site/Endpoints-2bee038a025c80629569c161c6614f59?source=copy_link)
+Todos los endpoints sensibles requieren JWT.
 
-### Users (API REST)
-```
-POST /users
-GET  /users/{id}
-```
+### Auth
+- POST /auth/register
+- POST /auth/login
+- GET  /auth/me
+- POST /auth/verify-email
+- POST /auth/reset-password
 
-### Categories (API REST)
-```
-POST /categories
-GET  /categories
-```
+### Cart
+- GET    /api/cart
+- POST   /api/cart/add
+- PUT    /api/cart/update
+- DELETE /api/cart/delete
 
-### Products (API REST)
-```
-POST /products
-GET  /products
-GET  /products/{id}
-DELETE /products/{id}
-```
+### Orders
+- POST /api/orders
+- GET  /api/orders/me
 
-### Cart (API REST)
-```
-POST /cart/{userId}
-GET  /cart/{userId}
-DELETE /cart/item/{cartItemId}
-DELETE /cart/clear/{userId}
-```
-
-### Orders (API REST)
-```
-POST /orders/{userId}
-GET  /orders/user/{userId}
-```
+### Payments
+- POST /api/payments/create-intent
+- POST /api/payments/webhook
 
 ---
 
-## 📅 Roadmap
+## 🧭 Roadmap
 
-### ✔ Semana actual (completada)
-- Orders
-- Documentación
-- Testing completo en Postman
-- Flujo del carrito a pedido
+✔ Auth + JWT + Roles  
+✔ Email verification  
+✔ Password reset  
+✔ Stripe payments end-to-end  
+✔ Seguridad real en endpoints  
+✔ Webhooks seguros  
+✔ Refactor de userId desde JWT  
 
-### ⏳ Semana siguiente (planificada)
-- Autenticación (Register + Login)
-- JWT completo
-- Roles (USER / ADMIN)
-- Seguridad en endpoints
-- Password hashing (BCrypt)
-- Validaciones avanzadas
-- Documentación final de Auth
+### ⏳ Próximos pasos
+
+- Tests unitarios (JUnit)
+- Frontend (React)
+- CI/CD
+- Docker
+- Caching
+- Logs estructurados
 
 ---
 
 ## 🧑‍💻 Autor
-**Ayoub Morghi — Backend Developer (Java & Spring Boot)**  
-Proyecto creado con intención de aprendizaje real, buenas prácticas y preparación profesional.
+
+**Ayoub Morghi**  
+Backend Developer · Java · Spring Boot  
+
+Proyecto desarrollado con enfoque en:
+
+- arquitectura limpia  
+- seguridad real  
+- buenas prácticas  
+- preparación profesional
