@@ -16,5 +16,7 @@ public record UserRequestDTO(
         @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
         String password,
 
-        Boolean hasWelcomeDiscount
+        Boolean hasWelcomeDiscount,
+
+        Integer userId // Solo se usa en endpoints de admin
 ) {}

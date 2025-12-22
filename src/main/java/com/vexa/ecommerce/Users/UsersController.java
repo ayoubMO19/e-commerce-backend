@@ -1,15 +1,13 @@
 package com.vexa.ecommerce.Users;
 
-import com.vexa.ecommerce.Users.DTOs.UserRequestDTO;
+import com.vexa.ecommerce.Security.UserDetailsImpl;
+import com.vexa.ecommerce.Users.DTOs.UpdateUserRequestDTO;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,14 +16,10 @@ import java.util.List;
 public class UsersController {
 
     private final UsersService usersService;
-    private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
 
     // Cambia el constructor para inyectar PasswordEncoder
-    public UsersController(UsersService usersService, UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
+    public UsersController(UsersService usersService) {
         this.usersService = usersService;
-        this.usersRepository = usersRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     // ADMIN ENDPOINTS
@@ -43,69 +37,51 @@ public class UsersController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id) {
-        String currentUserEmail = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-
-        Users currentUser = usersRepository.findByEmail(currentUserEmail)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Usuario autenticado no encontrado"
-                ));
-
-        // Verificar que el ID y Role
-        if (currentUser.getRole() != Role.ADMIN &&
-                !currentUser.getUserId().equals(id)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         Users user = usersService.getUserById(id);
         return ResponseEntity.ok(UserMapper.toDTO(user));
     }
 
-    // TODO: Crear endpoint de deleteUserById
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Integer id) {
+        usersService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
 
-    // TODO: Crear endpoint de updateUserById
+    @PatchMapping("/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> updateUserById(
+            @PathVariable Integer userId,
+            @Valid @RequestBody UpdateUserRequestDTO dto
+    ) {
+        Users updateUser = usersService.updateUser(userId, dto);
+        return ResponseEntity.ok(UserMapper.toDTO(updateUser));
+    }
 
 
     // CLIENTS ENDPOINTS
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDTO> getMyProfile() {
-        String userEmail = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-
-        Users user = usersRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Usuario no encontrado"
-                ));
-
+    public ResponseEntity<UserResponseDTO> getMyProfile(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        Users user = usersService.getUserById(userDetails.getUserId());
         return ResponseEntity.ok(UserMapper.toDTO(user));
     }
 
-    @PutMapping("/me")
+    @PatchMapping("/me")
     public ResponseEntity<UserResponseDTO> updateMyProfile(
-            @Valid @RequestBody UserRequestDTO requestDTO
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @Valid @RequestBody UpdateUserRequestDTO dto
     ) {
-        String userEmail = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-
-        Users currentUser = usersRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        Users updatedUser = UserMapper.toEntity(requestDTO);
-        updatedUser.setUserId(currentUser.getUserId());
-
-        if (requestDTO.password() != null && !requestDTO.password().isEmpty()) {
-            updatedUser.setPassword(passwordEncoder.encode(requestDTO.password()));
-        }
-
-        Users savedUser = usersService.updateUser(updatedUser);
+        Users savedUser = usersService.updateUser(userDetails.getUserId(), dto);
         return ResponseEntity.ok(UserMapper.toDTO(savedUser));
     }
 
-    // TODO: Crear endpoint de deleteMyProfile
-
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMyProfile (
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        usersService.deleteUserById(userDetails.getUserId());
+        return ResponseEntity.noContent().build();
+    }
 }

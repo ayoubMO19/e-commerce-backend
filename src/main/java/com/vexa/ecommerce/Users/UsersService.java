@@ -2,7 +2,9 @@ package com.vexa.ecommerce.Users;
 
 import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
+import com.vexa.ecommerce.Users.DTOs.UpdateUserRequestDTO;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -35,12 +37,27 @@ public class UsersService implements IUsersService {
     }
 
     @Override
-    public Users updateUser(Users user) {
-        this.usersRepository.findById(user.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", user.getUserId()));
+    public Users updateUser(Integer userId, UpdateUserRequestDTO dto) {
+        Users user = this.usersRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
 
-        if (usersRepository.existsByEmailAndUserIdNot(user.getEmail(), user.getUserId())) {
-            throw new BadRequestException("Email is already registered.");
+        if (dto.name() != null) {
+            user.setName(dto.name());
+        }
+
+        if (dto.surname() != null) {
+            user.setSurname(dto.surname());
+        }
+
+        if (dto.email() != null) {
+            if (usersRepository.existsByEmailAndUserIdNot(dto.email(), userId)) {
+                throw new BadRequestException("Email is already registered.");
+            }
+            user.setEmail(dto.email());
+        }
+
+        if (dto.hasWelcomeDiscount() != null) {
+            user.setHasWelcomeDiscount(dto.hasWelcomeDiscount());
         }
 
         return this.usersRepository.save(user);

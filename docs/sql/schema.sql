@@ -1,3 +1,7 @@
+DROP SCHEMA IF EXISTS mydb CASCADE;
+CREATE SCHEMA mydb;
+SET search_path TO mydb;
+
 -- USERS
 CREATE TABLE Users (
   user_id SERIAL PRIMARY KEY,
@@ -5,7 +9,8 @@ CREATE TABLE Users (
   surname VARCHAR(45) NOT NULL,
   email VARCHAR(120) NOT NULL UNIQUE,
   has_welcome_discount BOOLEAN NOT NULL DEFAULT false,
-  password VARCHAR(200) NOT NULL
+  password VARCHAR(200) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'USER'
 );
 
 -- CART
@@ -34,12 +39,12 @@ CREATE TABLE Products (
 );
 
 -- ORDERS
-CREATE TYPE order_status AS ENUM ('pending', 'paid', 'shipped', 'delivered', 'cancelled');
+CREATE TYPE order_status AS ENUM ('PENDING', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELLED');
 
 CREATE TABLE Orders (
   order_id SERIAL PRIMARY KEY,
   total_price NUMERIC(10,2) NOT NULL,
-  status order_status NOT NULL DEFAULT 'pending',
+  status order_status NOT NULL DEFAULT 'PENDING',
   shipping_address VARCHAR(255),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -4,6 +4,7 @@ import com.vexa.ecommerce.Cart.Cart;
 import com.vexa.ecommerce.Cart.CartItems;
 import com.vexa.ecommerce.Cart.CartService;
 import com.vexa.ecommerce.Orders.DTOs.OrdersRequestDTO;
+import com.vexa.ecommerce.Orders.DTOs.UpdateOrderRequestDTO;
 import com.vexa.ecommerce.Products.Products;
 import com.vexa.ecommerce.Products.ProductsService;
 import com.vexa.ecommerce.Users.Users;
@@ -11,7 +12,9 @@ import com.vexa.ecommerce.Users.UsersService;
 import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
@@ -51,7 +54,7 @@ public class OrdersService implements IOrdersService {
 
         // Crear Order
         Orders order = new Orders();
-        order.setStatus(OrdersStatus.pending);
+        order.setStatus(OrdersStatus.PENDING);
         order.setShippingAddress(dto.getShippingAddress());
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
@@ -107,6 +110,10 @@ public class OrdersService implements IOrdersService {
         return saved;
     }
 
+    public Orders saveOrder(Orders order) {
+        return ordersRepository.save(order);
+    }
+
     @Override
     public Orders getOrderByOrderId(Integer orderId) {
         return ordersRepository.findById(orderId).orElseThrow(() -> {
@@ -126,13 +133,67 @@ public class OrdersService implements IOrdersService {
     }
 
     @Override
-    public Orders updateOrder(Orders order) {
-        Optional<Orders> optionalOrder = ordersRepository.findById(order.getOrderId());
+    public Orders updateOrder(Integer id, UpdateOrderRequestDTO dto) {
+        Orders order = ordersRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", id));
 
-        if (optionalOrder.isPresent()) {
-            return ordersRepository.save(order);
+        if (dto.status() != null) {
+            OrdersStatus current = order.getStatus();
+            OrdersStatus next = dto.status();
+
+            if (!current.canTransitionTo(next)) {
+                throw new BadRequestException(
+                        "Invalid status transition from " + current + " to " + next
+                );
+            }
+
+            order.setStatus(next);
         }
 
-        throw new ResourceNotFoundException("Order", order.getOrderId());
+        if (dto.shippingAddress() != null) {
+            order.setShippingAddress(dto.shippingAddress());
+        }
+
+        if (dto.paymentIntentId() != null) {
+            if (ordersRepository.existsByPaymentIntentId(dto.paymentIntentId())) {
+                throw new BadRequestException("PaymentIntentId is already in use.");
+            }
+            order.setPaymentIntentId(dto.paymentIntentId());
+        }
+
+        if (dto.paidAt() != null) {
+            order.setPaidAt(dto.paidAt());
+        }
+
+        return this.ordersRepository.save(order);
+    }
+
+    public Orders cancelOrderByUser(Integer orderId, Integer userId) {
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
+
+        // Validar propiedad
+        if (!order.getUser().getUserId().equals(userId)) {
+            throw new BadRequestException("You are not allowed to cancel this order.");
+        }
+
+        // Validar estado
+        if (order.getStatus() != OrdersStatus.PENDING) {
+            throw new BadRequestException("Only PENDING orders can be cancelled.");
+        }
+
+        order.setStatus(OrdersStatus.CANCELLED);
+        return ordersRepository.save(order);
+    }
+
+
+    public Orders getOrderByPaymentIntentId(String paymentIntentId) {
+        Optional<Orders> optionalOrder = ordersRepository.findByPaymentIntentId(paymentIntentId);
+
+        if (optionalOrder.isPresent()) {
+            return optionalOrder.get();
+        }
+
+        throw new ResourceNotFoundException("Order payment Intent: " + paymentIntentId, null);
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,12 @@ public class Orders {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Column(name = "payment_intent_id")
+    private String paymentIntentId;
+
+    @Column(name = "paid_at")
+    private LocalDateTime paidAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
@@ -55,12 +62,14 @@ public class Orders {
     }
 
     // Constructor
-    public Orders(OrdersStatus status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt) {
+    public Orders(OrdersStatus status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt, String paymentIntentId, LocalDateTime paidAt) {
         this.status = status;
         this.totalPrice = totalPrice;
         this.shippingAddress = shippingAddress;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.paymentIntentId = paymentIntentId;
+        this.paidAt = paidAt;
         this.orderItemsList = new ArrayList<>();
     }
 
@@ -74,6 +83,8 @@ public class Orders {
                 ", shippingAddress='" + shippingAddress + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", paymentIntentId=" + paymentIntentId +
+                ", paidAt=" + paidAt +
                 '}';
     }
 }
