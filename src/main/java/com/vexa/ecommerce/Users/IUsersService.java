@@ -1,5 +1,7 @@
 package com.vexa.ecommerce.Users;
 
+import com.vexa.ecommerce.Users.DTOs.UpdateUserRequestDTO;
+
 import java.util.List;
 
 public interface IUsersService {
@@ -10,7 +12,7 @@ public interface IUsersService {
 
     Users saveNewUser(Users user);
 
-    Users updateUser(Users user);
+    Users updateUser(Integer userId, UpdateUserRequestDTO userRequestDTO);
 
     void deleteUserById(Integer id);
 }

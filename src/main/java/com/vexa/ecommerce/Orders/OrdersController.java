@@ -2,9 +2,11 @@ package com.vexa.ecommerce.Orders;
 
 import com.vexa.ecommerce.Orders.DTOs.OrderResponseDTO;
 import com.vexa.ecommerce.Orders.DTOs.OrdersRequestDTO;
+import com.vexa.ecommerce.Orders.DTOs.UpdateOrderRequestDTO;
 import com.vexa.ecommerce.Security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +44,27 @@ public class OrdersController {
     }
 
     // TODO: Obtener los orders de un user específico (SOLO PARA ADMINS)
+
+    // Actualizar el status de un order
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<OrderResponseDTO> updateOrderStatus(
+            @PathVariable Integer id,
+            @RequestBody UpdateOrderRequestDTO dto
+    ) {
+        Orders order = ordersService.updateOrder(id, dto);
+        return ResponseEntity.ok(OrderMapper.toDTO(order));
+    }
+
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponseDTO> cancelMyOrder(
+            @PathVariable Integer id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        Orders order = ordersService.cancelOrderByUser(id, userDetails.getUserId());
+        return ResponseEntity.ok(OrderMapper.toDTO(order));
+    }
+
+
 }
 

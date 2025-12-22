@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Service
 public class PaymentService {
@@ -43,7 +44,7 @@ public class PaymentService {
         // Obtener el order mediante el OrderId
         Orders order = ordersService.getOrderByOrderId(orderId);
         // Si existe comprobamos el status que esté en pending
-        if (order.getStatus() != OrdersStatus.pending) {
+        if (order.getStatus() != OrdersStatus.PENDING) {
             // Lanzamos excepción bad request si el status no es pending
             throw new BadRequestException("The status of the order with order id: " + orderId + " is not pending. order.staus:" + order.getStatus());
         }
@@ -54,19 +55,21 @@ public class PaymentService {
 
         // Creamos el PaymentIntent utilizando los params
         try {
-        PaymentIntentCreateParams params =
+            PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
-                        .setAmount(amount)
-                        .setCurrency(currency)
-                        .setAutomaticPaymentMethods( // Métodos de pago automáticos por Stripe
-                                PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                                        .setEnabled(true)
-                                        .build()
-                        ).putMetadata("orderId", orderId.toString()) // Aquí incluimos el orderId en metadata
-                        .build();
-
+                    .setAmount(amount)
+                    .setCurrency(currency)
+                    .setAutomaticPaymentMethods( // Métodos de pago automáticos por Stripe
+                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+                            .setEnabled(true)
+                            .build()
+                    ).build();
 
             PaymentIntent paymentIntent = PaymentIntent.create(params);
+
+            // Guardamos el payment intent id en la order
+            order.setPaymentIntentId(paymentIntent.getId());
+            ordersService.saveOrder(order);
 
             // Extraemos el secret client key del PaymentIntent creado y lo retornamos.
             return paymentIntent.getClientSecret();
@@ -104,14 +107,17 @@ public class PaymentService {
 
             // Obtener PaymentIntent
             PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
-            // Obtener orderId de los metadatos de PaymentIntent
-            Integer orderId = Integer.parseInt(paymentIntent.getMetadata().get("orderId"));
+
             // Buscar el order por orderId
-            Orders order = ordersService.getOrderByOrderId(orderId);
-            if (order.getStatus() == OrdersStatus.pending) { // Comprobamos si order existe y su estado
+            Orders order = ordersService.getOrderByPaymentIntentId(paymentIntent.getId());
+
+            if (order.getStatus() == OrdersStatus.PENDING) { // Comprobamos si order existe y su estado
                 // Cambiamos estado de order a PAID
-                order.setStatus(OrdersStatus.paid);
-                ordersService.updateOrder(order);
+                order.setStatus(OrdersStatus.PAID);
+                // Asignar fecha de pago
+                order.setPaidAt(LocalDateTime.now());
+                // Actualizamos la order
+                ordersService.saveOrder(order);
             }
 
         } catch (SignatureVerificationException e) {
