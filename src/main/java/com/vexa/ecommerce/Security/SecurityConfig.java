@@ -38,7 +38,11 @@ public class SecurityConfig {
                         // Endpoints públicos
                         .requestMatchers("/api/auth/**").permitAll() // autoriza requests a todos los endpoints que hay en api/auth/
                         .requestMatchers("/api/payments/webhook").permitAll()
-
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll() // Permite el acceso público a Swagger
                         // Endpoints que requieren autenticación
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}").authenticated() // se configura autenticación necesaria para el endpont get /api/users/{id} para obtener user
                         .requestMatchers(HttpMethod.PUT, "/api/users/{id}").authenticated() // se configura autenticación necesaria para el endpont put /api/users/{id} para crear user
