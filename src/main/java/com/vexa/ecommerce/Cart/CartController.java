@@ -4,7 +4,6 @@ import com.vexa.ecommerce.Cart.DTOs.CartAddRequestDTO;
 import com.vexa.ecommerce.Cart.DTOs.CartDeleteProductRequestDTO;
 import com.vexa.ecommerce.Cart.DTOs.CartUpdateRequestDTO;
 import com.vexa.ecommerce.Cart.DTOs.CartResponseDTO;
-import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;
 import com.vexa.ecommerce.Security.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
