@@ -4,6 +4,12 @@ import com.vexa.ecommerce.Auth.DTOs.*;
 import com.vexa.ecommerce.Security.JwtService;
 import com.vexa.ecommerce.Users.*;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -21,6 +27,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Auth", description = "Endpoints para crear y gestionar usuarios del sistema")
 public class AuthController {
 
     private final JwtService jwtService;
@@ -50,6 +57,13 @@ public class AuthController {
     }
 
     // REGISTER
+    @Operation(
+            summary = "Registar un nuevo User",
+            description = "Registra un nuevo User en el ecommerce",
+            tags = {"Auth"}
+    )
+    @ApiResponse(responseCode = "200", description = "Usuario registrado existosamente",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterResponseDTO.class))) // Respuesta exitosa
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         // Verificar si el email ya existe
@@ -104,6 +118,13 @@ public class AuthController {
     }
 
     // LOGIN
+    @Operation(
+            summary = "Login en el sistema",
+            description = "Loguearse en el sistema con usuario existente",
+            tags = {"Auth"}
+    )
+    @ApiResponse(responseCode = "200", description = "Usuario logueado existosamente",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         Users user = usersRepository.findByEmail(request.email())
@@ -134,6 +155,7 @@ public class AuthController {
     }
 
     // EMAIL
+    @Hidden
     @PostMapping("/test-email")
     public ResponseEntity<String> testEmail(@RequestParam String email) {
         try {
@@ -145,6 +167,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
+    @Hidden
     public String verifyEmail(@RequestParam String token) {
         try {
             // Buscar token en BD
@@ -195,6 +218,12 @@ public class AuthController {
     }
 
     // FORGOT PASSWORD
+    @Operation(
+            summary = "Recuperación de password",
+            description = "Recuperar password olvidada utilizando el email",
+            tags = {"Auth"}
+    )
+    @ApiResponse(responseCode = "200", description = "Email de recuperación de password enviado exitosamente") // Respuesta exitosa
     @PostMapping("/forgot-password")
     @Transactional
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequestDTO request) {
@@ -244,6 +273,7 @@ public class AuthController {
 
     // RESET PASSWORD FORM (página HTML)
     @GetMapping("/reset-password-form")
+    @Hidden
     public String resetPasswordForm(@RequestParam String token) {
         // Verificar token
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
@@ -262,6 +292,7 @@ public class AuthController {
 
     // RESET PASSWORD
     @PostMapping("/reset-password")
+    @Hidden
     public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequestDTO request) {
         // Verificar token
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(request.token())
