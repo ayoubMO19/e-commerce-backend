@@ -2,7 +2,6 @@ package com.vexa.ecommerce.Categories;
 
 import com.vexa.ecommerce.Categories.DTOs.CategoriesRequestDTO;
 import com.vexa.ecommerce.Categories.DTOs.CategoriesResponseDTO;
-import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

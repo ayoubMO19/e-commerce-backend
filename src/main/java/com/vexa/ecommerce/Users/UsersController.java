@@ -1,6 +1,5 @@
 package com.vexa.ecommerce.Users;
 
-import com.vexa.ecommerce.Auth.DTOs.RegisterResponseDTO;
 import com.vexa.ecommerce.Security.UserDetailsImpl;
 import com.vexa.ecommerce.Users.DTOs.UpdateUserRequestDTO;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;

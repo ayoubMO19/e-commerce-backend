@@ -3,7 +3,6 @@ package com.vexa.ecommerce.Products;
 import com.vexa.ecommerce.Categories.CategoriesRepository;
 import com.vexa.ecommerce.Products.DTOs.ProductRequestDTO;
 import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;
-import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
