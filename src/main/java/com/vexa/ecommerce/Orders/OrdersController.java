@@ -34,7 +34,7 @@ public class OrdersController {
     @Operation(
             summary = "(ADMIN) - Actualizar el status de una Order específica",
             description = "Actualizar el status de uan Order específica",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Order status actualizado existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
@@ -49,7 +49,6 @@ public class OrdersController {
     }
 
     // Crear una orden desde el carrito
-    @Tag(name = "Orders", description = "Endpoints para crear y gestionar orders")
     @Operation(
             summary = "Crear order para User logueado",
             description = "Crear order para el user logueado usando su carrito",

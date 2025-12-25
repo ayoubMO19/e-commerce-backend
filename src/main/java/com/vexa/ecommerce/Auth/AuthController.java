@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,7 +26,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Auth", description = "Endpoints para crear y gestionar usuarios del sistema")
 public class AuthController {
 
     private final JwtService jwtService;

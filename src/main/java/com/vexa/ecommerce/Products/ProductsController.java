@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@SecurityRequirement(name = "Bearer Authentication")
 public class ProductsController {
 
     private final ProductsService productsService;
@@ -33,10 +33,11 @@ public class ProductsController {
     @Operation(
             summary = "(ADMIN) - Crear un nuevo producto",
             description = "Crear un nuevo producto en el sistema",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Producto creado existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO requestDTO) {
@@ -53,10 +54,11 @@ public class ProductsController {
     @Operation(
             summary = "(ADMIN) - Actualizar un producto",
             description = "Actualizar un producto del sistema",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Producto actualizado existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> updateProduct(
@@ -77,9 +79,10 @@ public class ProductsController {
     @Operation(
             summary = "(ADMIN) - Eliminar un producto",
             description = "Eliminar un producto en el sistema",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Producto eliminado existosamente") // Respuesta exitosa
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
@@ -89,7 +92,6 @@ public class ProductsController {
 
 
     // ENDPOINTS PARA ROL USER
-    @Tag(name = "Products", description = "Endpoints para obtener productos")
     @Operation(
             summary = "Obtener productos",
             description = "Obtener todos los productos del sistema",
