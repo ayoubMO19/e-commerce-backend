@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/payments")
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "Payment", description = "Endpoints para gestionar pagos")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -25,7 +23,7 @@ public class PaymentController {
     @Operation(
             summary = "(STRIPE) - Crear nuevo intento de pago",
             description = "Crear un nuevo intento de pago de stripe",
-            tags = {"Payment"}
+            tags = {"Payments"}
     )
     @ApiResponse(responseCode = "200", description = "PaymentIntent creado con éxito existosamente") // Respuesta exitosa
     @PostMapping("/create-intent")

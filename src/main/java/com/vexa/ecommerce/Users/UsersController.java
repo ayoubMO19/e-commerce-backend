@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,11 +29,10 @@ public class UsersController {
     }
 
     // ADMIN ENDPOINTS
-    @Tag(name = "Admin Endpoints", description = "Endpoints para gestionar todo el sistema")
     @Operation(
             summary = "(ADMIN) - Obtener todos los usuarios del sistema",
             description = "Retorna todos los usuarios del sistema",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Usuarios obtenidos existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
@@ -52,7 +50,7 @@ public class UsersController {
     @Operation(
             summary = "(ADMIN) - Obtener usuario por id",
             description = "Retorna un usuario indicando su id",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Usuario obtenido existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
@@ -66,7 +64,7 @@ public class UsersController {
     @Operation(
             summary = "(ADMIN) - Eliminar user por id",
             description = "Eliminar un usuario indicando su id",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Usuario eliminado existosamente") // Respuesta exitosa
     @DeleteMapping("/{id}")
@@ -81,7 +79,7 @@ public class UsersController {
     @Operation(
             summary = "(ADMIN) - Actualizar usuario por id",
             description = "Actualizar un usuario indicando su id y sus nuevos datos",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Usuario actualizado existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
@@ -95,7 +93,6 @@ public class UsersController {
 
 
     // CLIENTS ENDPOINTS
-    @Tag(name = "Users", description = "Endpoints para gestionar perfil de usaurio")
     @Operation(
             summary = "Obtener perfil",
             description = "Obtener el perfil del user logueado",

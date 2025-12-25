@@ -30,7 +30,7 @@ public class CategoriesController {
     @Operation(
             summary = "(ADMIN) - Crear una nueva categoría",
             description = "Crear una nueva categoría",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Categoría creada existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
@@ -46,7 +46,7 @@ public class CategoriesController {
     @Operation(
             summary = "(ADMIN) - Actualizar una categoría",
             description = "Actualizar una categoría",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Categoría actualizada existosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
@@ -66,7 +66,7 @@ public class CategoriesController {
     @Operation(
             summary = "(ADMIN) - Eliminar una categoría",
             description = "Eliminar una categoría",
-            tags = {"Admin Endpoints"}
+            tags = {"Admin"}
     )
     @ApiResponse(responseCode = "200", description = "Categoría eliminada existosamente") // Respuesta exitosa
     @DeleteMapping("/{id}")
@@ -78,7 +78,6 @@ public class CategoriesController {
 
 
     // CLIENTS ENDPOINTS
-    @Tag(name = "Categories", description = "Endpoints para gestionar categorías")
     @Operation(
             summary = "Obtener todas las categorías",
             description = "Obtener todas las categorías",
