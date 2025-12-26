@@ -22,14 +22,15 @@ class ProductsServiceTest {
     @InjectMocks
     ProductsService productsService;
 
+    private Products createProduct(Integer id) {
+        Products p = new Products("name", 10.0, "description", "url_image", 10);
+        p.setProductId(id);
+        return p;
+    }
+
     @Test
-    void getAllProducts_ShouldGotProducts() {
-        // Preparación de datos
-        Products product = new Products("name", 10.0, "description" , "url_image", 10);
-        product.setProductId(1);
-        Products product2 = new Products("name2", 20.0, "description2" , "url_image2", 20);
-        product2.setProductId(2);
-        List<Products> productsList = List.of(product, product2);
+    void getAllProducts_shouldReturnProducts() {
+        List<Products> productsList = List.of(createProduct(1), createProduct(2));
 
         // Ejecución de lógica
         when(productsRepository.findAll()).thenReturn(productsList);
@@ -43,14 +44,14 @@ class ProductsServiceTest {
     @Test
     void saveNewProduct_ShouldSaveProduct() {
         // Preparación de datos
-        Products product = new Products("name", 10.0, "description", "url_image", 10);
-        product.setProductId(1);
+        Products product = createProduct(1);
 
         // Ejecución de lógica
         when(productsRepository.save(product)).thenReturn(product);
         Products addedProduct = productsService.saveNewProduct(product);
 
         // Comprobaciones de resultado
+        verify(productsRepository, times(1)).save(product);
         assertNotNull(addedProduct); // Comprobar que la respuesta al guardado de producto no es null
         assertEquals(product.getProductId(), addedProduct.getProductId()); // Comprobar que el ID del producto original y el guardado es el mismo
     }
@@ -58,8 +59,7 @@ class ProductsServiceTest {
     @Test
     void getProductById_shouldReturnProduct_whenProductExists() {
         // Preparación de datos
-        Products product = new Products();
-        product.setProductId(1);
+        Products product = createProduct(1);
         Optional<Products> productsOptional = Optional.of(product);
 
         // Ejecución de lógica
@@ -74,8 +74,7 @@ class ProductsServiceTest {
     @Test
     void getProductById_shouldThrowException_whenProductDoesNotExist() {
         // Preparación de datos
-        Products product = new Products();
-        product.setProductId(1);
+        Products product = createProduct(1);
 
         // Ejecución de lógica
         when(productsRepository.findById(product.getProductId())).thenReturn(Optional.empty());
@@ -91,8 +90,8 @@ class ProductsServiceTest {
     @Test
     void updateProduct_shouldUpdateSuccessfully() {
         // Preparación de datos
-        Products product = new Products("name", 10.0, "description", "url_image", 10);
-        product.setProductId(1);
+        Products product = createProduct(1);
+
         Optional<Products> productsOptional = Optional.of(product);
 
         // TODO: Hay que revisar la función updateProduct del service ya que puede ser necesario modificarla primero
@@ -103,26 +102,26 @@ class ProductsServiceTest {
     @Test
     void deleteProductById_shouldDelete_whenProductWExists() {
         // Preparación de datos
-        Integer productId = 1;
+        Products product = createProduct(1);
 
         // Ejecución de lógica
-        when(productsRepository.existsById(1)).thenReturn(true);
-        doNothing().when(productsRepository).deleteById(productId);
-        productsService.deleteProductById(productId);
+        when(productsRepository.existsById(product.getProductId())).thenReturn(true);
+        doNothing().when(productsRepository).deleteById(product.getProductId());
+        productsService.deleteProductById(product.getProductId());
 
         // Comprobaciones de resultado
-        verify(productsRepository, times(1)).deleteById(productId);
+        verify(productsRepository, times(1)).deleteById(product.getProductId());
     }
 
     @Test
     void deleteProductById_shouldThrowException_whenProductNotFound() {
         // Preparación de datos
-        Integer productId = 1;
+        Products product = createProduct(1);
 
         // Ejecución de lógica
-        when(productsRepository.existsById(1)).thenReturn(false);
+        when(productsRepository.existsById(product.getProductId())).thenReturn(false);
         ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            productsService.deleteProductById(productId);
+            productsService.deleteProductById(product.getProductId());
         });
 
         // Comprobaciones de resultados

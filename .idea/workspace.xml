@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Users/UsersServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Users/UsersServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Users/UsersServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Users/UsersServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
