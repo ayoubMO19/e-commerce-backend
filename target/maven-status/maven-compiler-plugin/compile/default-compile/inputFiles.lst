@@ -77,3 +77,4 @@
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Users/UsersController.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Users/UsersRepository.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Users/UsersService.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/config/SwaggerConfig.java

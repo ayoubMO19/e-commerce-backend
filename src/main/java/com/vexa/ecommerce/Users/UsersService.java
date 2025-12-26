@@ -51,7 +51,7 @@ public class UsersService implements IUsersService {
 
         if (dto.email() != null) {
             if (usersRepository.existsByEmailAndUserIdNot(dto.email(), userId)) {
-                throw new BadRequestException("Email is already registered.");
+                throw new BadRequestException("Email is already registered");
             }
             user.setEmail(dto.email());
         }

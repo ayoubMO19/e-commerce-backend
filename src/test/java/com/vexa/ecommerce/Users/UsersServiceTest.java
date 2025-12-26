@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Users;
 
+import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import com.vexa.ecommerce.Users.DTOs.UpdateUserRequestDTO;
 import org.junit.jupiter.api.Assertions;
@@ -7,14 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UsersServiceTest {
@@ -34,6 +34,7 @@ class UsersServiceTest {
         user2.setUserId(2);
         List<Users> usersList = List.of(user, user2);
 
+        // Ejecución de lógica
         when(usersRepository.findAll()).thenReturn(usersList);
         List<Users> obtainedUsersList = usersService.getAllUsers();
 
@@ -59,7 +60,7 @@ class UsersServiceTest {
         Users addedUser = usersService.saveNewUser(user);
 
         // Comprobaciones del resultado
-        assertNotNull(addedUser); // Comprobar que el user guardado no sea null
+        assertNotNull(addedUser); // Comprobar que la respuesta al guardado del user no es null
         assertEquals(user.getUserId(), addedUser.getUserId()); // Comprobar que el ID del user guardado y el proporcionado son iguales
     }
 
@@ -117,6 +118,68 @@ class UsersServiceTest {
     }
 
     @Test
-    void deleteUserById() {
+    void updateUser_shouldThrowException_whenUserNotFound() {
+        // Preparación de datos
+        Users user = new Users( "name", "surname", "email@email.com", true, "password", Role.USER);
+        user.setUserId(1);
+        UpdateUserRequestDTO dto = new UpdateUserRequestDTO("nameUpdated", user.getSurname(), user.getEmail(), user.getHasWelcomeDiscount());
+
+        // Ejecución de lógica
+        when(usersRepository.findById(user.getUserId())).thenReturn(Optional.empty());
+        ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            usersService.updateUser(user.getUserId(), dto);
+        });
+
+        // Comprobaciones de resultado
+        Assertions.assertEquals("User with id 1 not found", resourceNotFoundException.getMessage());
+    }
+
+    @Test
+    void updateUser_shouldThrowException_whenEmailAlreadyExists() {
+        // Preparación de datos
+        Users user = new Users( "name", "surname", "email@email.com", true, "password", Role.USER);
+        user.setUserId(1);
+        Optional<Users> usersOptional = Optional.of(user);
+        UpdateUserRequestDTO dto = new UpdateUserRequestDTO("nameUpdated", user.getSurname(), user.getEmail(), user.getHasWelcomeDiscount());
+
+        // Ejecución de lógica
+        when(usersRepository.findById(user.getUserId())).thenReturn(usersOptional);
+        when(usersRepository.existsByEmailAndUserIdNot(dto.email(), user.getUserId())).thenReturn(true);
+        BadRequestException badRequestException = Assertions.assertThrows(BadRequestException.class, () -> {
+            usersService.updateUser(user.getUserId(), dto);
+        });
+
+        // Comprobaciones de resultado
+        Assertions.assertEquals("Email is already registered", badRequestException.getMessage());
+        verify(usersRepository, never()).save(any());
+    }
+
+    @Test
+    void deleteUserById_shouldDelete_whenUserExists() {
+        // Preparación de datos
+        Integer userId = 1;
+
+        // Ejecución de lógica
+        when(usersRepository.existsById(userId)).thenReturn(true);
+        doNothing().when(usersRepository).deleteById(userId);
+        usersService.deleteUserById(userId);
+
+        // Comprobaciones de resultados
+        verify(usersRepository, times(1)).deleteById(userId);
+    }
+
+    @Test
+    void deleteUserById_shouldThrowException_whenUserNotFound() {
+        // Preparación de datos
+        Integer userId = 1;
+
+        // Ejecución de lógica
+        when(usersRepository.existsById(userId)).thenReturn(false);
+        ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            usersService.deleteUserById(userId);
+        });
+
+        // Comprobaciones de resultados
+        Assertions.assertEquals("User with id 1 not found", resourceNotFoundException.getMessage());
     }
 }
