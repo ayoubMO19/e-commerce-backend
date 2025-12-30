@@ -3,13 +3,12 @@ package com.vexa.ecommerce.Products;
 import com.vexa.ecommerce.Categories.CategoriesRepository;
 import com.vexa.ecommerce.Products.DTOs.ProductRequestDTO;
 import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;
+import com.vexa.ecommerce.Products.DTOs.UpdateProductRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityRequirements;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,7 +34,7 @@ public class ProductsController {
             description = "Crear un nuevo producto en el sistema",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Producto creado existosamente",
+    @ApiResponse(responseCode = "200", description = "Producto creado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
@@ -56,23 +55,16 @@ public class ProductsController {
             description = "Actualizar un producto del sistema",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Producto actualizado existosamente",
+    @ApiResponse(responseCode = "200", description = "Producto actualizado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
     @SecurityRequirement(name = "Bearer Authentication")
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> updateProduct(
             @PathVariable Integer id,
-            @Valid @RequestBody ProductRequestDTO requestDTO
+            @Valid @RequestBody UpdateProductRequestDTO dto
     ) {
-        // Comprobar si la categoría existe
-        categoriesRepository.findById(requestDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        Products updatedProduct = ProductMapper.toEntity(requestDTO);
-        updatedProduct.setProductId(id);
-
-        Products savedProduct = productsService.updateProduct(updatedProduct);
+        Products savedProduct = productsService.updateProduct(id, dto);
         return ResponseEntity.ok(ProductMapper.toDTO(savedProduct));
     }
 
@@ -81,7 +73,7 @@ public class ProductsController {
             description = "Eliminar un producto en el sistema",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Producto eliminado existosamente") // Respuesta exitosa
+    @ApiResponse(responseCode = "200", description = "Producto eliminado exitosamente") // Respuesta exitosa
     @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -97,7 +89,7 @@ public class ProductsController {
             description = "Obtener todos los productos del sistema",
             tags = {"Products"}
     )
-    @ApiResponse(responseCode = "200", description = "Products obtenidos existosamente",
+    @ApiResponse(responseCode = "200", description = "Products obtenidos exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
@@ -114,7 +106,7 @@ public class ProductsController {
             description = "Obtener producto por id",
             tags = {"Products"}
     )
-    @ApiResponse(responseCode = "200", description = "Producto obtenido existosamente",
+    @ApiResponse(responseCode = "200", description = "Producto obtenido exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))) // Respuesta exitosa
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer id) {

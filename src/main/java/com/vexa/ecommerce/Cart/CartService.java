@@ -7,6 +7,7 @@ import com.vexa.ecommerce.Users.UsersService;
 import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.vexa.ecommerce.Cart.DTOs.CartItemDTO;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CartService {
     private final CartRepository cartRepository;
     private final UsersService usersService;
@@ -37,12 +39,14 @@ public class CartService {
 
         Cart newCart = new Cart();
         newCart.setUser(user);
+        log.info("Cart for user with ID {} has been created and obtained", userId);
         return cartRepository.save(newCart);
     }
 
     @Transactional
     public Cart addProductToCart(Integer userId, Integer productId, Integer quantity) {
         if (quantity == null || quantity <= 0) {
+            log.warn("Quantity must be greater than zero. Quantity: {}. Cannot add product with ID {} to the cart of the user with ID {}", quantity, productId, userId);
             throw new BadRequestException("Quantity must be greater than zero");
         }
 
@@ -51,6 +55,7 @@ public class CartService {
 
         // Validar stock
         if (product.getStock() < quantity) {
+            log.warn("Not enough stock for product with ID {}. Product stock: {} requested stock: {}. Cannot add producto to Cart with ID: {}", product.getProductId(), product.getStock(), quantity, cart.getCartId());
             throw new BadRequestException("Not enough stock for product " + product.getName());
         }
 
@@ -64,6 +69,7 @@ public class CartService {
 
             // Validar stock para suma
             if (product.getStock() < newQuantity) {
+                log.warn("Stock exceeded for product with ID {}. Product stock: {} is less than the new stock: {}. Cannot add producto to Cart with ID: {}", product.getProductId(), product.getStock(), newQuantity, cart.getCartId());
                 throw new BadRequestException("Stock exceeded for " + product.getName());
             }
 
@@ -73,6 +79,7 @@ public class CartService {
             cart.getCartItemsList().add(newItem);
         }
 
+        log.info("Product with ID {} has been added to the cart for user with ID {}", productId, userId);
         return cartRepository.save(cart);
     }
 
@@ -80,6 +87,7 @@ public class CartService {
     public Cart updateQuantity(Integer userId, Integer productId, Integer quantity) {
 
         if (quantity == null || quantity < 0) {
+            log.warn("Quantity must be greater than zero. Quantity: {}. Cannot update quantity product with ID {} to the cart of the user with ID {}", quantity, productId, userId);
             throw new BadRequestException("Quantity cannot be negative");
         }
 
@@ -89,16 +97,18 @@ public class CartService {
         // Si la cantidad es 0 elimina el producto de la lista
         if (quantity == 0) {
             cart.getCartItemsList().remove(item);
+            log.info("Update Quantity to 0. Product with ID {} has been removed in the cart for user with ID {}", productId, userId);
             return cartRepository.save(cart);
         }
 
         // Validar stock
         if (item.getProduct().getStock() < quantity) {
+            log.warn("Insufficient quantity to update the quantity of product with id {} in the cart of user with id {}. Product stock: {} Request quantity: {} ", productId, userId, item.getProduct().getStock(), quantity);
             throw new BadRequestException("Not enough stock");
         }
 
         item.setQuantity(quantity);
-
+        log.info("Quantity product with ID {} has been updated in the cart for user with ID {} to quantity {}", productId, userId, quantity);
         return cartRepository.save(cart);
     }
 
@@ -106,18 +116,25 @@ public class CartService {
     public Cart removeProduct(Integer userId, Integer productId) {
         Cart cart = getCartByUserId(userId);
 
-        cart.getCartItemsList().removeIf(
+        boolean removed = cart.getCartItemsList().removeIf(
                 item -> item.getProduct().getProductId().equals(productId)
         );
+        if (!removed){
+            log.warn("Product with ID {} not exist in the cart for user with ID {}", productId, userId);
+        }
+        else {
+            log.info("Product with ID {} has been removed in the cart for user with ID {}", productId, userId);
+        }
 
         return cartRepository.save(cart);
     }
 
     @Transactional
-    public Cart clearCart(Integer userId) {
+    public void clearCart(Integer userId) {
         Cart cart = getCartByUserId(userId);
         cart.getCartItemsList().clear();
-        return cartRepository.save(cart);
+        log.info("Cart has been cleaned for user with ID {}", userId);
+        cartRepository.save(cart);
     }
 
     public CartResponseDTO convertToDTO(Cart cart) {

@@ -6,8 +6,45 @@
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Auth/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Auth/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrderResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/DTOs/OrderResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/Orders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/DTOs/UpdateProductRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/DTOs/UpdateProductRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/IProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/IProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Cart/CartServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Cart/CartServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Categories/CategoriesServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Categories/CategoriesServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Payment/PaymentServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Payment/PaymentServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Users/UsersServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Users/UsersServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Categories/CategoriesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Categories/CategoriesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/DTOs/OrderResponseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/DTOs/OrderResponseDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrderMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrderMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/Orders.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/Orders.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/IProductsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/IProductsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.EcommerceApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.EcommerceApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Users.UsersServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Users.UsersServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.EcommerceApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.EcommerceApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Users.UsersServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Users.UsersServiceTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Users/UsersServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Users/UsersServiceTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,86 +97,102 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.EcommerceApplication.executor": "Run",
-    "JUnit.ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.ProductsServiceTest.executor": "Run",
-    "JUnit.ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist.executor": "Run",
-    "JUnit.UsersServiceTest.deleteUserById.executor": "Run",
-    "JUnit.UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.UsersServiceTest.executor": "Run",
-    "JUnit.UsersServiceTest.getAllUsers.executor": "Run",
-    "JUnit.UsersServiceTest.getUserByIdShouldThrowExceptionUserNotFound.executor": "Run",
-    "JUnit.UsersServiceTest.getUserById_shouldThrowException_whenUserDoesNotExist.executor": "Run",
-    "JUnit.UsersServiceTest.saveNewUser.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser_shouldThrowException_whenEmailAlreadyExists.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser_shouldThrowException_whenUserNotFound.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.EcommerceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CartServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CategoriesServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.getOrderByOrderId_shouldThrowException_whenOrderDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.getOrderByPaymentIntentId_shouldThrowException_whenOrderNotFoundWithPaymentIntentId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenPaymentIntentIdAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenCategoryNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenProductNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.deleteUserById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getAllUsers.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getUserByIdShouldThrowExceptionUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getUserById_shouldThrowException_whenUserDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.saveNewUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldThrowException_whenEmailAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EcommerceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.vexa.ecommerce.Categories" />
+      <recent name="com.vexa.ecommerce.Cart" />
+      <recent name="com.vexa.ecommerce.Payment" />
+      <recent name="com.vexa.ecommerce.Orders" />
       <recent name="com.vexa.ecommerce.Products" />
-      <recent name="com.vexa.ecommerce.Users" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductsServiceTest">
-    <configuration name="ProductsServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.EcommerceApplication">
+    <configuration name="CartServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecommerce" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.vexa.ecommerce.Products.*" />
+          <option name="PATTERN" value="com.vexa.ecommerce.Cart.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Products" />
-      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Products.ProductsServiceTest" />
+      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Cart" />
+      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Cart.CartServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CategoriesServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecommerce" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.vexa.ecommerce.Products.*" />
+          <option name="PATTERN" value="com.vexa.ecommerce.Categories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Products" />
-      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Products.ProductsServiceTest" />
-      <option name="METHOD_NAME" value="deleteProductById_shouldThrowException_whenUserNotFound" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Categories" />
+      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Categories.CategoriesServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecommerce" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.vexa.ecommerce.Products.*" />
+          <option name="PATTERN" value="com.vexa.ecommerce.Payment.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Products" />
-      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Products.ProductsServiceTest" />
-      <option name="METHOD_NAME" value="getProductById_shouldThrowException_whenUserDoesNotExist" />
+      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Payment" />
+      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Payment.PaymentServiceTest" />
+      <option name="METHOD_NAME" value="createIntent_shouldThrowException_whenOrderIsNotPending" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -160,22 +213,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ecommerce" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.vexa.ecommerce.Users.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.vexa.ecommerce.Users" />
-      <option name="MAIN_CLASS_NAME" value="com.vexa.ecommerce.Users.UsersServiceTest" />
-      <option name="METHOD_NAME" value="deleteUserById_shouldThrowException_whenUserNotFound" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="e-commerce-backend" />
       <method v="2">
@@ -187,20 +224,34 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="EcommerceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="ecommerce" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vexa.ecommerce.EcommerceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vexa.ecommerce.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductsServiceTest" />
+        <item itemvalue="Spring Boot.EcommerceApplication" />
+        <item itemvalue="JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending" />
+        <item itemvalue="JUnit.CategoriesServiceTest" />
+        <item itemvalue="JUnit.CartServiceTest" />
         <item itemvalue="JUnit.UsersServiceTest" />
-        <item itemvalue="JUnit.ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound" />
-        <item itemvalue="JUnit.ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist" />
-        <item itemvalue="JUnit.UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
       </set>
     </attachedChunks>
   </component>

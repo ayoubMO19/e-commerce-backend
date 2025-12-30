@@ -1,0 +1,7 @@
+com/vexa/ecommerce/EcommerceApplicationTests.class
+com/vexa/ecommerce/Payment/PaymentServiceTest.class
+com/vexa/ecommerce/Cart/CartServiceTest.class
+com/vexa/ecommerce/Products/ProductsServiceTest.class
+com/vexa/ecommerce/Orders/OrdersServiceTest.class
+com/vexa/ecommerce/Users/UsersServiceTest.class
+com/vexa/ecommerce/Categories/CategoriesServiceTest.class

@@ -34,7 +34,7 @@ public class UsersController {
             description = "Retorna todos los usuarios del sistema",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuarios obtenidos existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuarios obtenidos exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,7 +52,7 @@ public class UsersController {
             description = "Retorna un usuario indicando su id",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario obtenido existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -66,7 +66,7 @@ public class UsersController {
             description = "Eliminar un usuario indicando su id",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario eliminado existosamente") // Respuesta exitosa
+    @ApiResponse(responseCode = "200", description = "Usuario eliminado exitosamente") // Respuesta exitosa
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUserById(@PathVariable Integer id) {
@@ -81,7 +81,7 @@ public class UsersController {
             description = "Actualizar un usuario indicando su id y sus nuevos datos",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario actualizado existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     public ResponseEntity<UserResponseDTO> updateUserById(
             @PathVariable Integer userId,
@@ -98,7 +98,7 @@ public class UsersController {
             description = "Obtener el perfil del user logueado",
             tags = {"Users"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario obtenido existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @GetMapping("/me")
     public ResponseEntity<UserResponseDTO> getMyProfile(
@@ -113,7 +113,7 @@ public class UsersController {
             description = "Actualizar el perfil del user logueado",
             tags = {"Users"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario actualizado existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @PatchMapping("/me")
     public ResponseEntity<UserResponseDTO> updateMyProfile(
@@ -129,7 +129,7 @@ public class UsersController {
             description = "Eliminar el perfil del user logueado",
             tags = {"Users"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario Eliminado existosamente",
+    @ApiResponse(responseCode = "200", description = "Usuario Eliminado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @DeleteMapping("/me")
     public ResponseEntity<Void> deleteMyProfile (

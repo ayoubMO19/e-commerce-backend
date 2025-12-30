@@ -56,6 +56,7 @@
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Payment/PaymentService.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/DTOs/ProductRequestDTO.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/DTOs/ProductResponseDTO.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/DTOs/UpdateProductRequestDTO.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/IProductsService.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/ProductMapper.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/main/java/com/vexa/ecommerce/Products/Products.java
