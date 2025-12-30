@@ -31,10 +31,10 @@ public class Orders {
     private String shippingAddress;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "payment_intent_id")
     private String paymentIntentId;
@@ -62,7 +62,7 @@ public class Orders {
     }
 
     // Constructor
-    public Orders(OrdersStatus status, Double totalPrice, String shippingAddress, Date createdAt, Date updatedAt, String paymentIntentId, LocalDateTime paidAt) {
+    public Orders(OrdersStatus status, Double totalPrice, String shippingAddress, LocalDateTime createdAt, LocalDateTime updatedAt, String paymentIntentId, LocalDateTime paidAt) {
         this.status = status;
         this.totalPrice = totalPrice;
         this.shippingAddress = shippingAddress;
@@ -72,7 +72,6 @@ public class Orders {
         this.paidAt = paidAt;
         this.orderItemsList = new ArrayList<>();
     }
-
 
     @Override
     public String toString() {

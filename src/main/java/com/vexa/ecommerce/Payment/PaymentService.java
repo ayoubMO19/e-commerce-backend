@@ -13,6 +13,7 @@ import com.vexa.ecommerce.Orders.Orders;
 import com.vexa.ecommerce.Orders.OrdersService;
 import com.vexa.ecommerce.Orders.OrdersStatus;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import static com.vexa.ecommerce.Auth.EmailService.hideSecureEmail;
+
 @Service
+@Slf4j
 public class PaymentService {
 
     private final OrdersService ordersService;
@@ -46,6 +50,7 @@ public class PaymentService {
         // Si existe comprobamos el status que esté en pending
         if (order.getStatus() != OrdersStatus.PENDING) {
             // Lanzamos excepción bad request si el status no es pending
+            log.warn("The status of the order with order ID {} is not PENDING. order.staus: {}", order.getOrderId(), order.getStatus());
             throw new BadRequestException("The status of the order with order id: " + orderId + " is not pending. order.staus:" + order.getStatus());
         }
 
@@ -72,8 +77,10 @@ public class PaymentService {
             ordersService.saveOrder(order);
 
             // Extraemos el secret client key del PaymentIntent creado y lo retornamos.
+            log.info("PaymentIntentID has been saved for order with ID {} and clientSecret has been returned", order.getOrderId());
             return paymentIntent.getClientSecret();
         } catch(Exception e) {
+            log.error("Error creating PaymentIntent for order with ID {}", orderId, e);
             throw new RuntimeException(e);
         }
     }
@@ -92,12 +99,8 @@ public class PaymentService {
             EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
             StripeObject stripeObject = null;
             if (dataObjectDeserializer.getObject().isEmpty()) {
-                System.err.println(
-                        "[STRIPE WEBHOOK] Failed to deserialize event. " +
-                                "eventId=" + event.getId() +
-                                ", type=" + event.getType() +
-                                ", apiVersion=" + event.getApiVersion()
-                );
+                log.error("[STRIPE WEBHOOK] Failed to deserialize event. eventId={}, type={}, apiVersion={}",
+                        event.getId(), event.getType(), event.getApiVersion());
 
                 // Return 200
                 return ResponseEntity.ok().build();
@@ -117,12 +120,14 @@ public class PaymentService {
                 // Asignar fecha de pago
                 order.setPaidAt(LocalDateTime.now());
                 // Actualizamos la order
+                log.info("Order status changed to PAID and paidAt has been saved for order with ID {}", order.getOrderId());
                 ordersService.saveOrder(order);
             }
 
         } catch (SignatureVerificationException e) {
-            System.err.println("Webhook signature verification failed: " + e.getMessage());
-            System.err.println("Header: " + e.getSigHeader());
+            log.error("Webhook signature verification failed: " +
+                    "MessageError: {}" +
+                    "Header: {}", e.getMessage(), e.getSigHeader());
             return ResponseEntity.badRequest().build();
         }
         // retornamos 200 ok

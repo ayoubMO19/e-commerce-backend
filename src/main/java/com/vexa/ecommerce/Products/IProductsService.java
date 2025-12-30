@@ -1,5 +1,7 @@
 package com.vexa.ecommerce.Products;
 
+import com.vexa.ecommerce.Products.DTOs.UpdateProductRequestDTO;
+
 import java.util.List;
 
 public interface IProductsService {
@@ -10,7 +12,7 @@ public interface IProductsService {
 
     Products saveNewProduct(Products product);
 
-    Products updateProduct(Products product);
+    Products updateProduct(Integer id, UpdateProductRequestDTO dto);
 
     void deleteProductById(Integer id);
 }

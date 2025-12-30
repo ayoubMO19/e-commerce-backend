@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.vexa.ecommerce.Users.UsersServiceTest" time="0.094" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.vexa.ecommerce.Cart.CartServiceTest" time="0.115" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -61,13 +61,14 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[ecommerce] "/>
   </properties>
-  <testcase name="deleteUserById_shouldThrowException_whenUserNotFound" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.066"/>
-  <testcase name="getUserById_shouldThrowException_whenUserDoesNotExist" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.002"/>
-  <testcase name="updateUser_shouldUpdateSuccessfully" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.004"/>
-  <testcase name="saveNewUser_ShouldSaveUser" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.003"/>
-  <testcase name="updateUser_shouldThrowException_whenUserNotFound" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.003"/>
-  <testcase name="updateUser_shouldThrowException_whenEmailAlreadyExists" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.002"/>
-  <testcase name="getAllUsers_ShouldReturnUsers" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.002"/>
-  <testcase name="deleteUserById_shouldDelete_whenUserExists" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.002"/>
-  <testcase name="getUserById_shouldReturnUser_whenUserExists" classname="com.vexa.ecommerce.Users.UsersServiceTest" time="0.002"/>
+  <testcase name="getCartByUserId_shouldReturnExistingCart" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.077"/>
+  <testcase name="getCartByUserId_shouldCreateCartIfNotExists" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.003"/>
+  <testcase name="clearCart_shouldEmptyCart" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.003"/>
+  <testcase name="updateQuantity_shouldRemoveIfZero" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.004"/>
+  <testcase name="updateQuantity_shouldThrowIfItemNotFound" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.003"/>
+  <testcase name="updateQuantity_shouldUpdateSuccessfully" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.003"/>
+  <testcase name="convertToDTO_shouldMapCorrectly" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.004"/>
+  <testcase name="addProductToCart_shouldThrowIfNoStock" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.005"/>
+  <testcase name="removeProduct_shouldRemoveItem" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.004"/>
+  <testcase name="addProductToCart_shouldAddNewItem" classname="com.vexa.ecommerce.Cart.CartServiceTest" time="0.004"/>
 </testsuite>

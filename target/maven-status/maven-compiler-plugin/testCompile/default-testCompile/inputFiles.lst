@@ -1,2 +1,7 @@
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Cart/CartServiceTest.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Categories/CategoriesServiceTest.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/EcommerceApplicationTests.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Payment/PaymentServiceTest.java
+/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java
 /home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend/src/test/java/com/vexa/ecommerce/Users/UsersServiceTest.java

@@ -6,33 +6,31 @@ import com.vexa.ecommerce.Cart.CartService;
 import com.vexa.ecommerce.Orders.DTOs.OrdersRequestDTO;
 import com.vexa.ecommerce.Orders.DTOs.UpdateOrderRequestDTO;
 import com.vexa.ecommerce.Products.Products;
-import com.vexa.ecommerce.Products.ProductsService;
 import com.vexa.ecommerce.Users.Users;
 import com.vexa.ecommerce.Users.UsersService;
 import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class OrdersService implements IOrdersService {
 
     private final OrdersRepository ordersRepository;
     private final CartService cartService;
     private final UsersService usersService;
-    private final ProductsService productsService;
 
-    public OrdersService(OrdersRepository ordersRepository, CartService cartService, UsersService usersService, ProductsService productsService) {
+    public OrdersService(OrdersRepository ordersRepository, CartService cartService, UsersService usersService) {
         this.ordersRepository = ordersRepository;
         this.cartService = cartService;
         this.usersService = usersService;
-        this.productsService = productsService;
     }
 
     @Override
@@ -43,12 +41,8 @@ public class OrdersService implements IOrdersService {
 
         // Obtener el Cart y comprobar que no esté vacío
         Cart cart = cartService.getCartByUserId(userId);
-        if (!cart.getUser().getUserId().equals(userId)) {
-            throw new BadRequestException("Cart does not belong to user");
-        }
-
-        // Comprobar que el Cart tiene items
         if (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty()) {
+            log.warn("Cart from user with ID {} is empty. Cannot create an order", userId);
             throw new BadRequestException("Your cart is empty, cannot create an order.");
         }
 
@@ -56,11 +50,11 @@ public class OrdersService implements IOrdersService {
         Orders order = new Orders();
         order.setStatus(OrdersStatus.PENDING);
         order.setShippingAddress(dto.getShippingAddress());
-        order.setCreatedAt(new Date());
-        order.setUpdatedAt(new Date());
+        order.setCreatedAt(LocalDateTime.now());
+        order.setUpdatedAt(LocalDateTime.now());
         order.setUser(user);
 
-        // primero guardas el order
+        // primero guardar el order
         Orders savedOrder = ordersRepository.save(order);
 
         for (CartItems ci : cart.getCartItemsList()) {
@@ -68,6 +62,7 @@ public class OrdersService implements IOrdersService {
             int qty = ci.getQuantity();
 
             if (product.getStock() < qty) {
+                log.warn("Not enough stock for product with ID {}. Product stock: {} requested stock: {}. Cannot create an order", product.getProductId(), product.getStock(), qty);
                 throw new BadRequestException("Not enough stock for " + product.getName());
             }
 
@@ -87,7 +82,6 @@ public class OrdersService implements IOrdersService {
 
             // Reducir stock
             product.setStock(product.getStock() - qty);
-            productsService.updateProduct(product);
         }
 
         double totalPrice = cart.getCartItemsList()
@@ -96,18 +90,17 @@ public class OrdersService implements IOrdersService {
                 .sum();
 
         if (totalPrice < 0) {
+            log.warn("Total price cannot be negative. Cannot create an order for user with ID {}", userId);
             throw new BadRequestException("Total price cannot be negative.");
         }
 
         savedOrder.setTotalPrice(totalPrice);
 
-        // Guardar savedOrder (cascade guardará OrderItems)
-        Orders saved = ordersRepository.save(savedOrder);
-
         // Vaciar carrito
         cartService.clearCart(userId);
 
-        return saved;
+        log.info("Order with ID {} has been created for user with ID {}", savedOrder.getOrderId(), userId);
+        return savedOrder;
     }
 
     public Orders saveOrder(Orders order) {
@@ -117,6 +110,7 @@ public class OrdersService implements IOrdersService {
     @Override
     public Orders getOrderByOrderId(Integer orderId) {
         return ordersRepository.findById(orderId).orElseThrow(() -> {
+            log.warn("Order id {} not found. The order could not be obtained", orderId);
             return new ResourceNotFoundException("Order", orderId);
         });
     }
@@ -126,22 +120,26 @@ public class OrdersService implements IOrdersService {
         Optional<List<Orders>> optionalListOrders = ordersRepository.findByUser_UserId(userId);
 
         if (optionalListOrders.isPresent()) {
+            log.info("Orders has been obtained by user ID {}", userId);
             return optionalListOrders.get();
         }
-
-        throw new ResourceNotFoundException("Orders for user", userId);
+        return new ArrayList<Orders>();
     }
 
     @Override
     public Orders updateOrder(Integer id, UpdateOrderRequestDTO dto) {
         Orders order = ordersRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order", id));
+                .orElseThrow(() -> {
+                    log.warn("Order with ID {} not found. The order could not be updated", id);
+                    return new ResourceNotFoundException("Order", id);
+                });
 
         if (dto.status() != null) {
             OrdersStatus current = order.getStatus();
             OrdersStatus next = dto.status();
 
             if (!current.canTransitionTo(next)) {
+                log.warn("Invalid status transition from {} to {} in order with ID {}. The order could not be updated", current, next, id);
                 throw new BadRequestException(
                         "Invalid status transition from " + current + " to " + next
                 );
@@ -156,7 +154,8 @@ public class OrdersService implements IOrdersService {
 
         if (dto.paymentIntentId() != null) {
             if (ordersRepository.existsByPaymentIntentId(dto.paymentIntentId())) {
-                throw new BadRequestException("PaymentIntentId is already in use.");
+                log.warn("PaymentIntentId is already in use. The order with ID {} could not be updated", id);
+                throw new BadRequestException("PaymentIntentId is already in use");
             }
             order.setPaymentIntentId(dto.paymentIntentId());
         }
@@ -165,24 +164,31 @@ public class OrdersService implements IOrdersService {
             order.setPaidAt(dto.paidAt());
         }
 
+        log.info("Order with id {} has been updated", id);
         return this.ordersRepository.save(order);
     }
 
     public Orders cancelOrderByUser(Integer orderId, Integer userId) {
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
+                .orElseThrow(() -> {
+                    log.warn("Order with ID {} not found. The order could not be canceled", orderId);
+                    return new ResourceNotFoundException("Order", orderId);
+                });
 
         // Validar propiedad
         if (!order.getUser().getUserId().equals(userId)) {
+            log.warn("Order with ID {} does not belong to the user with ID {}. The order could not be canceled", orderId, userId);
             throw new BadRequestException("You are not allowed to cancel this order.");
         }
 
         // Validar estado
         if (order.getStatus() != OrdersStatus.PENDING) {
+            log.warn("Only PENDING orders can be cancelled. The order with ID {} and status {} could not be canceled", orderId, order.getStatus());
             throw new BadRequestException("Only PENDING orders can be cancelled.");
         }
 
         order.setStatus(OrdersStatus.CANCELLED);
+        log.info("Order with id {} has been canceled", orderId);
         return ordersRepository.save(order);
     }
 
@@ -191,9 +197,17 @@ public class OrdersService implements IOrdersService {
         Optional<Orders> optionalOrder = ordersRepository.findByPaymentIntentId(paymentIntentId);
 
         if (optionalOrder.isPresent()) {
+            log.info("Order with id {} has been obtained by payment intent id", optionalOrder.get().getOrderId());
             return optionalOrder.get();
         }
 
-        throw new ResourceNotFoundException("Order payment Intent: " + paymentIntentId, null);
+        log.info("Order with paymentIntentId start with {} not found. Order cannot be obtained", maskKey(paymentIntentId));
+        throw new ResourceNotFoundException("Order payment Intent id: " + maskKey(paymentIntentId), null);
+    }
+
+    private String maskKey(String key) {
+        if (key == null) return null;
+        if (key.length() < 10) return "********";
+        return key.substring(0, 4) + "..." + key.substring(key.length() - 4);
     }
 }

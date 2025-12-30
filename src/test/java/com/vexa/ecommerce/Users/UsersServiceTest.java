@@ -26,7 +26,7 @@ class UsersServiceTest {
     UsersService usersService;
 
     @Test
-    void getAllUsers_ShouldGotUsers() {
+    void getAllUsers_ShouldReturnUsers() {
         // Preparación de datos
         Users user = new Users( "name", "surname", "email@email.com", true, "password", Role.USER);
         user.setUserId(1);
@@ -57,11 +57,11 @@ class UsersServiceTest {
 
         // Ejecución de lógica
         when(usersRepository.save(user)).thenReturn(user);
-        Users addedUser = usersService.saveNewUser(user);
+        Users savedUser = usersService.saveNewUser(user);
 
         // Comprobaciones del resultado
-        assertNotNull(addedUser); // Comprobar que la respuesta al guardado del user no es null
-        assertEquals(user.getUserId(), addedUser.getUserId()); // Comprobar que el ID del user guardado y el proporcionado son iguales
+        assertNotNull(savedUser); // Comprobar que la respuesta al guardado del user no es null
+        assertEquals(user.getUserId(), savedUser.getUserId()); // Comprobar que el ID del user guardado y el proporcionado son iguales
     }
 
     @Test
@@ -107,13 +107,13 @@ class UsersServiceTest {
         // Ejecución de lógica
         when(usersRepository.findById(user.getUserId())).thenReturn(usersOptional);
         when(usersRepository.existsByEmailAndUserIdNot(dto.email(), user.getUserId())).thenReturn(false);
-        when(usersRepository.save(user)).thenReturn(user);
+        when(usersRepository.save(any(Users.class)))
+                .thenAnswer(inv -> inv.getArgument(0));
         Users updatedUser = usersService.updateUser(user.getUserId(), dto);
 
         // Comprobaciones de resultado
         Assertions.assertNotNull(updatedUser);
         Assertions.assertEquals(user.getUserId(), updatedUser.getUserId());
-        Assertions.assertNotEquals("name", updatedUser.getName());
         Assertions.assertEquals("nameUpdated", updatedUser.getName());
     }
 

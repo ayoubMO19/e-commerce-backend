@@ -1,6 +1,9 @@
 package com.vexa.ecommerce.Products;
 
+import com.vexa.ecommerce.Categories.Categories;
+import com.vexa.ecommerce.Categories.CategoriesService;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
+import com.vexa.ecommerce.Products.DTOs.UpdateProductRequestDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +22,8 @@ class ProductsServiceTest {
 
     @Mock
     ProductsRepository productsRepository;
+    @Mock
+    CategoriesService categoriesService;
     @InjectMocks
     ProductsService productsService;
 
@@ -83,7 +88,7 @@ class ProductsServiceTest {
         });
 
         // Comprobaciones del resultado
-        Assertions.assertEquals("Product with id 1 not found", resourceNotFoundException.getMessage());
+        assertEquals("Product with id 1 not found", resourceNotFoundException.getMessage());
     }
 
 
@@ -91,12 +96,76 @@ class ProductsServiceTest {
     void updateProduct_shouldUpdateSuccessfully() {
         // Preparación de datos
         Products product = createProduct(1);
-
         Optional<Products> productsOptional = Optional.of(product);
+        UpdateProductRequestDTO dto = new UpdateProductRequestDTO("nameUpdated", 1.0, "description", "urlImage", 10, 1);
+        Categories category = new Categories("categoryName");
 
-        // TODO: Hay que revisar la función updateProduct del service ya que puede ser necesario modificarla primero
         // Ejecución de lógica
+        when(productsRepository.findById(product.getProductId())).thenReturn(productsOptional);
+        when(productsRepository.existsByNameAndProductIdNot(dto.name(), product.getProductId())).thenReturn(false);
+        when(categoriesService.getCategoryById(dto.categoryId())).thenReturn(category);
+        when(productsRepository.save(any(Products.class)))
+                .thenAnswer(inv -> inv.getArgument(0));
+        Products updatedProduct = productsService.updateProduct(product.getProductId(), dto);
+
+        // Verificación de llamadas a funciones
+        verify(productsRepository).findById(1);
+        verify(productsRepository).existsByNameAndProductIdNot("nameUpdated", 1);
+        verify(categoriesService).getCategoryById(1);
+        verify(productsRepository).save(any(Products.class));
+
         // Comprobaciones de resultado
+        Assertions.assertNotNull(updatedProduct);
+        Assertions.assertEquals(product.getProductId(), updatedProduct.getProductId());
+        Assertions.assertEquals("nameUpdated", updatedProduct.getName());
+        Assertions.assertEquals(1.0, updatedProduct.getPrice());
+        Assertions.assertEquals(10, updatedProduct.getStock());
+        Assertions.assertEquals(category, updatedProduct.getCategory());
+    }
+
+    @Test
+    void updateProduct_shouldThrowException_whenProductNotFound() {
+        // Preparación de datos
+        Products product = createProduct(1);
+        UpdateProductRequestDTO dto = new UpdateProductRequestDTO("nameUpdated", 1.0, "description", "urlImage", 10, 1);
+
+        // Ejecución de lógica
+        when(productsRepository.findById(product.getProductId())).thenReturn(Optional.empty());
+        ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            productsService.updateProduct(product.getProductId(), dto);
+        });
+        // Verificación de llamadas a funciones
+        verify(productsRepository).findById(1);
+
+        // Comprobaciones de resultado
+        Assertions.assertEquals("Product with id 1 not found", resourceNotFoundException.getMessage());
+    }
+
+    @Test
+    void updateProduct_shouldThrowException_whenCategoryNotFound() {
+        // Preparación de datos
+        Products product = createProduct(1);
+        Optional<Products> productsOptional = Optional.of(product);
+        UpdateProductRequestDTO dto = new UpdateProductRequestDTO("nameUpdated", 1.0, "description", "urlImage", 10, 1);
+
+        // Ejecución de lógica
+        when(productsRepository.findById(product.getProductId())).thenReturn(productsOptional);
+        when(productsRepository.existsByNameAndProductIdNot(dto.name(), product.getProductId())).thenReturn(false);
+        when(categoriesService.getCategoryById(1))
+                .thenThrow(new ResourceNotFoundException("Category", 1));
+
+        ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            productsService.updateProduct(product.getProductId(), dto);
+        });
+
+        // Verificación de llamadas a funciones
+        verify(productsRepository).findById(1);
+        verify(productsRepository).existsByNameAndProductIdNot("nameUpdated", 1);
+        verify(categoriesService).getCategoryById(1);
+        verify(productsRepository, never()).save(any());
+
+        // Comprobaciones de resultado
+        Assertions.assertEquals("Category with id 1 not found", resourceNotFoundException.getMessage());
     }
 
     @Test

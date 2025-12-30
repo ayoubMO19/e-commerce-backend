@@ -11,6 +11,7 @@ com/vexa/ecommerce/Auth/EmailService.class
 com/vexa/ecommerce/Products/DTOs/ProductRequestDTO.class
 com/vexa/ecommerce/Users/DTOs/UserRequestDTO.class
 com/vexa/ecommerce/Payment/PaymentController.class
+com/vexa/ecommerce/config/SwaggerConfig.class
 com/vexa/ecommerce/Security/JwtAuthenticationFilter.class
 com/vexa/ecommerce/Comments/Comments.class
 com/vexa/ecommerce/Users/DTOs/UserResponseDTO.class
@@ -46,6 +47,7 @@ com/vexa/ecommerce/Auth/DTOs/LoginRequestDTO.class
 com/vexa/ecommerce/Auth/PasswordResetToken.class
 com/vexa/ecommerce/Cart/DTOs/CartDeleteProductRequestDTO.class
 com/vexa/ecommerce/Orders/OrderMapper.class
+com/vexa/ecommerce/Products/DTOs/UpdateProductRequestDTO.class
 com/vexa/ecommerce/Categories/CategoriesRepository.class
 com/vexa/ecommerce/Orders/OrdersService.class
 com/vexa/ecommerce/Products/DTOs/ProductResponseDTO.class
