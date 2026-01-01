@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.vexa.ecommerce.Utils.SecurityUtils.maskKey;
+
 @Service
 @Slf4j
 public class OrdersService implements IOrdersService {
@@ -41,7 +43,7 @@ public class OrdersService implements IOrdersService {
 
         // Obtener el Cart y comprobar que no esté vacío
         Cart cart = cartService.getCartByUserId(userId);
-        if (cart.getCartItemsList().isEmpty()) { // se quita comprobación de si es null, ya que en el constructor se inicia cartItemsList como arrayList empty
+        if (cart.getCartItemsList().isEmpty()) {
             log.warn("Cart from user with ID {} is empty. Cannot create an order", userId);
             throw new BadRequestException("Your cart is empty, cannot create an order.");
         }
@@ -64,8 +66,6 @@ public class OrdersService implements IOrdersService {
                 .stream()
                 .mapToDouble(ci -> ci.getProduct().getPrice() * ci.getQuantity())
                 .sum();
-
-        // No es necesario comprobar tamaño de total price menor que 0, no es posible, no?
 
         savedOrder.setTotalPrice(totalPrice);
 
@@ -205,11 +205,5 @@ public class OrdersService implements IOrdersService {
 
         log.info("Order with paymentIntentId start with {} not found. Order cannot be obtained", maskKey(paymentIntentId));
         throw new ResourceNotFoundException("Order payment Intent id: " + maskKey(paymentIntentId), null);
-    }
-
-    private String maskKey(String key) {
-        if (key == null) return null;
-        if (key.length() < 10) return "********";
-        return key.substring(0, 4) + "..." + key.substring(key.length() - 4);
     }
 }

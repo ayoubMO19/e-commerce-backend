@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import static com.vexa.ecommerce.Auth.EmailService.hideSecureEmail;
+import static com.vexa.ecommerce.Utils.SecurityUtils.hideSecureEmail;
 
 @Service
 @Slf4j

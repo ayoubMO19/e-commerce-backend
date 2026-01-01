@@ -1,47 +1,28 @@
 package com.vexa.ecommerce.Payment;
 
-import com.stripe.Stripe;
-import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
 import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.PaymentIntent;
-import com.stripe.model.StripeObject;
-import com.stripe.net.Webhook;
-import com.stripe.param.PaymentIntentCreateParams;
 import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Orders.Orders;
 import com.vexa.ecommerce.Orders.OrdersService;
 import com.vexa.ecommerce.Orders.OrdersStatus;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import static com.vexa.ecommerce.Auth.EmailService.hideSecureEmail;
 
 @Service
 @Slf4j
 public class PaymentService {
 
     private final OrdersService ordersService;
+    private final StripeClient stripeClient;
 
-    @Value("${stripe.secret-key}")
-    private String apiKey;
-
-    @Value("${stripe.webhook-secret}")
-    private String webhookSecret;
-
-    public PaymentService(OrdersService ordersService) {
+    public PaymentService(OrdersService ordersService, StripeClient stripeClient) {
         this.ordersService = ordersService;
-    }
-
-    @PostConstruct
-    public void init() {
-        Stripe.apiKey = apiKey;
+        this.stripeClient = stripeClient;
     }
 
     public String createIntent(Integer orderId) {
@@ -59,78 +40,43 @@ public class PaymentService {
         String currency = "eur";
 
         // Creamos el PaymentIntent utilizando los params
-        try {
-            PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                    .setAmount(amount)
-                    .setCurrency(currency)
-                    .setAutomaticPaymentMethods( // Métodos de pago automáticos por Stripe
-                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                            .setEnabled(true)
-                            .build()
-                    ).build();
+        PaymentIntent paymentIntent = stripeClient.createPaymentIntent(amount, currency);
 
-            PaymentIntent paymentIntent = PaymentIntent.create(params);
+        // Guardamos el payment intent id en la order
+        order.setPaymentIntentId(paymentIntent.getId());
+        ordersService.saveOrder(order);
 
-            // Guardamos el payment intent id en la order
-            order.setPaymentIntentId(paymentIntent.getId());
-            ordersService.saveOrder(order);
-
-            // Extraemos el secret client key del PaymentIntent creado y lo retornamos.
-            log.info("PaymentIntentID has been saved for order with ID {} and clientSecret has been returned", order.getOrderId());
-            return paymentIntent.getClientSecret();
-        } catch(Exception e) {
-            log.error("Error creating PaymentIntent for order with ID {}", orderId, e);
-            throw new RuntimeException(e);
-        }
+        // Extraemos el secret client key del PaymentIntent creado y lo retornamos.
+        log.info("PaymentIntentID has been saved for order with ID {} and clientSecret has been returned", order.getOrderId());
+        return paymentIntent.getClientSecret();
     }
 
-    public ResponseEntity<?> handleWebhook(String payload, String signature) {
-        try{
-            // Comprobar Firma signature
-            Event event = Webhook.constructEvent(payload, signature, webhookSecret);
+    public void handleWebhook(String payload, String signature) {
+        // Comprobar Firma signature
+        Event event = stripeClient.parseWebhook(payload, signature);
 
-            // Comprobamos si el payment intent es de tipo succeeded, en caso de no serlo, terminamos el proceso
-            if (!event.getType().equals("payment_intent.succeeded")) {
-                return ResponseEntity.ok().build();
-            }
-
-            // Deserialize the nested object inside the event
-            EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
-            StripeObject stripeObject = null;
-            if (dataObjectDeserializer.getObject().isEmpty()) {
-                log.error("[STRIPE WEBHOOK] Failed to deserialize event. eventId={}, type={}, apiVersion={}",
-                        event.getId(), event.getType(), event.getApiVersion());
-
-                // Return 200
-                return ResponseEntity.ok().build();
-            }
-
-            stripeObject = dataObjectDeserializer.getObject().get();
-
-            // Obtener PaymentIntent
-            PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
-
-            // Buscar el order por orderId
-            Orders order = ordersService.getOrderByPaymentIntentId(paymentIntent.getId());
-
-            if (order.getStatus() == OrdersStatus.PENDING) { // Comprobamos si order existe y su estado
-                // Cambiamos estado de order a PAID
-                order.setStatus(OrdersStatus.PAID);
-                // Asignar fecha de pago
-                order.setPaidAt(LocalDateTime.now());
-                // Actualizamos la order
-                log.info("Order status changed to PAID and paidAt has been saved for order with ID {}", order.getOrderId());
-                ordersService.saveOrder(order);
-            }
-
-        } catch (SignatureVerificationException e) {
-            log.error("Webhook signature verification failed: " +
-                    "MessageError: {}" +
-                    "Header: {}", e.getMessage(), e.getSigHeader());
-            return ResponseEntity.badRequest().build();
+        // Comprobamos si el payment intent es de tipo succeeded, en caso de no serlo, terminamos el proceso
+        if (!"payment_intent.succeeded".equals(event.getType())) {
+            return;
         }
-        // retornamos 200 ok
-        return ResponseEntity.ok().build();
+
+        // Deserialize the nested object inside the event
+        EventDataObjectDeserializer deserializer = event.getDataObjectDeserializer();
+        if (deserializer.getObject().isEmpty()) {
+            log.error("[STRIPE WEBHOOK] Failed to deserialize event. eventId={}, type={}, apiVersion={}",
+                    event.getId(), event.getType(), event.getApiVersion());
+            return;
+        }
+
+        // Obtener PaymentIntent
+        PaymentIntent paymentIntent = (PaymentIntent) deserializer.getObject().get();
+        Orders order = ordersService.getOrderByPaymentIntentId(paymentIntent.getId());
+
+        if (order.getStatus() == OrdersStatus.PENDING) {
+            order.setStatus(OrdersStatus.PAID);
+            order.setPaidAt(LocalDateTime.now());
+            ordersService.saveOrder(order);
+            log.info("Order status changed to PAID and paidAt has been saved for order with ID {}", order.getOrderId());
+        }
     }
 }
