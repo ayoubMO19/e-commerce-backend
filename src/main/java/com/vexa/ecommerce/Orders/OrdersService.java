@@ -41,7 +41,7 @@ public class OrdersService implements IOrdersService {
 
         // Obtener el Cart y comprobar que no esté vacío
         Cart cart = cartService.getCartByUserId(userId);
-        if (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty()) {
+        if (cart.getCartItemsList().isEmpty()) { // se quita comprobación de si es null, ya que en el constructor se inicia cartItemsList como arrayList empty
             log.warn("Cart from user with ID {} is empty. Cannot create an order", userId);
             throw new BadRequestException("Your cart is empty, cannot create an order.");
         }
@@ -54,10 +54,30 @@ public class OrdersService implements IOrdersService {
         order.setUpdatedAt(LocalDateTime.now());
         order.setUser(user);
 
-        // primero guardar el order
+        // Guardar el order
         Orders savedOrder = ordersRepository.save(order);
 
-        for (CartItems ci : cart.getCartItemsList()) {
+        // Función para agregar cartItems a orderItems
+        addCartItemsToOrderItems(cart.getCartItemsList(), savedOrder);
+
+        double totalPrice = cart.getCartItemsList()
+                .stream()
+                .mapToDouble(ci -> ci.getProduct().getPrice() * ci.getQuantity())
+                .sum();
+
+        // No es necesario comprobar tamaño de total price menor que 0, no es posible, no?
+
+        savedOrder.setTotalPrice(totalPrice);
+
+        // Vaciar carrito
+        cartService.clearCart(userId);
+
+        log.info("Order with ID {} has been created for user with ID {}", savedOrder.getOrderId(), userId);
+        return savedOrder;
+    }
+
+    private void addCartItemsToOrderItems(List<CartItems> cartItemsList, Orders savedOrder) {
+        for (CartItems ci : cartItemsList) {
             Products product = ci.getProduct();
             int qty = ci.getQuantity();
 
@@ -83,24 +103,6 @@ public class OrdersService implements IOrdersService {
             // Reducir stock
             product.setStock(product.getStock() - qty);
         }
-
-        double totalPrice = cart.getCartItemsList()
-                .stream()
-                .mapToDouble(ci -> ci.getProduct().getPrice() * ci.getQuantity())
-                .sum();
-
-        if (totalPrice < 0) {
-            log.warn("Total price cannot be negative. Cannot create an order for user with ID {}", userId);
-            throw new BadRequestException("Total price cannot be negative.");
-        }
-
-        savedOrder.setTotalPrice(totalPrice);
-
-        // Vaciar carrito
-        cartService.clearCart(userId);
-
-        log.info("Order with ID {} has been created for user with ID {}", savedOrder.getOrderId(), userId);
-        return savedOrder;
     }
 
     public Orders saveOrder(Orders order) {
