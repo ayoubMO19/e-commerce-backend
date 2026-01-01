@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import static com.vexa.ecommerce.Utils.SecurityUtils.hideSecureEmail;
+
 @Service
 @Slf4j
 public class EmailService {
@@ -64,24 +66,5 @@ public class EmailService {
         sendEmail(toEmail, "Restablece tu contraseña - Vexa E-commerce", htmlContent);
 
         log.info("Email de recuperación enviado a {}", hideSecureEmail(toEmail));
-    }
-
-    public static String hideSecureEmail(String email) {
-        if (email == null || email.isEmpty()) {
-            return "";
-        }
-        int arrobaIndex = email.indexOf('@');
-        if (arrobaIndex == -1) {
-            return email; // No es un email válido
-        }
-
-        String usuario = email.substring(0, arrobaIndex);
-        String dominio = email.substring(arrobaIndex + 1);
-
-        // Mostrar solo los primeros 3 caracteres del usuario y los primeros 3 del dominio
-        String partialUser = usuario.substring(0, Math.min(usuario.length(), 3)) + "...";
-        String partialDomain = dominio.substring(0, Math.min(dominio.length(), 3)) + "...";
-
-        return partialUser + "@" + partialDomain; // Salida: usu...@dom...
     }
 }

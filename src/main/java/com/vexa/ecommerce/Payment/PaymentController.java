@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/payments")
-@SecurityRequirement(name = "Bearer Authentication")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -20,6 +19,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(
             summary = "(STRIPE) - Crear nuevo intento de pago",
             description = "Crear un nuevo intento de pago de stripe",
@@ -39,7 +39,8 @@ public class PaymentController {
             @RequestHeader("Stripe-Signature") String signature
     ) {
         // Return result code
-        return paymentService.handleWebhook(payload, signature);
+        paymentService.handleWebhook(payload, signature);
+        return ResponseEntity.ok().build();
     }
 
 }
