@@ -1,131 +1,159 @@
-# VEXA E-Commerce Backend — Spring Boot · JWT · Stripe · PostgreSQL
+# VEXA E-Commerce Backend
+Spring Boot · JWT · Stripe · PostgreSQL
 
-Backend de e-commerce desarrollado en **Spring Boot** con arquitectura modular, seguridad completa con **JWT + roles**, verificación por email, recuperación de contraseña y **pagos reales integrados con Stripe** (PaymentIntent + Webhooks).
+Backend de e-commerce desarrollado en **Spring Boot** siguiendo una arquitectura limpia por capas, con **seguridad stateless basada en JWT**, control estricto de acceso a recursos y **pagos reales integrados con Stripe** mediante PaymentIntent y Webhooks.
 
-El proyecto sigue una evolución progresiva orientada a **buenas prácticas**, **seguridad real**, **flujo end-to-end** y preparación para entorno profesional.
-
----
-
-## 🚀 Tecnologías
-
-- **Java 17**
-- **Spring Boot 3**
-  - Web
-  - Spring Security
-  - JPA / Hibernate
-  - Validation
-- **JWT (Auth stateless)**
-- **Stripe API (PaymentIntent + Webhooks)**
-- **PostgreSQL**
-- **Maven**
-- **Lombok**
-- **Postman (testing manual)**
-- **Stripe CLI (testing webhooks en local)**
+El proyecto está pensado como backend real de producción: reglas claras de dominio, separación de responsabilidades, validaciones, excepciones personalizadas y tests unitarios.
 
 ---
 
-## 🔐 Autenticación y Seguridad
+## 📌 Descripción del proyecto
 
-- Registro de usuario
-- Login con JWT
-- Roles:
-  - USER
-  - ADMIN
-- Endpoints protegidos por rol
-- Acceso a recursos **siempre desde el JWT** (nunca desde el request)
-- Verificación de email
-- Reset de contraseña por email
-- Password hashing con **BCrypt**
-- Protección total frente a acceso a recursos de otros usuarios
+VEXA es un backend de e-commerce que cubre el flujo completo de compra:
 
----
+- Autenticación segura con JWT
+- Gestión de usuarios, productos, carrito y pedidos
+- Creación de pedidos desde carrito
+- Pagos reales con Stripe
+- Confirmación de pago vía Webhooks
+- Gestión de estados del pedido
+- Seguridad total frente a manipulación desde frontend
 
-## 💳 Pagos con Stripe (End-to-End)
-
-Implementación completa de pagos reales con Stripe:
-
-- Creación de PaymentIntent desde el backend
-- Asociación del orderId en metadata
-- Confirmación del pago desde frontend (Stripe Elements)
-- Recepción de eventos mediante **Webhooks**
-- Verificación de firma del webhook
-- Actualización segura del estado del pedido (PENDING → PAID)
-- Manejo idempotente (múltiples eventos, una sola actualización)
-
-> El backend **no confía nunca** en el frontend para marcar pedidos como pagados.
+El backend **no confía nunca en datos críticos enviados por el cliente** (userId, estado del pedido, pago).
 
 ---
 
-## 📦 Módulos implementados
+## 🧱 Arquitectura
 
-### ✔ Users
+Arquitectura por capas clara y desacoplada:
+
+### Controller
+- Expone endpoints REST
+- Valida input (DTOs)
+- No contiene lógica de negocio
+- Llama únicamente a servicios
+
+### Service
+- Contiene toda la lógica de negocio
+- Orquesta flujos (orders, payments, auth)
+- Aplica reglas de dominio
+- No accede directamente a HTTP ni a SDKs externos
+
+### Repository
+- Acceso a datos mediante JPA
+- Sin lógica de negocio
+- Queries explícitas cuando es necesario
+
+### Integraciones externas
+- Stripe aislado mediante **StripeClient (wrapper)**
+- Permite mockeo en tests
+- Evita dependencia directa del SDK en servicios
+
+---
+
+## 🔐 Flujo de autenticación
+
+1. Usuario se registra
+2. Se envía email de verificación
+3. Usuario verifica email
+4. Login devuelve JWT
+5. JWT se envía en `Authorization: Bearer <token>`
+6. El backend:
+  - Extrae userId y roles del JWT
+  - Nunca acepta userId desde request
+  - Protége endpoints por rol
+
+Características clave:
+- Stateless
+- BCrypt para contraseñas
+- Roles: USER / ADMIN
+- Acceso a recursos validado siempre contra JWT
+
+---
+
+## 💳 Flujo de pagos con Stripe
+
+Flujo completo y seguro end-to-end:
+
+1. Usuario crea un pedido desde el carrito  
+   → Order queda en estado **PENDING**
+2. Backend crea un **PaymentIntent** en Stripe
+3. Backend devuelve `clientSecret` al frontend
+4. Frontend confirma el pago con Stripe Elements
+5. Stripe envía webhook `payment_intent.succeeded`
+6. Backend:
+  - Verifica firma del webhook
+  - Valida tipo de evento
+  - Busca order por `paymentIntentId`
+  - Cambia estado del pedido a **PAID**
+
+Reglas clave:
+- El frontend **nunca** marca pedidos como pagados
+- Solo el webhook válido puede cambiar el estado
+- Flujo idempotente (múltiples eventos, una sola actualización)
+
+---
+
+## 📦 Estados de Order y reglas
+
+Estados posibles del pedido:
+
+- **PENDING**
+- **PAID**
+- **SHIPPED**
+- **DELIVERED**
+- **CANCELLED**
+
+Reglas de negocio:
+- Un pedido solo puede pagarse si está en PENDING
+- Stripe solo puede mover PENDING → PAID
+- No se permite modificar pedidos pagados
+- Stock se reduce al crear el pedido
+- Precio del producto se copia al order item (histórico)
+
+---
+
+## 🧩 Módulos principales
+
+### Users
 - Registro
 - Login
-- Perfil /me
+- Perfil
 - Roles
 - Verificación de email
 - Reset de contraseña
 
-### ✔ Categories
-- Crear categorías (ADMIN)
-- Listar categorías
+### Categories
+- Crear (ADMIN)
+- Listar
 
-### ✔ Products
+### Products
 - CRUD (ADMIN)
 - Relación con Category
-- Validaciones:
-  - precio > 0
-  - stock ≥ 0
+- Validaciones de precio y stock
 
-### ✔ Cart
-- 1 carrito por usuario
-- Añadir productos
-- Actualizar cantidades
-- Eliminar productos
-- Obtener carrito
-- **UserId siempre obtenido del JWT**
+### Cart
+- Un carrito por usuario
+- Añadir / actualizar / eliminar items
+- userId siempre desde JWT
 
-### ✔ Orders
+### Orders
 - Crear pedido desde carrito
-- Copia de items:
-  - cantidad
-  - precio pagado
-- Reducción de stock automática
-- totalPrice calculado automáticamente
-- Estados:
-  - PENDING
-  - PAID
-  - SHIPPED
-  - DELIVERED
-  - CANCELLED
-- Historial de pedidos por usuario
+- Copia de items y precios
+- Cálculo automático del total
+- Historial por usuario
 
-### ✔ Payments
+### Payments
 - Crear PaymentIntent
-- Webhook seguro (/api/payments/webhook)
-- Validación de firma Stripe
-- Actualización del estado del pedido solo si:
-  - Evento = payment_intent.succeeded
-  - Order está en PENDING
+- Webhook seguro
+- Verificación de firma
+- Cambio de estado controlado
 
 ---
 
-## 🔄 Flujo completo de compra
+## 🗄️ Base de datos
 
-1. Usuario autenticado añade productos al carrito  
-2. Consulta su carrito  
-3. Crea pedido (order queda en PENDING)  
-4. Backend crea PaymentIntent (Stripe)  
-5. Frontend confirma pago con Stripe Elements  
-6. Stripe envía webhook al backend  
-7. Backend valida firma y evento  
-8. Pedido pasa a PAID  
-
----
-
-## 🗄️ Base de Datos
-
-### Tablas principales
+Tablas principales:
 - users
 - roles
 - categories
@@ -136,10 +164,9 @@ Implementación completa de pagos reales con Stripe:
 - order_items
 
 Relaciones JPA:
-- @OneToMany
-- @ManyToOne
-- @JoinColumn
-- @EmbeddedId (CartItems / OrderItems)
+- OneToMany
+- ManyToOne
+- EmbeddedId (cart_items, order_items)
 
 ---
 
@@ -147,107 +174,87 @@ Relaciones JPA:
 
 ### 1️⃣ Crear base de datos
 
-    CREATE DATABASE vexadb;
-
+```sql
+CREATE DATABASE vexadb;
+```
 ### 2️⃣ Configurar application.yaml
 
-    spring:
-      datasource:
-        url: jdbc:postgresql://localhost:5432/vexadb
-        username: admin
-        password: vexa
-      jpa:
-        hibernate:
-          ddl-auto: update
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vexadb
+    username: admin
+    password: vexa
+  jpa:
+    hibernate:
+      ddl-auto: update
 
-    server:
-      port: 8082
+server:
+  port: 8082
 
-    jwt:
-      secret: your_jwt_secret
+jwt:
+  secret: your_jwt_secret
 
-    stripe:
-      secret-key: sk_test_...
-      webhook-secret: whsec_...
+stripe:
+  secret-key: sk_test_...
+  webhook-secret: whsec_...
+```
 
 ### 3️⃣ Ejecutar backend
 
-    mvn spring-boot:run
-
----
+```bash
+mvn spring-boot:run
+```
 
 ## 🧪 Testing
+- Tests unitarios con JUnit + Mockito 
+- Stripe aislado mediante wrapper 
+- Sin llamadas reales a Stripe en tests
 
-Testing manual completo con Postman.
+#### Stripe CLI para webhooks locales:
+```bash
+stripe listen --forward-to localhost:8082/api/payments/webhook
+```
 
-Stripe CLI para webhooks:
-
-    stripe listen --forward-to localhost:8082/api/payments/webhook
-
-Tarjeta de prueba Stripe:
-
-- 4242 4242 4242 4242  
-- Cualquier fecha futura  
-- CVC cualquiera  
-
----
+#### Tarjeta de prueba:
+- 4242 4242 4242 4242 
+- Fecha futura 
+- CVC cualquiera
 
 ## 📬 Endpoints (resumen)
-
-Todos los endpoints sensibles requieren JWT.
-
 ### Auth
-- POST /auth/register
-- POST /auth/login
-- GET  /auth/me
-- POST /auth/verify-email
-- POST /auth/reset-password
+- POST /auth/register 
+- POST /auth/login 
+- GET /auth/me
 
 ### Cart
-- GET    /api/cart
-- POST   /api/cart/add
-- PUT    /api/cart/update
+- GET /api/cart 
+- POST /api/cart/add 
+- PUT /api/cart/update 
 - DELETE /api/cart/delete
 
 ### Orders
-- POST /api/orders
-- GET  /api/orders/me
+- POST /api/orders 
+- GET /api/orders/me
 
 ### Payments
-- POST /api/payments/create-intent
+- POST /api/payments/create-intent 
 - POST /api/payments/webhook
 
----
-
 ## 🧭 Roadmap
+- ✔ Auth + JWT 
+- ✔ Seguridad real 
+- ✔ Stripe end-to-end 
+- ✔ Wrapper + tests 
+- ✔ Arquitectura limpia
 
-✔ Auth + JWT + Roles  
-✔ Email verification  
-✔ Password reset  
-✔ Stripe payments end-to-end  
-✔ Seguridad real en endpoints  
-✔ Webhooks seguros  
-✔ Refactor de userId desde JWT  
-
-### ⏳ Próximos pasos
-
-- Tests unitarios (JUnit)
-- Frontend (React)
-- CI/CD
-- Docker
-- Caching
+### Próximos pasos:
+- Frontend 
+- Docker 
+- CI/CD 
 - Logs estructurados
 
----
-
 ## 🧑‍💻 Autor
+Ayoub Morghi - Backend Developer · Java · Spring Boot
 
-**Ayoub Morghi**  
-Backend Developer · Java · Spring Boot  
-
-Proyecto desarrollado con enfoque en:
-
-- arquitectura limpia  
-- seguridad real  
-- buenas prácticas  
-- preparación profesional
+Proyecto desarrollado con enfoque en arquitectura limpia, seguridad real y estándares profesionales.

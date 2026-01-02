@@ -265,7 +265,7 @@ class OrdersServiceTest {
 
         // Comprobaciones de lógica
         // TODO: Hay que revisar como retornar el error mejor, no tiene lógica el mensaje
-        Assertions.assertEquals("Order payment Intent id: paymentIntentId with id null not found", resourceNotFoundException.getMessage());
+        Assertions.assertEquals("Order payment Intent id: paym...ntId with id null not found", resourceNotFoundException.getMessage());
 
     }
 }
