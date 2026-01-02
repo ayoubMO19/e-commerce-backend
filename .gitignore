@@ -2,5 +2,3 @@ application-dev.yaml
 application.yaml
 application.yml
 application.properties
-application-*.yaml
-application-*.yml
