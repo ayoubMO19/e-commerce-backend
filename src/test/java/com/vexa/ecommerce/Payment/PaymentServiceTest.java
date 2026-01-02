@@ -1,6 +1,7 @@
 package com.vexa.ecommerce.Payment;
 
 import com.stripe.model.Event;
+import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.PaymentIntent;
 import com.vexa.ecommerce.Orders.Orders;
 import com.vexa.ecommerce.Orders.OrdersService;
@@ -52,27 +53,33 @@ class PaymentServiceTest {
 
         // Comprobaciones del resultado
         assertNotNull(secretClient);
-        Assertions.assertEquals("test_client_secret", secretClient);
+        assertEquals("test_client_secret", secretClient);
+        assertEquals(fakePaymentIntent.getId(), order.getPaymentIntentId());
+        verify(stripeClient).createPaymentIntent(amount, "eur");
+        verify(ordersService).saveOrder(order);
     }
 
     @Test
     void handleWebhook() {
         // Preparación de datos
-        Event event = new Event(); // ¿Cómo creo un evento correcto para que pase por mi flujo de handleWebhook?
-        event.setType("payment_intent.succeeded");
-        Event.Data data = new Event.Data(); // Esto está mal, lo he hecho siguiendo mi intuición
-        event.setData(data);
+        Event event = mock(Event.class);
+        EventDataObjectDeserializer deserializer = mock(EventDataObjectDeserializer.class);
+        PaymentIntent paymentIntent = mock(PaymentIntent.class);
+
         Orders order = createOrder(1);
 
         // Ejecución de lógica
         when(stripeClient.parseWebhook("payload", "signature")).thenReturn(event);
+        when(event.getType()).thenReturn("payment_intent.succeeded");
+        when(event.getDataObjectDeserializer()).thenReturn(deserializer);
+        when(deserializer.getObject()).thenReturn(java.util.Optional.of(paymentIntent));
+        when(paymentIntent.getId()).thenReturn("paymentIntentId");
         when(ordersService.getOrderByPaymentIntentId("paymentIntentId")).thenReturn(order);
-        when(ordersService.saveOrder(order)).thenReturn(order);
         paymentService.handleWebhook("payload", "signature");
 
         // Comprobaciones del resultado
-        verify(stripeClient.parseWebhook("payload", "signature"), times(1));
-        verify(ordersService.getOrderByPaymentIntentId("paymentIntentId"), times(1));
-        verify(ordersService.saveOrder(order), times(1));
+        assertEquals(OrdersStatus.PAID, order.getStatus());
+        assertNotNull(order.getPaidAt());
+        verify(ordersService).saveOrder(order);
     }
 }
