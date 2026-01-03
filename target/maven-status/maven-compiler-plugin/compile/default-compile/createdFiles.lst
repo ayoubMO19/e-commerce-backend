@@ -1,6 +1,7 @@
 com/vexa/ecommerce/Comments/CommentsRepository.class
 com/vexa/ecommerce/Categories/DTOs/CategoriesResponseDTO.class
 com/vexa/ecommerce/Security/UserDetailsServiceImpl.class
+com/vexa/ecommerce/Auth/AuthService.class
 com/vexa/ecommerce/Payment/DTOs/PaymentIntentRequestDTO.class
 com/vexa/ecommerce/Auth/DTOs/ForgotPasswordRequestDTO.class
 com/vexa/ecommerce/Categories/CategoriesService.class
@@ -9,7 +10,6 @@ com/vexa/ecommerce/Users/UsersRepository.class
 com/vexa/ecommerce/Auth/DTOs/ResetPasswordRequestDTO.class
 com/vexa/ecommerce/Auth/EmailService.class
 com/vexa/ecommerce/Products/DTOs/ProductRequestDTO.class
-com/vexa/ecommerce/Users/DTOs/UserRequestDTO.class
 com/vexa/ecommerce/Payment/PaymentController.class
 com/vexa/ecommerce/config/SwaggerConfig.class
 com/vexa/ecommerce/Security/JwtAuthenticationFilter.class
@@ -41,9 +41,11 @@ com/vexa/ecommerce/Cart/CartController.class
 com/vexa/ecommerce/Security/UserDetailsImpl.class
 com/vexa/ecommerce/Auth/PasswordResetTokenRepository.class
 com/vexa/ecommerce/Auth/DTOs/RegisterResponseDTO.class
+com/vexa/ecommerce/Payment/StripeClientImpl.class
 com/vexa/ecommerce/Products/ProductsController.class
 com/vexa/ecommerce/Cart/CartRepository.class
 com/vexa/ecommerce/Auth/DTOs/LoginRequestDTO.class
+com/vexa/ecommerce/Utils/SecurityUtils.class
 com/vexa/ecommerce/Auth/PasswordResetToken.class
 com/vexa/ecommerce/Cart/DTOs/CartDeleteProductRequestDTO.class
 com/vexa/ecommerce/Orders/OrderMapper.class
@@ -51,9 +53,12 @@ com/vexa/ecommerce/Products/DTOs/UpdateProductRequestDTO.class
 com/vexa/ecommerce/Categories/CategoriesRepository.class
 com/vexa/ecommerce/Orders/OrdersService.class
 com/vexa/ecommerce/Products/DTOs/ProductResponseDTO.class
+com/vexa/ecommerce/Payment/StripeClient.class
 com/vexa/ecommerce/Security/SecurityConfig.class
 com/vexa/ecommerce/Users/IUsersService.class
+com/vexa/ecommerce/Exceptions/StripeWebhookSignatureException.class
 com/vexa/ecommerce/Exceptions/GlobalExceptionHandler.class
+com/vexa/ecommerce/Exceptions/StripePaymentIntentException.class
 com/vexa/ecommerce/Users/Role.class
 com/vexa/ecommerce/Users/UsersService.class
 com/vexa/ecommerce/Auth/DTOs/AuthResponseDTO.class
