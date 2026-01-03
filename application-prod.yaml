@@ -16,6 +16,7 @@ spring:
     port: ${MAIL_PORT}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+    test-connection: false
 
 server:
   port: ${PORT:8080}

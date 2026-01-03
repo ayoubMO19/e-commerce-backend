@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application-prod.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +116,7 @@
       <recent name="com.vexa.ecommerce.Products" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in ecommerce">
+  <component name="RunManager" selected="Spring Boot.EcommerceApplication">
     <configuration name="All in ecommerce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecommerce" />
       <option name="PACKAGE_NAME" value="" />
@@ -199,8 +200,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in ecommerce" />
         <item itemvalue="Spring Boot.EcommerceApplication" />
+        <item itemvalue="JUnit.All in ecommerce" />
         <item itemvalue="JUnit.PaymentServiceTest.handleWebhook" />
         <item itemvalue="JUnit.PaymentServiceTest.createIntent" />
         <item itemvalue="JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending" />
