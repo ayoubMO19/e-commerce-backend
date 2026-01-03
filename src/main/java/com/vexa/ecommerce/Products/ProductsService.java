@@ -2,6 +2,7 @@ package com.vexa.ecommerce.Products;
 
 import com.vexa.ecommerce.Categories.Categories;
 import com.vexa.ecommerce.Categories.CategoriesService;
+import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import com.vexa.ecommerce.Products.DTOs.UpdateProductRequestDTO;
 import jakarta.transaction.Transactional;
@@ -35,10 +36,12 @@ public class ProductsService implements IProductsService {
     }
 
     @Override
-    public Products saveNewProduct(Products product) {
+    public Products saveNewProduct(Products product, Integer categoryId) {
+        Categories category = categoriesService.getCategoryById(categoryId);
+        product.setCategory(category);
         if (productsRepository.existsByName(product.getName())) {
             log.warn("Product Name {} already exists. The product could not be saved", product.getName());
-            throw new RuntimeException("Product name already exists.");
+            throw new BadRequestException("Product name already exists.");
         }
 
         log.info("Product with name {} has been created", product.getName());
@@ -59,7 +62,7 @@ public class ProductsService implements IProductsService {
             // Comprobar Nombre duplicado (excepto si es el mismo producto)
             if (productsRepository.existsByNameAndProductIdNot(dto.name(), productId)) {
                 log.warn("Product Name {} already exists. The product could not be updated", dto.name());
-                throw new RuntimeException("Product name already exists.");
+                throw new BadRequestException("Product name already exists.");
             }
             product.setName(dto.name());
         }

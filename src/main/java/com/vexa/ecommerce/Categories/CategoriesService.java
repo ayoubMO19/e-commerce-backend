@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Categories;
 
+import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class CategoriesService implements ICategoriesService {
     public Categories saveNewCategory(Categories category) {
         if (categoriesRepository.existsByName(category.getName())) {
             log.warn("Category name {} already exists. The category could not be saved", category.getName());
-            throw new RuntimeException("Category name already exists.");
+            throw new BadRequestException("Category name already exists.");
         }
 
         log.info("Category with name {} has been created", category.getName());

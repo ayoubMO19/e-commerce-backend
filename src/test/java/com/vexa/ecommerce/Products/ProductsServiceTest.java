@@ -50,10 +50,11 @@ class ProductsServiceTest {
     void saveNewProduct_ShouldSaveProduct() {
         // Preparación de datos
         Products product = createProduct(1);
+        Integer categoryId = 1;
 
         // Ejecución de lógica
         when(productsRepository.save(product)).thenReturn(product);
-        Products addedProduct = productsService.saveNewProduct(product);
+        Products addedProduct = productsService.saveNewProduct(product, categoryId);
 
         // Comprobaciones de resultado
         verify(productsRepository, times(1)).save(product);

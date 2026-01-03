@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +31,7 @@ public class CategoriesController {
             description = "Crear una nueva categoría",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Categoría creada existosamente",
+    @ApiResponse(responseCode = "200", description = "Categoría creada exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +47,7 @@ public class CategoriesController {
             description = "Actualizar una categoría",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Categoría actualizada existosamente",
+    @ApiResponse(responseCode = "200", description = "Categoría actualizada exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -68,7 +67,7 @@ public class CategoriesController {
             description = "Eliminar una categoría",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Categoría eliminada existosamente") // Respuesta exitosa
+    @ApiResponse(responseCode = "200", description = "Categoría eliminada exitosamente") // Respuesta exitosa
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
@@ -83,7 +82,7 @@ public class CategoriesController {
             description = "Obtener todas las categorías",
             tags = {"Categories"}
     )
-    @ApiResponse(responseCode = "200", description = "Categorías obtenidas existosamente",
+    @ApiResponse(responseCode = "200", description = "Categorías obtenidas exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
     @GetMapping
     public ResponseEntity<List<CategoriesResponseDTO>> getAllCategories() {
@@ -100,7 +99,7 @@ public class CategoriesController {
             description = "Obtener una categoría por id",
             tags = {"Categories"}
     )
-    @ApiResponse(responseCode = "200", description = "Categoría obtenida existosamente",
+    @ApiResponse(responseCode = "200", description = "Categoría obtenida exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriesResponseDTO.class))) // Respuesta exitosa
     @GetMapping("/{id}")
     public ResponseEntity<CategoriesResponseDTO> getCategoryById(@PathVariable Integer id) {

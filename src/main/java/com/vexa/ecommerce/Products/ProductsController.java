@@ -1,6 +1,5 @@
 package com.vexa.ecommerce.Products;
 
-import com.vexa.ecommerce.Categories.CategoriesRepository;
 import com.vexa.ecommerce.Products.DTOs.ProductRequestDTO;
 import com.vexa.ecommerce.Products.DTOs.ProductResponseDTO;
 import com.vexa.ecommerce.Products.DTOs.UpdateProductRequestDTO;
@@ -21,11 +20,9 @@ import java.util.List;
 public class ProductsController {
 
     private final ProductsService productsService;
-    private final CategoriesRepository categoriesRepository;
 
-    public ProductsController(ProductsService productsService, CategoriesRepository categoriesRepository) {
+    public ProductsController(ProductsService productsService) {
         this.productsService = productsService;
-        this.categoriesRepository = categoriesRepository;
     }
 
     // ENDPOINTS PARA ROL ADMIN
@@ -40,13 +37,8 @@ public class ProductsController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO requestDTO) {
-        // Comprobar si la categoría existe
-        categoriesRepository.findById(requestDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
         Products newProduct = ProductMapper.toEntity(requestDTO);
-        Products savedProduct = productsService.saveNewProduct(newProduct);
-
+        Products savedProduct = productsService.saveNewProduct(newProduct, requestDTO.getCategoryId());
         return ResponseEntity.ok(ProductMapper.toDTO(savedProduct));
     }
 

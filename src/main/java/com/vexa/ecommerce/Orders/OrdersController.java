@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +35,7 @@ public class OrdersController {
             description = "Actualizar el status de uan Order específica",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Order status actualizado existosamente",
+    @ApiResponse(responseCode = "200", description = "Order status actualizado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/status")
@@ -44,8 +43,9 @@ public class OrdersController {
             @PathVariable Integer id,
             @RequestBody UpdateOrderRequestDTO dto
     ) {
-        Orders order = ordersService.updateOrder(id, dto);
-        return ResponseEntity.ok(OrderMapper.toDTO(order));
+        Orders orderData = OrderMapper.toEntity(dto);
+        Orders updatedOrder = ordersService.updateOrder(id, orderData);
+        return ResponseEntity.ok(OrderMapper.toDTO(updatedOrder));
     }
 
     // Crear una orden desde el carrito
@@ -54,14 +54,14 @@ public class OrdersController {
             description = "Crear order para el user logueado usando su carrito",
             tags = {"Orders"}
     )
-    @ApiResponse(responseCode = "200", description = "Order creada existosamente",
+    @ApiResponse(responseCode = "200", description = "Order creada exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
     @PostMapping
     public ResponseEntity<OrderResponseDTO> createOrder(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @Valid @RequestBody OrdersRequestDTO dto
     ) {
-        Orders order = ordersService.createOrderFromCart(userDetails.getUserId(), dto);
+        Orders order = ordersService.createOrderFromCart(userDetails.getUserId(), dto.getShippingAddress());
         return ResponseEntity.ok(OrderMapper.toDTO(order));
     }
 
@@ -71,7 +71,7 @@ public class OrdersController {
             description = "Obtener todas las orders del user logueado",
             tags = {"Orders"}
     )
-    @ApiResponse(responseCode = "200", description = "Orders obtenidas existosamente",
+    @ApiResponse(responseCode = "200", description = "Orders obtenidas exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
     @GetMapping
     public ResponseEntity<List<OrderResponseDTO>> getOrders(@AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -91,7 +91,7 @@ public class OrdersController {
             description = "Cancelar una Order específica actualizando su status a canceled",
             tags = {"Orders"}
     )
-    @ApiResponse(responseCode = "200", description = "Order cancelada existosamente",
+    @ApiResponse(responseCode = "200", description = "Order cancelada exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))) // Respuesta exitosa
     public ResponseEntity<OrderResponseDTO> cancelMyOrder(
             @PathVariable Integer id,

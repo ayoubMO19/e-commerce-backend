@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface IOrdersService {
 
-    Orders createOrderFromCart(Integer userId, OrdersRequestDTO dto);
+    Orders createOrderFromCart(Integer userId, String shippingAddress);
     List<Orders> getOrdersByUserId(Integer userId);
     Orders getOrderByOrderId(Integer orderId);
-    Orders updateOrder(Integer id, UpdateOrderRequestDTO dto);
+    Orders updateOrder(Integer id, Orders orderData);
 }
