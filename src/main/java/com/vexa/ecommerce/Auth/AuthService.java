@@ -1,6 +1,7 @@
 package com.vexa.ecommerce.Auth;
 
 import com.vexa.ecommerce.Auth.DTOs.*;
+import com.vexa.ecommerce.Exceptions.BadRequestException;
 import com.vexa.ecommerce.Security.JwtService;
 import com.vexa.ecommerce.Users.*;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
@@ -126,7 +127,7 @@ public class AuthService {
             // Buscar token en BD
             EmailVerificationToken verificationToken = emailVerificationTokenRepository
                     .findByToken(token)
-                    .orElseThrow(() -> new RuntimeException("Token no encontrado"));
+                    .orElseThrow(() -> new BadRequestException("Token no encontrado"));
 
             // Verificar que el token sea válido
             if (verificationToken.isUsed()) {
@@ -162,7 +163,7 @@ public class AuthService {
 
             return templateEngine.process("email/verification-success", context);
 
-        } catch (RuntimeException e) {
+        } catch (BadRequestException e) {
             // Si hay error, renderizar template de error
             Context errorContext = new Context();
             errorContext.setVariable("errorMessage", e.getMessage());
@@ -220,10 +221,10 @@ public class AuthService {
     public String resetPasswordForm(String token) {
         // Verificar token
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Token inválido"));
+                .orElseThrow(() -> new BadRequestException("Token inválido"));
 
         if (!resetToken.isValid()) {
-            throw new RuntimeException("Token expirado o ya utilizado");
+            throw new BadRequestException("Token expirado o ya utilizado");
         }
 
         // Preparar template

@@ -66,7 +66,7 @@ public class UsersController {
             description = "Eliminar un usuario indicando su id",
             tags = {"Admin"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario eliminado exitosamente") // Respuesta exitosa
+    @ApiResponse(responseCode = "204", description = "Usuario eliminado exitosamente") // Respuesta exitosa
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUserById(@PathVariable Integer id) {
@@ -129,7 +129,7 @@ public class UsersController {
             description = "Eliminar el perfil del user logueado",
             tags = {"Users"}
     )
-    @ApiResponse(responseCode = "200", description = "Usuario Eliminado exitosamente",
+    @ApiResponse(responseCode = "204", description = "Usuario Eliminado exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))) // Respuesta exitosa
     @DeleteMapping("/me")
     public ResponseEntity<Void> deleteMyProfile (

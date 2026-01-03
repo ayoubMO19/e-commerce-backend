@@ -3,8 +3,6 @@ package com.vexa.ecommerce.Orders;
 import com.vexa.ecommerce.Cart.Cart;
 import com.vexa.ecommerce.Cart.CartItems;
 import com.vexa.ecommerce.Cart.CartService;
-import com.vexa.ecommerce.Orders.DTOs.OrdersRequestDTO;
-import com.vexa.ecommerce.Orders.DTOs.UpdateOrderRequestDTO;
 import com.vexa.ecommerce.Products.Products;
 import com.vexa.ecommerce.Users.Users;
 import com.vexa.ecommerce.Users.UsersService;
@@ -37,7 +35,7 @@ public class OrdersService implements IOrdersService {
 
     @Override
     @Transactional
-    public Orders createOrderFromCart(Integer userId, OrdersRequestDTO dto) {
+    public Orders createOrderFromCart(Integer userId, String shippingAddress) {
         // Obtener el User
         Users user = usersService.getUserById(userId);
 
@@ -51,7 +49,7 @@ public class OrdersService implements IOrdersService {
         // Crear Order
         Orders order = new Orders();
         order.setStatus(OrdersStatus.PENDING);
-        order.setShippingAddress(dto.getShippingAddress());
+        order.setShippingAddress(shippingAddress);
         order.setCreatedAt(LocalDateTime.now());
         order.setUpdatedAt(LocalDateTime.now());
         order.setUser(user);
@@ -129,16 +127,16 @@ public class OrdersService implements IOrdersService {
     }
 
     @Override
-    public Orders updateOrder(Integer id, UpdateOrderRequestDTO dto) {
+    public Orders updateOrder(Integer id, Orders orderData) {
         Orders order = ordersRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("Order with ID {} not found. The order could not be updated", id);
                     return new ResourceNotFoundException("Order", id);
                 });
 
-        if (dto.status() != null) {
+        if (orderData.getStatus() != null) {
             OrdersStatus current = order.getStatus();
-            OrdersStatus next = dto.status();
+            OrdersStatus next = orderData.getStatus();
 
             if (!current.canTransitionTo(next)) {
                 log.warn("Invalid status transition from {} to {} in order with ID {}. The order could not be updated", current, next, id);
@@ -150,20 +148,20 @@ public class OrdersService implements IOrdersService {
             order.setStatus(next);
         }
 
-        if (dto.shippingAddress() != null) {
-            order.setShippingAddress(dto.shippingAddress());
+        if (orderData.getShippingAddress() != null) {
+            order.setShippingAddress(orderData.getShippingAddress());
         }
 
-        if (dto.paymentIntentId() != null) {
-            if (ordersRepository.existsByPaymentIntentId(dto.paymentIntentId())) {
+        if (orderData.getPaymentIntentId() != null) {
+            if (ordersRepository.existsByPaymentIntentId(orderData.getPaymentIntentId())) {
                 log.warn("PaymentIntentId is already in use. The order with ID {} could not be updated", id);
                 throw new BadRequestException("PaymentIntentId is already in use");
             }
-            order.setPaymentIntentId(dto.paymentIntentId());
+            order.setPaymentIntentId(orderData.getPaymentIntentId());
         }
 
-        if (dto.paidAt() != null) {
-            order.setPaidAt(dto.paidAt());
+        if (orderData.getPaidAt() != null) {
+            order.setPaidAt(orderData.getPaidAt());
         }
 
         log.info("Order with id {} has been updated", id);

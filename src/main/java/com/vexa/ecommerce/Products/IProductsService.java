@@ -10,7 +10,7 @@ public interface IProductsService {
 
     Products getProductById(Integer id);
 
-    Products saveNewProduct(Products product);
+    Products saveNewProduct(Products product, Integer categoryId);
 
     Products updateProduct(Integer id, UpdateProductRequestDTO dto);
 

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class CartController {
             description = "Obtener carrito del user logueado",
             tags = {"Cart"}
     )
-    @ApiResponse(responseCode = "200", description = "Cart obtenido existosamente",
+    @ApiResponse(responseCode = "200", description = "Cart obtenido exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponseDTO.class))) // Respuesta exitosa
     @GetMapping
     public ResponseEntity<CartResponseDTO> getCart(@AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -46,7 +45,7 @@ public class CartController {
             description = "Agregar producto al carrito del user logueado",
             tags = {"Cart"}
     )
-    @ApiResponse(responseCode = "200", description = "Product agregado al Cart existosamente",
+    @ApiResponse(responseCode = "200", description = "Product agregado al Cart exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponseDTO.class))) // Respuesta exitosa
     @PostMapping("/add")
     public ResponseEntity<CartResponseDTO> addToCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CartAddRequestDTO dto) {
@@ -64,7 +63,7 @@ public class CartController {
             description = "Actualizar cantidad de producto del carrito del user loguead",
             tags = {"Cart"}
     )
-    @ApiResponse(responseCode = "200", description = "Cantidad de Product actualizado en Cart existosamente",
+    @ApiResponse(responseCode = "200", description = "Cantidad de Product actualizado en Cart exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponseDTO.class))) // Respuesta exitosa
     @PutMapping("/update")
     public ResponseEntity<CartResponseDTO> updateQuantity(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CartUpdateRequestDTO dto) {
@@ -82,7 +81,7 @@ public class CartController {
             description = "Eliminar producto del carrito del user logueado",
             tags = {"Cart"}
     )
-    @ApiResponse(responseCode = "200", description = "Product eliminado de Cart existosamente",
+    @ApiResponse(responseCode = "200", description = "Product eliminado de Cart exitosamente",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponseDTO.class))) // Respuesta exitosa
     @DeleteMapping("/delete")
     public ResponseEntity<CartResponseDTO> removeProduct(

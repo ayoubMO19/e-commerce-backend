@@ -25,7 +25,7 @@ public class PaymentController {
             description = "Crear un nuevo intento de pago de stripe",
             tags = {"Payments"}
     )
-    @ApiResponse(responseCode = "200", description = "PaymentIntent creado con éxito existosamente") // Respuesta exitosa
+    @ApiResponse(responseCode = "200", description = "PaymentIntent creado con éxito exitosamente") // Respuesta exitosa
     @PostMapping("/create-intent")
     public ResponseEntity<String> createIntent(@Valid @RequestBody PaymentIntentRequestDTO orderDetails) {
         String secretClientKey = paymentService.createIntent(orderDetails.orderId());

@@ -74,7 +74,7 @@ class OrdersServiceTest {
                     o.setOrderId(1);
                     return o;
                 });
-        Orders createdOrder = ordersService.createOrderFromCart(user.getUserId(), dto);
+        Orders createdOrder = ordersService.createOrderFromCart(user.getUserId(), dto.getShippingAddress());
 
         // Comprobaciones del resultado
         assertNotNull(createdOrder);
@@ -150,31 +150,33 @@ class OrdersServiceTest {
     void updateOrder_shouldUpdateSuccessfully() {
         // Preparación de datos
         Orders order = createOrder(1);
-        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAdressUpdated", "paymentIntentId", LocalDateTime.now());
         Optional<Orders> ordersOptional = Optional.of(order);
+        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAddressUpdated", "paymentIntentId", LocalDateTime.now());
+        Orders orderData = OrderMapper.toEntity(dto);
 
         // Ejecución de lógica
         when(ordersRepository.findById(order.getOrderId())).thenReturn(ordersOptional);
-        when(ordersRepository.existsByPaymentIntentId(dto.paymentIntentId())).thenReturn(false);
+        when(ordersRepository.existsByPaymentIntentId(orderData.getPaymentIntentId())).thenReturn(false);
         when(ordersRepository.save(order)).thenReturn(order);
-        Orders updatedOrder = ordersService.updateOrder(order.getOrderId(), dto);
+        Orders updatedOrder = ordersService.updateOrder(order.getOrderId(), orderData);
 
         //Comprobaciones de resultado
         assertNotNull(updatedOrder);
         assertEquals(order.getOrderId(), updatedOrder.getOrderId());
-        assertEquals("shippingAdressUpdated", updatedOrder.getShippingAddress());
+        assertEquals("shippingAddressUpdated", updatedOrder.getShippingAddress());
     }
 
     @Test
     void updateOrder_shouldThrowException_whenUserNotFound() {
         // Preparación de datos
         Orders order = createOrder(1);
-        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAdressUpdated", "paymentIntentId", LocalDateTime.now());
+        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAddressUpdated", "paymentIntentId", LocalDateTime.now());
+        Orders orderData = OrderMapper.toEntity(dto);
 
         // Ejecución de lógica
         when(ordersRepository.findById(order.getOrderId())).thenReturn(Optional.empty());
         ResourceNotFoundException resourceNotFoundException = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            ordersService.updateOrder(order.getOrderId(), dto);
+            ordersService.updateOrder(order.getOrderId(), orderData);
         });
 
         //Comprobaciones de resultado
@@ -185,14 +187,15 @@ class OrdersServiceTest {
     void updateOrder_shouldThrowException_whenPaymentIntentIdAlreadyExists() {
         // Preparación de datos
         Orders order = createOrder(1);
-        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAdressUpdated", "paymentIntentId", LocalDateTime.now());
         Optional<Orders> ordersOptional = Optional.of(order);
+        UpdateOrderRequestDTO dto = new UpdateOrderRequestDTO(OrdersStatus.PAID, "shippingAddressUpdated", "paymentIntentId", LocalDateTime.now());
+        Orders orderData = OrderMapper.toEntity(dto);
 
         // Ejecución de lógica
         when(ordersRepository.findById(order.getOrderId())).thenReturn(ordersOptional);
-        when(ordersRepository.existsByPaymentIntentId(dto.paymentIntentId())).thenReturn(true);
+        when(ordersRepository.existsByPaymentIntentId(orderData.getPaymentIntentId())).thenReturn(true);
         BadRequestException badRequestException = Assertions.assertThrows(BadRequestException.class, () -> {
-            ordersService.updateOrder(order.getOrderId(), dto);
+            ordersService.updateOrder(order.getOrderId(), orderData);
         });
 
         //Comprobaciones de resultado

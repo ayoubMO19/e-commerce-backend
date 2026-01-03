@@ -2,6 +2,7 @@ package com.vexa.ecommerce.Orders;
 
 import com.vexa.ecommerce.Orders.DTOs.OrderItemResponseDTO;
 import com.vexa.ecommerce.Orders.DTOs.OrderResponseDTO;
+import com.vexa.ecommerce.Orders.DTOs.UpdateOrderRequestDTO;
 
 public class OrderMapper {
 
@@ -29,6 +30,16 @@ public class OrderMapper {
         );
 
         return dto;
+    }
+
+    public static Orders toEntity(UpdateOrderRequestDTO dto) {
+        Orders order = new Orders();
+        order.setStatus(dto.status());
+        order.setShippingAddress(dto.shippingAddress());
+        order.setPaymentIntentId(dto.paymentIntentId());
+        order.setPaidAt(dto.paidAt());
+
+        return order;
     }
 
 }

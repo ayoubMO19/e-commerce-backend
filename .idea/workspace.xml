@@ -5,7 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Auth/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Categories/CategoriesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/IOrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/IOrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrderMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Orders/OrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/IProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/IProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Products/ProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Users/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Products/ProductsServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/IOrdersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/IOrdersService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrderMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrderMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Orders/OrdersService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/IProductsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/IProductsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Products/ProductsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Users/UsersController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Orders/OrdersServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Orders/OrdersServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Products/ProductsServiceTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +126,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.debugger.capture&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -200,9 +226,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in ecommerce" />
+        <item itemvalue="Spring Boot.EcommerceApplication" />
         <item itemvalue="JUnit.PaymentServiceTest.handleWebhook" />
         <item itemvalue="JUnit.PaymentServiceTest.createIntent" />
-        <item itemvalue="Spring Boot.EcommerceApplication" />
         <item itemvalue="JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending" />
       </list>
     </recent_temporary>
