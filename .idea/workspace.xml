@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
-      <change beforePath="$PROJECT_DIR$/application-prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application-prod.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Orders/OrdersServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Payment/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Payment/PaymentServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vexa/ecommerce/Payment/PaymentServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Payment/PaymentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Payment/PaymentService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Cart.CartServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Cart.CartServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Categories.CategoriesServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Categories.CategoriesServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.EcommerceApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.EcommerceApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Orders.OrdersServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Orders.OrdersServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Payment.PaymentServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Payment.PaymentServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Products.ProductsServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Products.ProductsServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Users.UsersServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.vexa.ecommerce.Users.UsersServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Cart.CartServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Cart.CartServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Categories.CategoriesServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Categories.CategoriesServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.EcommerceApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.EcommerceApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Orders.OrdersServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Orders.OrdersServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Payment.PaymentServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Payment.PaymentServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Products.ProductsServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Products.ProductsServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Users.UsersServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.vexa.ecommerce.Users.UsersServiceTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Orders/OrdersServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Orders/OrdersServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Payment/PaymentServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/vexa/ecommerce/Payment/PaymentServiceTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +137,7 @@
       <recent name="com.vexa.ecommerce.Products" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.EcommerceApplication">
+  <component name="RunManager" selected="JUnit.PaymentServiceTest.createIntent">
     <configuration name="All in ecommerce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecommerce" />
       <option name="PACKAGE_NAME" value="" />
@@ -200,10 +221,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PaymentServiceTest.createIntent" />
         <item itemvalue="Spring Boot.EcommerceApplication" />
         <item itemvalue="JUnit.All in ecommerce" />
         <item itemvalue="JUnit.PaymentServiceTest.handleWebhook" />
-        <item itemvalue="JUnit.PaymentServiceTest.createIntent" />
         <item itemvalue="JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending" />
       </list>
     </recent_temporary>

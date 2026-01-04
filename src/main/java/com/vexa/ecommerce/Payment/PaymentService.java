@@ -35,6 +35,13 @@ public class PaymentService {
             throw new BadRequestException("The status of the order with order id: " + orderId + " is not pending. order.staus:" + order.getStatus());
         }
 
+        // Si existe comprobamos el status que esté en pending
+        if (order.getPaymentIntentId() != null) {
+            // Lanzamos excepción bad request si ya tiene paymentIntent
+            log.warn("The order with ID {} already has a payment intent. You cannot create a payment intent for an order that already contains one.", order.getOrderId());
+            throw new BadRequestException("The order with ID: " + orderId + " already has a payment intent. You cannot create a payment intent for an order that already contains one.");
+        }
+
         // Variables necesarias para crear PaymentIntent
         long amount = new BigDecimal(order.getTotalPrice()).multiply(new BigDecimal(100)).longValueExact();
         String currency = "eur";

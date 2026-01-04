@@ -39,6 +39,7 @@ class PaymentServiceTest {
     void createIntent() {
         // Preparación de datos
         Orders order = createOrder(1);
+        order.setPaymentIntentId(null);
         long amount = new BigDecimal(order.getTotalPrice()).multiply(new BigDecimal(100)).longValueExact();
         PaymentIntent fakePaymentIntent = new PaymentIntent();
         fakePaymentIntent.setAmount(amount);
