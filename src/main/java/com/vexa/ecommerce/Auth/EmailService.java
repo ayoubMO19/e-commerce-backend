@@ -3,6 +3,7 @@ package com.vexa.ecommerce.Auth;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
+    @Value("${app.mail.from}")
+    private String fromEmail;
+    @Value("${app.url}")
+    private String appUrl;
 
     public EmailService(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
@@ -24,7 +29,7 @@ public class EmailService {
     }
 
     public void sendVerificationEmail(String toEmail, String token) throws MessagingException {
-        String verificationUrl = "http://localhost:8082/api/auth/verify?token=" + token;
+        String verificationUrl = appUrl + "/api/auth/verify?token=" + token;
 
         Context context = new Context();
         context.setVariable("verificationUrl", verificationUrl);
@@ -49,6 +54,7 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+        helper.setFrom(fromEmail);
         helper.setTo(toEmail);
         helper.setSubject(subject);
         helper.setText(htmlContent, true);  // true = HTML
@@ -57,7 +63,7 @@ public class EmailService {
     }
 
     public void sendPasswordResetEmail(String toEmail, String token) throws MessagingException {
-        String resetUrl = "http://localhost:8082/api/auth/reset-password-form?token=" + token;
+        String resetUrl = appUrl + "/api/auth/reset-password-form?token=" + token;
 
         Context context = new Context();
         context.setVariable("resetUrl", resetUrl);

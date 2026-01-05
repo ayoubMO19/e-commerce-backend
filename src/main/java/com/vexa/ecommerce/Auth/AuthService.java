@@ -7,6 +7,7 @@ import com.vexa.ecommerce.Users.*;
 import com.vexa.ecommerce.Users.DTOs.UserResponseDTO;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,8 @@ public class AuthService {
     private final EmailVerificationTokenRepository emailVerificationTokenRepository;
     private final TemplateEngine templateEngine;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    @Value("${app.url}")
+    private String appUrl;
 
     public AuthService(JwtService jwtService,
                        UsersRepository usersRepository,
@@ -159,7 +162,7 @@ public class AuthService {
             // Preparar y renderizar template de éxito
             Context context = new Context();
             context.setVariable("userName", user.getName());
-            context.setVariable("loginUrl", "http://localhost:8082/api/auth/login");
+            context.setVariable("loginUrl", appUrl + "/api/auth/login");
 
             return templateEngine.process("email/verification-success", context);
 
