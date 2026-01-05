@@ -1,23 +1,14 @@
 spring:
   jpa:
     show-sql: true
-    # CAMBIA temporalmente a 'create' para forzar la creación. 'update' no crea las tablas
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-        # Esquema de Supabase
         default_schema: public
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.results: DEBUG
-    org.hibernate.tool.schema: DEBUG
-
-  # Se usa SPRING_MAIL_... en Render.  Spring lo detecta por defecto.
   mail:
     test-connection: false
     properties:
@@ -26,6 +17,14 @@ logging:
           auth: true
           starttls:
             enable: true
+
+# EL MARGEN IZQUIERDO ES VITAL: Cero espacios antes de logging
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.results: DEBUG
+    org.hibernate.tool.schema: DEBUG
 
 server:
   port: ${PORT:8080}
