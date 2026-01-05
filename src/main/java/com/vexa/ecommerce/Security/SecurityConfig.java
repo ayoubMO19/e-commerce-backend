@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll() // Permite obtener productos sin autenticación
                         .requestMatchers(HttpMethod.GET, "/api/products/{id}").permitAll() // Permite obtener producto por ID sin autenticación
                         .requestMatchers(
+                                "/",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
