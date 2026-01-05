@@ -2,7 +2,7 @@ spring:
   # Uso de variables SPRING_DATASOURCE_... en Render. Spring las detecta por defecto.
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
