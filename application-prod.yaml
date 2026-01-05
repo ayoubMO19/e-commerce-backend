@@ -1,18 +1,20 @@
 spring:
-  # Uso de variables SPRING_DATASOURCE_... en Render. Spring las detecta por defecto.
   jpa:
     show-sql: true
+    # CAMBIA temporalmente a 'create' para forzar la creación. 'update' no crea las tablas
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        # Esquema de Supabase
+        default_schema: public
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.orm.results: DEBUG
     org.hibernate.tool.schema: DEBUG
 
   # Se usa SPRING_MAIL_... en Render.  Spring lo detecta por defecto.
