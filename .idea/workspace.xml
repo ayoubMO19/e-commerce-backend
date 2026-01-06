@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/reset-password-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/reset-password-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/reset-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/reset-password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/verification-error.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/verification-error.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/verification-success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/verification-success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/verification.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/verification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email/welcome.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-prod.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Auth/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Auth/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Auth/EmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Auth/EmailService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
