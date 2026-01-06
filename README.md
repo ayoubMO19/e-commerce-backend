@@ -1,4 +1,7 @@
 # VEXA E-Commerce Backend
+📚 **Documentación detallada**
+- Si desea una documentación más detallada con cada checklist realizado para llevar a cabo el proyecto:  
+[**Java Spring Boot E-commerce - Notion Documentation**](https://aged-stag-a8e.notion.site/Java-Spring-Boot-E-commerce-2b1e038a025c80cfb7acd698e9766724?pvs=74)
 
 **Spring Boot · JWT · Stripe · PostgreSQL**
 
