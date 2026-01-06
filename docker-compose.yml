@@ -33,16 +33,6 @@ services:
     networks:
       - vexa_net
 
-  # app:
-   # build: .
-    #container_name: vexa_app
-    #ports:
-    #  - "8081:8080"
-    #depends_on:
-    #  - db
-    #networks:
-    #  - vexa_net
-
 volumes:
   pgdata:
 

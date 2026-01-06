@@ -2,87 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error de Verificación - Vexa E-commerce</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        .error-icon {
-            color: #dc3545;
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #f5c6cb;
-            margin: 20px 0;
-        }
-        .button {
-            display: inline-block;
-            background: #6c757d;
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            margin: 10px;
-            transition: transform 0.3s;
-        }
-        .button:hover {
-            transform: translateY(-2px);
-        }
-        .button-primary {
-            background: #007bff;
-        }
-    </style>
+    <title>Error de verificación</title>
 </head>
-<body>
-<div class="container">
-    <div class="error-icon">❌</div>
-    <h1>Error de Verificación</h1>
+    <body style="font-family: Arial, sans-serif; background-color: #ffffff; color: #333;">
+        <h2>Error de verificación</h2>
 
-    <div class="error-message">
-        <p th:text="${errorMessage}">Mensaje de error</p>
-    </div>
+        <p th:text="${errorMessage}">No se pudo verificar la cuenta.</p>
 
-    <p>Lo sentimos, no pudimos verificar tu cuenta.</p>
+        <p>Puedes volver a la plataforma desde el siguiente enlace:</p>
 
-    <div>
-        <a href="/api/auth/register" class="button button-primary">
-            Registrarse de nuevo
+        <a href="https://e-commerce-backend-lny2.onrender.com/swagger-ui/index.html"
+           style="display:inline-block;padding:10px 16px;border:1px solid #333;color:#333;text-decoration:none;">
+            Acceder
         </a>
-        <a href="/" class="button">
-            Ir al inicio
-        </a>
-    </div>
 
-    <p style="margin-top: 30px; font-size: 12px; color: #999;">
-        Si el problema persiste, contacta con soporte: soporte@vexa.com
-    </p>
-</div>
-</body>
+        <p style="margin-top:30px;font-size:12px;color:#777;">
+            Soporte: soporte@vexa.com
+        </p>
+    </body>
 </html>
