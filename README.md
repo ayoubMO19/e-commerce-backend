@@ -1,55 +1,79 @@
 # VEXA E-Commerce Backend
-Spring Boot · JWT · Stripe · PostgreSQL
 
-Backend de e-commerce desarrollado en **Spring Boot** siguiendo una arquitectura limpia por capas, con **seguridad stateless basada en JWT**, control estricto de acceso a recursos y **pagos reales integrados con Stripe** mediante PaymentIntent y Webhooks.
+**Spring Boot · JWT · Stripe · PostgreSQL**
 
-El proyecto está pensado como backend real de producción: reglas claras de dominio, separación de responsabilidades, validaciones, excepciones personalizadas y tests unitarios.
+Backend de e-commerce desarrollado en Spring Boot, orientado a producción, con arquitectura modular por dominios, seguridad stateless con JWT, control estricto de acceso y pagos reales con Stripe usando PaymentIntent y Webhooks verificados.
 
----
+El sistema está diseñado para **no confiar nunca en el cliente**, aplicar **reglas de dominio explícitas** y mantener aislamiento entre lógica de negocio, infraestructura y frameworks externos.
 
 ## 📌 Descripción del proyecto
 
-VEXA es un backend de e-commerce que cubre el flujo completo de compra:
-
+VEXA E-commerce cubre el flujo completo de un e-commerce real:
 - Autenticación segura con JWT
 - Gestión de usuarios, productos, carrito y pedidos
 - Creación de pedidos desde carrito
 - Pagos reales con Stripe
 - Confirmación de pago vía Webhooks
-- Gestión de estados del pedido
-- Seguridad total frente a manipulación desde frontend
+- Gestión estricta de estados del pedido
+- Protección total frente a manipulación desde frontend
 
-El backend **no confía nunca en datos críticos enviados por el cliente** (userId, estado del pedido, pago).
-
----
+> **El backend nunca acepta datos críticos desde el cliente** como `userId`, precios, estados de pedido o pagos.
 
 ## 🧱 Arquitectura
 
-Arquitectura por capas clara y desacoplada:
+### Arquitectura por dominios
 
-### Controller
-- Expone endpoints REST
-- Valida input (DTOs)
-- No contiene lógica de negocio
-- Llama únicamente a servicios
+El proyecto está organizado por bounded contexts funcionales:
+- `Auth`
+- `Users`
+- `Categories`
+- `Products`
+- `Cart`
+- `Orders`
+- `Payment`
+- `Security`
+- `Comments`
+- `Exceptions`
+- `Utils`
+- `config`
 
-### Service
-- Contiene toda la lógica de negocio
-- Orquesta flujos (orders, payments, auth)
-- Aplica reglas de dominio
-- No accede directamente a HTTP ni a SDKs externos
+Cada dominio es autónomo, sin dependencias circulares, y contiene internamente sus propias capas.
 
-### Repository
-- Acceso a datos mediante JPA
-- Sin lógica de negocio
-- Queries explícitas cuando es necesario
+### Estructura interna de un dominio
 
-### Integraciones externas
-- Stripe aislado mediante **StripeClient (wrapper)**
-- Permite mockeo en tests
-- Evita dependencia directa del SDK en servicios
+Dentro de cada dominio se sigue una separación clara:
 
----
+- **Controller**
+   - Endpoints REST
+   - Validación de entrada mediante DTOs
+   - Sin lógica de negocio
+
+- **Service**
+   - Lógica de negocio
+   - Reglas de dominio
+   - Orquestación de flujos
+   - No conoce HTTP ni detalles de frameworks externos
+
+- **Repository**
+   - Acceso a datos con JPA
+   - Queries explícitas cuando es necesario
+   - Sin lógica de negocio
+
+- **DTOs**
+   - Requests y Responses
+   - Separación clara del modelo de dominio
+
+- **Entities**
+   - Modelo persistente
+   - Relaciones JPA bien definidas
+
+## 🔌 Integraciones externas
+
+### Stripe
+- Integración aislada mediante `StripeClient` (wrapper propio)
+- Los servicios de dominio no dependen directamente del SDK de Stripe
+- Facilita testing y mockeo
+- Webhooks verificados por firma
 
 ## 🔐 Flujo de autenticación
 
@@ -58,62 +82,56 @@ Arquitectura por capas clara y desacoplada:
 3. Usuario verifica email
 4. Login devuelve JWT
 5. JWT se envía en `Authorization: Bearer <token>`
-6. El backend:
-  - Extrae userId y roles del JWT
-  - Nunca acepta userId desde request
-  - Protége endpoints por rol
 
-Características clave:
+El backend:
+- Extrae `userId` y roles del JWT
+- **Nunca** acepta `userId` desde la request
+- Protege endpoints por rol
+
+**Características:**
 - Stateless
 - BCrypt para contraseñas
-- Roles: USER / ADMIN
-- Acceso a recursos validado siempre contra JWT
-
----
+- Roles: `USER` / `ADMIN`
+- Autorización basada exclusivamente en JWT
 
 ## 💳 Flujo de pagos con Stripe
 
-Flujo completo y seguro end-to-end:
+Flujo seguro end-to-end:
 
 1. Usuario crea un pedido desde el carrito  
-   → Order queda en estado **PENDING**
-2. Backend crea un **PaymentIntent** en Stripe
-3. Backend devuelve `clientSecret` al frontend
+   → `Order` queda en estado `PENDING`
+2. Backend crea un `PaymentIntent` en Stripe
+3. Backend devuelve `clientSecret`
 4. Frontend confirma el pago con Stripe Elements
 5. Stripe envía webhook `payment_intent.succeeded`
 6. Backend:
-  - Verifica firma del webhook
-  - Valida tipo de evento
-  - Busca order por `paymentIntentId`
-  - Cambia estado del pedido a **PAID**
+   - Verifica la firma del webhook
+   - Valida el tipo de evento
+   - Busca el pedido por `paymentIntentId`
+   - Cambia el estado a `PAID`
 
-Reglas clave:
+**Reglas:**
 - El frontend **nunca** marca pedidos como pagados
-- Solo el webhook válido puede cambiar el estado
-- Flujo idempotente (múltiples eventos, una sola actualización)
+- Solo Stripe vía webhook puede hacerlo
+- Flujo idempotente
 
----
+## 📦 Estados de Order
 
-## 📦 Estados de Order y reglas
+**Estados posibles:**
+- `PENDING`
+- `PAID`
+- `SHIPPED`
+- `DELIVERED`
+- `CANCELLED`
 
-Estados posibles del pedido:
+**Reglas de dominio:**
+- Solo pedidos `PENDING` pueden pagarse
+- Stripe solo puede mover `PENDING` → `PAID`
+- Pedidos pagados no se modifican
+- El stock se reduce al crear el pedido
+- El precio del producto se copia al order item (histórico)
 
-- **PENDING**
-- **PAID**
-- **SHIPPED**
-- **DELIVERED**
-- **CANCELLED**
-
-Reglas de negocio:
-- Un pedido solo puede pagarse si está en PENDING
-- Stripe solo puede mover PENDING → PAID
-- No se permite modificar pedidos pagados
-- Stock se reduce al crear el pedido
-- Precio del producto se copia al order item (histórico)
-
----
-
-## 🧩 Módulos principales
+## 🧩 Dominios principales
 
 ### Users
 - Registro
@@ -135,126 +153,151 @@ Reglas de negocio:
 ### Cart
 - Un carrito por usuario
 - Añadir / actualizar / eliminar items
-- userId siempre desde JWT
+- `userId` siempre desde JWT
 
 ### Orders
 - Crear pedido desde carrito
-- Copia de items y precios
+- Copia de productos y precios
 - Cálculo automático del total
 - Historial por usuario
 
 ### Payments
-- Crear PaymentIntent
+- Creación de PaymentIntent
 - Webhook seguro
 - Verificación de firma
 - Cambio de estado controlado
 
----
-
 ## 🗄️ Base de datos
 
-Tablas principales:
-- users
-- roles
-- categories
-- products
-- cart
-- cart_items
-- orders
-- order_items
+**Tablas principales:**
+- `users`
+- `roles`
+- `categories`
+- `products`
+- `cart`
+- `cart_items`
+- `orders`
+- `order_items`
 
-Relaciones JPA:
+**Relaciones:**
 - OneToMany
 - ManyToOne
-- EmbeddedId (cart_items, order_items)
+- EmbeddedId (`cart_items`, `order_items`)
 
----
-
-## ▶️ Cómo ejecutar el proyecto
+## ▶️ Ejecución del proyecto
 
 ### 1️⃣ Crear base de datos
-
 ```sql
-CREATE DATABASE vexadb;
+CREATE DATABASE vexadb; # O el nombre que hayamos configurado
 ```
-### 2️⃣ Configurar application.yaml
 
+### 2️⃣ Configurar `application.yaml`
 ```yaml
+# ADAPTAR VALORES SEGÚN CONFIGURACIÓN PROPIA
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/vexadb
-    username: admin
-    password: vexa
-  jpa:
-    hibernate:
-      ddl-auto: update
+   datasource:
+      url: jdbc:postgresql://localhost:5433/vexadb
+      username: admin
+      password: vexa
+   jpa:
+      hibernate:
+         ddl-auto: update
+      properties:
+         hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+   mail:
+      host: localhost
+      port: 1025
+      properties:
+         mail:
+            smtp:
+               auth: false
+               starttls:
+                  enable: false
+      test-connection: false  # Opcional para debug
+
+app:
+   mail:
+      from: remittentTest@remittentTest.com
 
 server:
-  port: 8082
+   port: 8082
+
+logging:
+   level:
+      org.springframework.mail: DEBUG
 
 jwt:
-  secret: your_jwt_secret
+   secret: TX...
 
 stripe:
-  secret-key: sk_test_...
-  webhook-secret: whsec_...
+   secret-key: sk_test...
+   webhook-secret: whsec_...
+
+springdoc:
+   enable-native-support: true
 ```
 
-### 3️⃣ Ejecutar backend
-
-```bash
+### 3️⃣ Ejecutar
+```shell
 mvn spring-boot:run
 ```
 
 ## 🧪 Testing
-- Tests unitarios con JUnit + Mockito 
-- Stripe aislado mediante wrapper 
+
+- Tests unitarios con JUnit + Mockito
+- Stripe completamente mockeado
 - Sin llamadas reales a Stripe en tests
 
-#### Stripe CLI para webhooks locales:
-```bash
+**Webhooks locales:**
+```shell
 stripe listen --forward-to localhost:8082/api/payments/webhook
 ```
 
-#### Tarjeta de prueba:
-- 4242 4242 4242 4242 
-- Fecha futura 
+**Tarjeta de prueba:**
+- `4242 4242 4242 4242`
+- Fecha futura
 - CVC cualquiera
 
 ## 📬 Endpoints (resumen)
+
 ### Auth
-- POST /auth/register 
-- POST /auth/login 
-- GET /auth/me
+- `POST /auth/register`
+- `POST /auth/login`
+- `GET /auth/me`
 
 ### Cart
-- GET /api/cart 
-- POST /api/cart/add 
-- PUT /api/cart/update 
-- DELETE /api/cart/delete
+- `GET /api/cart`
+- `POST /api/cart/add`
+- `PUT /api/cart/update`
+- `DELETE /api/cart/delete`
 
 ### Orders
-- POST /api/orders 
-- GET /api/orders/me
+- `POST /api/orders`
+- `GET /api/orders/me`
 
 ### Payments
-- POST /api/payments/create-intent 
-- POST /api/payments/webhook
+- `POST /api/payments/create-intent`
+- `POST /api/payments/webhook`
 
 ## 🧭 Roadmap
-- ✔ Auth + JWT 
-- ✔ Seguridad real 
-- ✔ Stripe end-to-end 
-- ✔ Wrapper + tests 
-- ✔ Arquitectura limpia
 
-### Próximos pasos:
-- Frontend 
-- Docker 
-- CI/CD 
-- Logs estructurados
+### ✅ Completado
+- Arquitectura por dominios
+- Seguridad real con JWT
+- Stripe end-to-end
+- Wrapper externo + tests
+- Reglas de negocio estrictas
 
-## 🧑‍💻 Autor
-Ayoub Morghi - Backend Developer · Java · Spring Boot
+### Próximos pasos
+- Frontend
+- Docker
+- CI/CD
+- Logging estructurado
 
-Proyecto desarrollado con enfoque en arquitectura limpia, seguridad real y estándares profesionales.
+## 👨‍💻 Autor
+
+**Ayoub Morghi**  
+Backend Developer · Java · Spring Boot
+
+> Proyecto desarrollado con foco en arquitectura limpia, reglas de dominio y seguridad real.
