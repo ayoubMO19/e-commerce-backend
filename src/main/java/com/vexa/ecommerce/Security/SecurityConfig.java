@@ -39,9 +39,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        // El método OPTIONS debe permitirse siempre de forma explícita
+                        .requestMatchers(org.springframework.web.bind.annotation.RequestMethod.OPTIONS.name()).permitAll()
                         // Endpoints públicos
                         .requestMatchers("/api/auth/**").permitAll() // autoriza requests a todos los endpoints que hay en api/auth/
                         .requestMatchers("/api/payments/webhook").permitAll() // autoriza requests a webhook de payment
