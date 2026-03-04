@@ -49,6 +49,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/payments/webhook").permitAll() // autoriza requests a webhook de payment
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll() // Permite obtener productos sin autenticación
                         .requestMatchers(HttpMethod.GET, "/api/products/{id}").permitAll() // Permite obtener producto por ID sin autenticación
+                        .requestMatchers(HttpMethod.GET, "/api/categories").permitAll() // Permite obtener categorías sin autenticación
+                        .requestMatchers(HttpMethod.GET, "/api/categories/{id}").permitAll() // Permite obtener categoría sin autenticación
                         .requestMatchers(
                                 "/",
                                 "/v3/api-docs/**",
