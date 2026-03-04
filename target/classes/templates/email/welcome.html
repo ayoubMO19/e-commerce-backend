@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>¡Bienvenido!</title>
-    </head>
-    <body>
-        <h1>¡Hola, <span th:text="${name}"></span>! 👋</h1>
-        <p>Tu cuenta en <strong>Vexa E-commerce</strong> ha sido verificada exitosamente.</p>
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido</title>
+</head>
+    <body style="font-family: Arial, sans-serif; background-color: #ffffff; color: #333;">
+        <h2>Hola, <span th:text="${name}"></span></h2>
 
-        <div style="margin: 20px 0; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
-            <p>🎁 <strong>Oferta especial:</strong> Tienes un 10% de descuento en tu primera compra.</p>
-            <p>Usa el código: <strong>BIENVENIDO10</strong></p>
-        </div>
+        <p>Tu cuenta en <strong>Vexa E-commerce</strong> ha sido verificada correctamente.</p>
 
-        <p>¡Empieza a comprar ahora!</p>
-        <a href="http://localhost:8082"
-           style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-            Ir a la tienda
+        <p>Puedes acceder a la plataforma desde el siguiente enlace:</p>
+
+        <a href="https://e-commerce-backend-lny2.onrender.com/swagger-ui/index.html"
+           style="display:inline-block;padding:10px 16px;border:1px solid #333;color:#333;text-decoration:none;">
+            Acceder a la plataforma
         </a>
 
-        <p style="margin-top: 30px; color: #666; font-size: 12px;">
-            Si tienes alguna pregunta, contáctanos en soporte@vexa.com
+        <p style="margin-top:30px;font-size:12px;color:#777;">
+            Soporte: soporte@vexa.com
         </p>
     </body>
 </html>
