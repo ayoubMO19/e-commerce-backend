@@ -6,19 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/DTOs/CartItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/CartService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/DTOs/CartItemDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Cart/DTOs/CartItemDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vexa/ecommerce/Security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/reset-password-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/reset-password-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/reset-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/reset-password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/verification-error.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/verification-error.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/verification-success.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/verification-success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/verification.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/verification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/email/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/email/welcome.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +25,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;ayoubMO19&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "state": "OPEN"
+    }
+  ],
+  "lastFilter": {
+    "state": "OPEN"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/ayoubMO19/e-commerce-backend.git",

@@ -8,14 +8,16 @@ public class CartItemDTO {
     private String name;
     private Double price;
     private String urlImage;
+    private Integer stock;
     private Integer quantity;
     private Double total;
 
-    public CartItemDTO(Integer productId, String name, Double price, String urlImage, Integer quantity) {
+    public CartItemDTO(Integer productId, String name, Double price, String urlImage, Integer stock, Integer quantity) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.urlImage = urlImage;
+        this.stock = stock;
         this.quantity = quantity;
         this.total = price * quantity;
     }
