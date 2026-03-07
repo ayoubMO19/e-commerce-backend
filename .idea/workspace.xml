@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ab2740d2-3a6b-4e21-a3df-3ad826645bcc" name="Changes" comment="docker compose configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vexa/ecommerce/Cart/CartService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,22 +27,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN"
+      &quot;state&quot;: &quot;OPEN&quot;
     }
   ],
-  "lastFilter": {
-    "state": "OPEN"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ayoubMO19/e-commerce-backend.git",
-    "accountId": "83bb65d8-7d48-44c2-b55d-7a562eb73394"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ayoubMO19/e-commerce-backend.git&quot;,
+    &quot;accountId&quot;: &quot;83bb65d8-7d48-44c2-b55d-7a562eb73394&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -62,51 +64,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.EcommerceApplication.executor": "Run",
-    "JUnit.All in ecommerce.executor": "Run",
-    "JUnit.CartServiceTest.executor": "Run",
-    "JUnit.CategoriesServiceTest.executor": "Run",
-    "JUnit.OrdersServiceTest.executor": "Run",
-    "JUnit.OrdersServiceTest.getOrderByOrderId_shouldThrowException_whenOrderDoesNotExist.executor": "Run",
-    "JUnit.OrdersServiceTest.getOrderByPaymentIntentId_shouldThrowException_whenOrderNotFoundWithPaymentIntentId.executor": "Run",
-    "JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenPaymentIntentIdAlreadyExists.executor": "Run",
-    "JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.OrdersServiceTest.updateOrder_shouldUpdateSuccessfully.executor": "Run",
-    "JUnit.PaymentServiceTest.createIntent.executor": "Run",
-    "JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending.executor": "Run",
-    "JUnit.PaymentServiceTest.handleWebhook.executor": "Run",
-    "JUnit.ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.ProductsServiceTest.executor": "Run",
-    "JUnit.ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist.executor": "Run",
-    "JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenCategoryNotFound.executor": "Run",
-    "JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenProductNotFound.executor": "Run",
-    "JUnit.ProductsServiceTest.updateProduct_shouldUpdateSuccessfully.executor": "Run",
-    "JUnit.UsersServiceTest.deleteUserById.executor": "Run",
-    "JUnit.UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.UsersServiceTest.executor": "Run",
-    "JUnit.UsersServiceTest.getAllUsers.executor": "Run",
-    "JUnit.UsersServiceTest.getUserByIdShouldThrowExceptionUserNotFound.executor": "Run",
-    "JUnit.UsersServiceTest.getUserById_shouldThrowException_whenUserDoesNotExist.executor": "Run",
-    "JUnit.UsersServiceTest.saveNewUser.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser_shouldThrowException_whenEmailAlreadyExists.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser_shouldThrowException_whenUserNotFound.executor": "Run",
-    "JUnit.UsersServiceTest.updateUser_shouldUpdateSuccessfully.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.EcommerceApplication.executor": "Run",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "endpoints__access",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend",
-    "settings.editor.selected.configurable": "reference.idesettings.debugger.capture"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.EcommerceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in ecommerce.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CartServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CategoriesServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.getOrderByOrderId_shouldThrowException_whenOrderDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.getOrderByPaymentIntentId_shouldThrowException_whenOrderNotFoundWithPaymentIntentId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenPaymentIntentIdAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrdersServiceTest.updateOrder_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentServiceTest.createIntent.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentServiceTest.createIntent_shouldThrowException_whenOrderIsNotPending.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentServiceTest.handleWebhook.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.deleteProductById_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.getProductById_shouldThrowException_whenUserDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenCategoryNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldThrowException_whenProductNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProductsServiceTest.updateProduct_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.deleteUserById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.deleteUserById_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getAllUsers.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getUserByIdShouldThrowExceptionUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.getUserById_shouldThrowException_whenUserDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.saveNewUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldThrowException_whenEmailAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldThrowException_whenUserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsersServiceTest.updateUser_shouldUpdateSuccessfully.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EcommerceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;endpoints__access&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ayoub/Documentos/Proyectos/JAVA/Spring Boot/e-commerce/code/e-commerce-backend&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.debugger.capture&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -228,7 +230,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
