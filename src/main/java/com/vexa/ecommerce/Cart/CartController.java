@@ -91,4 +91,22 @@ public class CartController {
         Cart cart = cartService.removeProduct(userDetails.getUserId(), dto.getProductId());
         return ResponseEntity.ok(cartService.convertToDTO(cart));
     }
+
+    // DELETE /cart/clear
+    @Operation(
+            summary = "Vaciar completamente el carrito del usuario logueado",
+            description = "Elimina todos los productos asociados al carrito del usuario actual",
+            tags = {"Cart"}
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Carrito vaciado exitosamente",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponseDTO.class))
+    )
+    @DeleteMapping("/clear")
+    public ResponseEntity<CartResponseDTO> clearCart(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        cartService.clearCart(userDetails.getUserId());
+        Cart emptyCart = cartService.getCartByUserId(userDetails.getUserId());
+        return ResponseEntity.ok(cartService.convertToDTO(emptyCart));
+    }
 }
