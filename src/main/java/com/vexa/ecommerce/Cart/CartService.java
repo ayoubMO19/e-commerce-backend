@@ -144,6 +144,7 @@ public class CartService {
                         ci.getProduct().getName(),
                         ci.getProduct().getPrice(),
                         ci.getProduct().getUrlImage(),
+                        ci.getProduct().getStock(),
                         ci.getQuantity()
                 ))
                 .toList();
