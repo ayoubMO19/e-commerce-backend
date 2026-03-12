@@ -23,6 +23,8 @@ app:
   url: ${APP_BASE_URL:http://localhost:8082}
   mail:
     from: ${REMITTENT_MAIL}
+  frontend:
+    url: https://e-commerce-frontend-mu-five.vercel.app
 
 logging:
   level:

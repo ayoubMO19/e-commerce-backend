@@ -1,3 +1,6 @@
 spring:
   application:
     name: ecommerce
+app:
+  frontend:
+    url: http://localhost:5173

@@ -9,15 +9,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
 
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -50,11 +55,25 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
-    // EMAIL
     @GetMapping("/verify")
     @Hidden
-    public String verifyEmail(@RequestParam String token) {
-        return authService.verifyEmail(token);
+    public ModelAndView verifyEmail(@RequestParam String token) {
+        try {
+            // Ejecutamos la lógica en el servicio
+            Users user = authService.verifyEmailAndGetUser(token);
+
+            // Si todo sale bien, mostramos la vista de éxito
+            ModelAndView mav = new ModelAndView("email/verification-success");
+            mav.addObject("userName", user.getName());
+            mav.addObject("frontendUrl", frontendUrl); // Variable @Value del controller
+            return mav;
+
+        } catch (Exception e) {
+            // Si hay cualquier error (expirado, usado, no existe), mostramos vista de error
+            ModelAndView mav = new ModelAndView("email/verification-error");
+            mav.addObject("errorMessage", e.getMessage());
+            return mav;
+        }
     }
 
     // FORGOT PASSWORD
@@ -71,11 +90,14 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    // RESET PASSWORD FORM (página HTML)
     @GetMapping("/reset-password-form")
     @Hidden
-    public String resetPasswordForm(@RequestParam String token) {
-        return authService.resetPasswordForm(token);
+    public ModelAndView resetPasswordForm(@RequestParam String token) {
+        // ModelAndView le dice a Spring: "Busca una plantilla, no devuelvas texto"
+        ModelAndView mav = new ModelAndView("email/reset-password-form"); // Asegúrate de poner la ruta correcta si está en una carpeta
+        mav.addObject("token", token);
+        mav.addObject("frontendUrl", frontendUrl);
+        return mav;
     }
 
     // RESET PASSWORD

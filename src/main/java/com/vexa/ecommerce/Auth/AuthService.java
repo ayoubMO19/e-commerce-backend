@@ -31,8 +31,9 @@ public class AuthService {
     private final EmailVerificationTokenRepository emailVerificationTokenRepository;
     private final TemplateEngine templateEngine;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
-    @Value("${app.url}")
-    private String appUrl;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
 
     public AuthService(JwtService jwtService,
                        UsersRepository usersRepository,
@@ -125,53 +126,38 @@ public class AuthService {
         return new AuthResponseDTO(token, userDTO);
     }
 
-    public String verifyEmail(String token) {
-        try {
-            // Buscar token en BD
-            EmailVerificationToken verificationToken = emailVerificationTokenRepository
-                    .findByToken(token)
-                    .orElseThrow(() -> new BadRequestException("Token no encontrado"));
+    public Users verifyEmailAndGetUser(String token) {
+        // Buscar token
+        EmailVerificationToken verificationToken = emailVerificationTokenRepository
+                .findByToken(token)
+                .orElseThrow(() -> new BadRequestException("Token no encontrado"));
 
-            // Verificar que el token sea válido
-            if (verificationToken.isUsed()) {
-                return "redirect:/error?message=Este+token+ya+fue+utilizado";
-            }
-
-            if (verificationToken.isExpired()) {
-                return "redirect:/error?message=El+token+ha+expirado.+Solicita+uno+nuevo";
-            }
-
-            // Obtener el usuario
-            Users user = verificationToken.getUser();
-
-            // Activar la cuenta
-            user.setEnabled(true);
-            usersRepository.save(user);
-
-            // Marcar token como usado
-            verificationToken.setUsed(true);
-            emailVerificationTokenRepository.save(verificationToken);
-
-            // Enviar email de bienvenida
-            try {
-                emailService.sendWelcomeEmail(user.getEmail(), user.getName());
-            } catch (MessagingException e) {
-                log.error("Error al enviar email de bienvenida: {}", e.getMessage());
-            }
-
-            // Preparar y renderizar template de éxito
-            Context context = new Context();
-            context.setVariable("userName", user.getName());
-            context.setVariable("loginUrl", appUrl + "/api/auth/login");
-
-            return templateEngine.process("email/verification-success", context);
-
-        } catch (BadRequestException e) {
-            // Si hay error, renderizar template de error
-            Context errorContext = new Context();
-            errorContext.setVariable("errorMessage", e.getMessage());
-            return templateEngine.process("email/verification-error", errorContext);
+        // Validaciones
+        if (verificationToken.isUsed()) {
+            throw new BadRequestException("Este enlace ya ha sido utilizado.");
         }
+
+        if (verificationToken.isExpired()) {
+            throw new BadRequestException("El enlace ha expirado. Por favor, solicita uno nuevo.");
+        }
+
+        // Activar usuario
+        Users user = verificationToken.getUser();
+        user.setEnabled(true);
+        usersRepository.save(user);
+
+        // Quemar token
+        verificationToken.setUsed(true);
+        emailVerificationTokenRepository.save(verificationToken);
+
+        // Email de bienvenida
+        try {
+            emailService.sendWelcomeEmail(user.getEmail(), user.getName());
+        } catch (MessagingException e) {
+            log.error("Error al enviar email de bienvenida: {}", e.getMessage());
+        }
+
+        return user;
     }
 
     public void forgotPassword(ForgotPasswordRequestDTO request) {
