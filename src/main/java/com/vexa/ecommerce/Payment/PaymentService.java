@@ -43,7 +43,10 @@ public class PaymentService {
         }
 
         // Variables necesarias para crear PaymentIntent
-        long amount = new BigDecimal(order.getTotalPrice()).multiply(new BigDecimal(100)).longValueExact();
+        long amount = new BigDecimal(order.getTotalPrice())
+                .multiply(new BigDecimal(100))
+                .setScale(0, java.math.RoundingMode.HALF_UP) // Redondea al céntimo más cercano
+                .longValue();
         String currency = "eur";
 
         // Creamos el PaymentIntent utilizando los params
