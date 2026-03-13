@@ -12,6 +12,7 @@ public class OrderMapper {
         dto.setProductName(item.getProduct().getName());
         dto.setQuantity(item.getQuantity());
         dto.setPriceAtPurchase(item.getPriceAtPurchase());
+        dto.setImageUrl(item.getProduct().getUrlImage());
         return dto;
     }
 
