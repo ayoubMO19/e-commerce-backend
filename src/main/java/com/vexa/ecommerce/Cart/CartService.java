@@ -1,5 +1,6 @@
 package com.vexa.ecommerce.Cart;
 
+import com.vexa.ecommerce.Cart.DTOs.CartSyncRequestDTO;
 import com.vexa.ecommerce.Products.Products;
 import com.vexa.ecommerce.Products.ProductsService;
 import com.vexa.ecommerce.Users.Users;
@@ -159,4 +160,38 @@ public class CartService {
                 .orElseThrow(() -> new ResourceNotFoundException("CartItem", productId));
     }
 
+    @Transactional
+    public Cart syncCart(Integer userId, List<CartSyncRequestDTO.CartItemSyncDTO> itemsToSync) {
+        Cart cart = getCartByUserId(userId);
+
+        for (CartSyncRequestDTO.CartItemSyncDTO itemDto : itemsToSync) {
+            Products product = productsService.getProductById(itemDto.getProductId());
+
+            // Buscar si el producto ya está en el carrito de la DB
+            Optional<CartItems> existingItem = cart.getCartItemsList().stream()
+                    .filter(item -> item.getProduct().getProductId().equals(itemDto.getProductId()))
+                    .findFirst();
+
+            if (existingItem.isPresent()) {
+                // Si existe, sumamos la cantidad local a la del backend
+                int newQuantity = existingItem.get().getQuantity() + itemDto.getQuantity();
+
+                // Validar stock total resultante
+                if (product.getStock() < newQuantity) {
+                    log.warn("Stock exceeded during sync for product {}. Using max available.", product.getName());
+                    existingItem.get().setQuantity(product.getStock());
+                } else {
+                    existingItem.get().setQuantity(newQuantity);
+                }
+            } else {
+                // Si no existe, lo añadimos nuevo validando stock
+                int quantityToAdd = Math.min(itemDto.getQuantity(), product.getStock());
+                CartItems newItem = new CartItems(cart, product, quantityToAdd);
+                cart.getCartItemsList().add(newItem);
+            }
+        }
+
+        log.info("Cart synchronized for user ID {}", userId);
+        return cartRepository.save(cart);
+    }
 }
