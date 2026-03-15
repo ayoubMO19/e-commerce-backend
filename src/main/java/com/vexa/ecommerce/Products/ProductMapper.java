@@ -33,6 +33,7 @@ public class ProductMapper {
         dto.setUrlImage(product.getUrlImage());
         dto.setStock(product.getStock());
         dto.setCategoryId(product.getCategory().getCategoryId());
+        dto.setCategoryName(product.getCategory().getName());
         return dto;
     }
 }
