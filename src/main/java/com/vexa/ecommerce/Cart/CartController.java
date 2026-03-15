@@ -1,9 +1,6 @@
 package com.vexa.ecommerce.Cart;
 
-import com.vexa.ecommerce.Cart.DTOs.CartAddRequestDTO;
-import com.vexa.ecommerce.Cart.DTOs.CartDeleteProductRequestDTO;
-import com.vexa.ecommerce.Cart.DTOs.CartUpdateRequestDTO;
-import com.vexa.ecommerce.Cart.DTOs.CartResponseDTO;
+import com.vexa.ecommerce.Cart.DTOs.*;
 import com.vexa.ecommerce.Security.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -108,5 +105,19 @@ public class CartController {
         cartService.clearCart(userDetails.getUserId());
         Cart emptyCart = cartService.getCartByUserId(userDetails.getUserId());
         return ResponseEntity.ok(cartService.convertToDTO(emptyCart));
+    }
+
+    @Operation(
+            summary = "Sincronizar carrito local con el backend",
+            description = "Recibe una lista de productos del localStorage y los fusiona con el carrito de la base de datos",
+            tags = {"Cart"}
+    )
+    @PostMapping("/sync")
+    public ResponseEntity<CartResponseDTO> syncCart(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody CartSyncRequestDTO dto
+    ) {
+        Cart cart = cartService.syncCart(userDetails.getUserId(), dto.getItems());
+        return ResponseEntity.ok(cartService.convertToDTO(cart));
     }
 }
