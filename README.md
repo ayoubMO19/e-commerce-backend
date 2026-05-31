@@ -1,306 +1,126 @@
 # VEXA E-Commerce Backend
-📚 **Documentación detallada**
-- Si desea una documentación más detallada con cada checklist realizado para llevar a cabo el proyecto:  
-[**Java Spring Boot E-commerce - Notion Documentation**](https://aged-stag-a8e.notion.site/Java-Spring-Boot-E-commerce-2b1e038a025c80cfb7acd698e9766724?pvs=74)
 
-**Spring Boot · JWT · Stripe · PostgreSQL**
+Production-oriented e-commerce backend built with Spring Boot, focused on clean architecture, secure authentication, strict business rules, and real Stripe payment integration.
 
-Backend de e-commerce desarrollado en Spring Boot, orientado a producción, con arquitectura modular por dominios, seguridad stateless con JWT, control estricto de acceso y pagos reales con Stripe usando PaymentIntent y Webhooks verificados.
+## 📚 Detailed Documentation
 
-El sistema está diseñado para **no confiar nunca en el cliente**, aplicar **reglas de dominio explícitas** y mantener aislamiento entre lógica de negocio, infraestructura y frameworks externos.
+For a complete breakdown of the project architecture, implementation decisions, development process, and technical documentation:
 
-## 📌 Descripción del proyecto
+👉 **[View Full Notion Documentation](https://aged-stag-a8e.notion.site/Java-Spring-Boot-E-commerce-2b1e038a025c80cfb7acd698e9766724?pvs=74)**
 
-VEXA E-commerce cubre el flujo completo de un e-commerce real:
-- Autenticación segura con JWT
-- Gestión de usuarios, productos, carrito y pedidos
-- Creación de pedidos desde carrito
-- Pagos reales con Stripe
-- Confirmación de pago vía Webhooks
-- Gestión estricta de estados del pedido
-- Protección total frente a manipulación desde frontend
+---
 
-> **El backend nunca acepta datos críticos desde el cliente** como `userId`, precios, estados de pedido o pagos.
+## 🚀 Tech Stack
 
-## 🧱 Arquitectura
+* Java 21
+* Spring Boot
+* Spring Security
+* JWT Authentication
+* PostgreSQL
+* Stripe API
+* JPA / Hibernate
+* JUnit & Mockito
 
-### Arquitectura por dominios
+---
 
-El proyecto está organizado por bounded contexts funcionales:
-- `Auth`
-- `Users`
-- `Categories`
-- `Products`
-- `Cart`
-- `Orders`
-- `Payment`
-- `Security`
-- `Comments`
-- `Exceptions`
-- `Utils`
-- `config`
+## ✨ Key Features
 
-Cada dominio es autónomo, sin dependencias circulares, y contiene internamente sus propias capas.
+### Authentication & Security
 
-### Estructura interna de un dominio
+* JWT-based stateless authentication
+* Role-based authorization (`USER` / `ADMIN`)
+* Password hashing with BCrypt
+* Email verification workflow
+* Password recovery flow
 
-Dentro de cada dominio se sigue una separación clara:
+### E-Commerce Core
 
-- **Controller**
-   - Endpoints REST
-   - Validación de entrada mediante DTOs
-   - Sin lógica de negocio
+* Product and category management
+* Shopping cart system
+* Order creation and tracking
+* Historical order records
+* Inventory management
 
-- **Service**
-   - Lógica de negocio
-   - Reglas de dominio
-   - Orquestación de flujos
-   - No conoce HTTP ni detalles de frameworks externos
+### Stripe Integration
 
-- **Repository**
-   - Acceso a datos con JPA
-   - Queries explícitas cuando es necesario
-   - Sin lógica de negocio
+* PaymentIntent workflow
+* Verified Stripe webhooks
+* Secure payment confirmation
+* Idempotent payment processing
 
-- **DTOs**
-   - Requests y Responses
-   - Separación clara del modelo de dominio
+### Business Rules
 
-- **Entities**
-   - Modelo persistente
-   - Relaciones JPA bien definidas
+* Backend never trusts client-side data
+* User identity extracted exclusively from JWT
+* Order state transitions strictly controlled
+* Product prices stored historically in order items
+* Stock automatically updated when orders are created
 
-## 🔌 Integraciones externas
+---
 
-### Stripe
-- Integración aislada mediante `StripeClient` (wrapper propio)
-- Los servicios de dominio no dependen directamente del SDK de Stripe
-- Facilita testing y mockeo
-- Webhooks verificados por firma
+## 🏗️ Architecture
 
-## 🔐 Flujo de autenticación
+The project follows a domain-oriented modular architecture.
 
-1. Usuario se registra
-2. Se envía email de verificación
-3. Usuario verifica email
-4. Login devuelve JWT
-5. JWT se envía en `Authorization: Bearer <token>`
+Each domain contains its own:
 
-El backend:
-- Extrae `userId` y roles del JWT
-- **Nunca** acepta `userId` desde la request
-- Protege endpoints por rol
+* Controllers
+* Services
+* Repositories
+* DTOs
+* Entities
 
-**Características:**
-- Stateless
-- BCrypt para contraseñas
-- Roles: `USER` / `ADMIN`
-- Autorización basada exclusivamente en JWT
+Main domains:
 
-## 💳 Flujo de pagos con Stripe
+* Auth
+* Users
+* Products
+* Categories
+* Cart
+* Orders
+* Payments
 
-Flujo seguro end-to-end:
+The goal is to keep business logic isolated from infrastructure concerns and external integrations.
 
-1. Usuario crea un pedido desde el carrito  
-   → `Order` queda en estado `PENDING`
-2. Backend crea un `PaymentIntent` en Stripe
-3. Backend devuelve `clientSecret`
-4. Frontend confirma el pago con Stripe Elements
-5. Stripe envía webhook `payment_intent.succeeded`
-6. Backend:
-   - Verifica la firma del webhook
-   - Valida el tipo de evento
-   - Busca el pedido por `paymentIntentId`
-   - Cambia el estado a `PAID`
+---
 
-**Reglas:**
-- El frontend **nunca** marca pedidos como pagados
-- Solo Stripe vía webhook puede hacerlo
-- Flujo idempotente
+## 💳 Payment Flow
 
-## 📦 Estados de Order
+1. User creates an order
+2. Backend generates a Stripe PaymentIntent
+3. Frontend completes payment through Stripe Elements
+4. Stripe sends a signed webhook
+5. Backend verifies the signature
+6. Order status changes from `PENDING` to `PAID`
 
-**Estados posibles:**
-- `PENDING`
-- `PAID`
-- `SHIPPED`
-- `DELIVERED`
-- `CANCELLED`
+The frontend can never mark an order as paid.
 
-**Reglas de dominio:**
-- Solo pedidos `PENDING` pueden pagarse
-- Stripe solo puede mover `PENDING` → `PAID`
-- Pedidos pagados no se modifican
-- El stock se reduce al crear el pedido
-- El precio del producto se copia al order item (histórico)
-
-## 🧩 Dominios principales
-
-### Users
-- Registro
-- Login
-- Perfil
-- Roles
-- Verificación de email
-- Reset de contraseña
-
-### Categories
-- Crear (ADMIN)
-- Listar
-
-### Products
-- CRUD (ADMIN)
-- Relación con Category
-- Validaciones de precio y stock
-
-### Cart
-- Un carrito por usuario
-- Añadir / actualizar / eliminar items
-- `userId` siempre desde JWT
-
-### Orders
-- Crear pedido desde carrito
-- Copia de productos y precios
-- Cálculo automático del total
-- Historial por usuario
-
-### Payments
-- Creación de PaymentIntent
-- Webhook seguro
-- Verificación de firma
-- Cambio de estado controlado
-
-## 🗄️ Base de datos
-
-**Tablas principales:**
-- `users`
-- `roles`
-- `categories`
-- `products`
-- `cart`
-- `cart_items`
-- `orders`
-- `order_items`
-
-**Relaciones:**
-- OneToMany
-- ManyToOne
-- EmbeddedId (`cart_items`, `order_items`)
-
-## ▶️ Ejecución del proyecto
-
-### 1️⃣ Crear base de datos
-```sql
-CREATE DATABASE vexadb; # O el nombre que hayamos configurado
-```
-
-### 2️⃣ Configurar `application.yaml`
-```yaml
-# ADAPTAR VALORES SEGÚN CONFIGURACIÓN PROPIA
-spring:
-   datasource:
-      url: jdbc:postgresql://localhost:5433/vexadb
-      username: admin
-      password: vexa
-   jpa:
-      hibernate:
-         ddl-auto: update
-      properties:
-         hibernate:
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-   mail:
-      host: localhost
-      port: 1025
-      properties:
-         mail:
-            smtp:
-               auth: false
-               starttls:
-                  enable: false
-      test-connection: false  # Opcional para debug
-
-app:
-   mail:
-      from: remittentTest@remittentTest.com
-
-server:
-   port: 8082
-
-logging:
-   level:
-      org.springframework.mail: DEBUG
-
-jwt:
-   secret: TX...
-
-stripe:
-   secret-key: sk_test...
-   webhook-secret: whsec_...
-
-springdoc:
-   enable-native-support: true
-```
-
-### 3️⃣ Ejecutar
-```shell
-mvn spring-boot:run
-```
+---
 
 ## 🧪 Testing
 
-- Tests unitarios con JUnit + Mockito
-- Stripe completamente mockeado
-- Sin llamadas reales a Stripe en tests
+* Unit tests with JUnit and Mockito
+* Stripe integrations fully mocked
+* No real Stripe calls during testing
 
-**Webhooks locales:**
-```shell
-stripe listen --forward-to localhost:8082/api/payments/webhook
+---
+
+## ▶️ Run Locally
+
+```bash
+mvn spring-boot:run
 ```
 
-**Tarjeta de prueba:**
-- `4242 4242 4242 4242`
-- Fecha futura
-- CVC cualquiera
+Configure your PostgreSQL database and Stripe credentials inside:
 
-## 📬 Endpoints (resumen)
+```yaml
+application.yaml
+```
 
-### Auth
-- `POST /auth/register`
-- `POST /auth/login`
-- `GET /auth/me`
+---
 
-### Cart
-- `GET /api/cart`
-- `POST /api/cart/add`
-- `PUT /api/cart/update`
-- `DELETE /api/cart/delete`
+## 👨‍💻 Author
 
-### Orders
-- `POST /api/orders`
-- `GET /api/orders/me`
+**Ayoub Morghi Ouhda**
 
-### Payments
-- `POST /api/payments/create-intent`
-- `POST /api/payments/webhook`
-
-## 🧭 Roadmap
-
-### ✅ Completado
-- Arquitectura por dominios
-- Seguridad real con JWT
-- Stripe end-to-end
-- Wrapper externo + tests
-- Reglas de negocio estrictas
-
-### Próximos pasos
-- Frontend
-- Docker
-- CI/CD
-- Logging estructurado
-
-## 👨‍💻 Autor
-
-**Ayoub Morghi**  
-Backend Developer · Java · Spring Boot
-
-> Proyecto desarrollado con foco en arquitectura limpia, reglas de dominio y seguridad real.
+Full Stack Developer | Node.js · TypeScript · React · Java · SQL/NoSQL
